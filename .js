@@ -1,0 +1,1 @@
+var sohu = doc

@@ -163,6 +163,66 @@ function getElementsByClassName(node, classname) {
         }
     }
     
+    // --------- 8. ----------------------
+    // without explanation, just add one example to practice, the "Creating Markup on Fly", which means create elements dynamically.
+    function displayAbbreviations() {
+
+        // checking for the browser compatibilities, to make sure the browsers understand DOM methods
+        if (!document.getElementsByTagName || !document.createElement
+        || !document.createTextNode ) return false;
+
+        // get all the abbreviations
+        var abbreviations = document.getElementsByTagName('abbr');
+        // improve the script running performance
+        if (abbreviations.length < 1) return false;
+
+        var i, defs = []; // create an associative array used to store the key-values
+        // loop through the abbreviations
+        for (i = 0; i < abbreviations.length; i++) {
+            var current_abbr = abbreviations[i]; // for performance
+            var definition = current_abbr.getAttribute('title');
+            var key = current_abbr.lastChild.nodeValue;
+            defs[key] = definition;
+        }
+        // upon statements got the info from the html
+
+        // next we will use the info to create new markup
+
+        // create the definition list
+        var dlist = document.createElement('dl');
+
+        // loop through the definitions
+        for (key in defs) {
+            var definition = defs[key];
+
+
+            // create the definition title
+            var dtitle = document.createElement('dt');
+            var dtitle_text = document.createTextNode(key);
+            dtitle.appendChild(dtitle_text);
+
+            // create the definition description
+            var ddesc = document.createElement('dd');
+            var ddesc_text = document.createTextNode(definition);
+            ddesc.appendChild(ddesc_text);
+
+            // add them to the definition list
+            dlist.appendChild(dtitle);
+            dlist.appendChild(ddesc);
+        }
+
+        // create a headline
+        var header = document.createElement('h2');
+        var header_text = document.createTextNode('Abbreviations');
+        header.appendChild(header_text);
+        //add the headline to the body
+        document.body.appendChild(header)
+        // addd the definition list to the body
+        document.body.appendChild(dlist);
+    }
+    
+    //
+    
     
     
     

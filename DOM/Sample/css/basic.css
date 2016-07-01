@@ -1,3 +1,7 @@
+/* 
+for some big project, we usually put separate css file to set the style of elements, and then integrate them together.
+*/
+
 @import url(color.css);
 @import url(layout.css);
 @import url(typography.css);

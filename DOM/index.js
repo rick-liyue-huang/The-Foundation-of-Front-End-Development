@@ -1,5 +1,5 @@
 /* 
-    A brief description of the DOM progamming based on the book of DOM Scripting, 
+    A brief note of the DOM progamming based on the book of DOM Scripting, 
 
     Here I do not want to deep into the details of the JS and DOM grammer and syntax, and just copy out some useful functions.
 */
@@ -221,9 +221,71 @@ function getElementsByClassName(node, classname) {
         document.body.appendChild(dlist);
     }
     
-    //
     
+    // -------- 9. ---------------------
     
+    // CSS-DOM is another feature about DOM control, used to set element style. Element's style is also the object. 
+    // element.style.property = value. 
+    // But just remember that: never use the DOM  to create important content, also never use the DOM to set the majority 
+    // of styles for a document.
+    // we still can use CSS DOM to add some small stylistic enhancements to doc.
+    // Just as before, I bring a function with some logic triky.
+    function stripTables() {
+        if (!document.getElementsByTagName) return false;
+        var tables = document.getElementsByTagName('table');
+        var i, j, odd, rows;
+        for (i = 0; i < tables.length; i++) {
+            odd = false;
+            rows = tables[i].getElementsByTagName('tr');
+            for (j = 0; j < rows.length; j++) {
+                if (odd = true) {
+                    rows[j].style.backgroundColor = 'red';
+                    odd = false;
+                } else {
+                    odd = true;
+                }
+            }
+        }
+    }
+    
+    // here the function change the row style by setting the row odd or even. 
+    
+    // a most property of CSS DOM is .className, and we can set the className in style doc in advanced, and then assign
+    // the style to the responding element by element.className = "className";
+    
+    // of couse, an compaitble function is necessary
+    function addClass(element, value) {
+        if (!element.className) {
+            element.className = value;
+        } else {
+            newClassName = element.className;
+            newClassName += " ";
+            newClassName += value;
+            element.className = newClassName;
+        }
+    }
+    
+    // ------ 10. ---------------------
+    // in animation, some details will show here,
+    // 1. in animation we should notice the "px", the normal format is that
+    var xpos = parseInt(elem.style.left);
+    // do something about xpos 
+    elem.style.left = xpos + "px";
+    
+    // 2.notice the setTimemout function, 
+    element.movement = setTimeout(function() {....}, interval);
+    // here in the function() {} we usually use this word to refer to the element.
+    // aditionally, we assign the setTimeout function to an variable or property, in order to remove it after it is executed, 
+    // by clearTimeout(element.movement)
+    //3. if the left and top properties have not been set, we have a couple of options, we can do,
+    if (!elem.style.left || !elem.style.top) return false;
+    // or
+    if (!elem.style.left) {
+        elem.style.left = '0px';
+    }
+    if (!elem.style.top) {
+        elem.style.top = '0px';
+    }
     
     
     

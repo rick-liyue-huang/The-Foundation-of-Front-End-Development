@@ -63,6 +63,62 @@ article img {
   outline-style: solid;
 }
 
+#about header {
+  background-image: url("../image/lineup.gif");
+}
+#photos header {
+  background-image: url("../image/basshead.gif");
+}
+#live header {
+  background-image: url("../image/bassist.gif");
+}
+#contact header {
+  background-image: url("../image/drummer.gif");
+}
+
+#slideshow {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+}
+#preview {
+  position: absolute;
+  border-width: 0;
+  outline-width: 0;
+}
+
+#frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+#imagegallery li {
+  display: inline;
+}
+
+td {
+  padding: .5em 3em;
+}
+dl {
+  overflow: hidden;
+}
+dt {
+  float: left;
+}
+dd {
+  float: left;
+}
+label {
+  display: block;
+}
+fieldset {
+  border: 0;
+}
+
+
 
 
 

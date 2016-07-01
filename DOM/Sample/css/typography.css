@@ -1,4 +1,3 @@
-
 body {
   font-size: 76%;
   font-family: 'Helvetica', 'Arial', sans-serif;
@@ -45,6 +44,12 @@ textarea {
   font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
+dt {
+  margin-right: 1em;
+}
+dd {
+  margin-right: 3em;
+}
 
 
 

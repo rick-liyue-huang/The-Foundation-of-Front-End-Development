@@ -8,7 +8,7 @@ function fn(parent) {
         for (var i = 0; i < arrLi.length; i++) {
             arrLi[i].index = i;
             arrLi[i].onmousemove = function() {
-                for (var j = 0; j < arrLi.length; j++) {
+                for (var j = 0; j < arrLi.length; j++) {  // exclusiveness
                     arrLi[j].className = "";
                     arrSpan[j].className = "";
                 }

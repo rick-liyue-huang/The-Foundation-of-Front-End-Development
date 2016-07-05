@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .clock {
+            width: 600px;
+            height: 600px;
+            margin: 30px auto;
+            background: url(images/clock.jpg) no-repeat;
+            position: relative;
+        }
+        .clock div {
+            width: 600px;
+            height: 600px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: url(images/hour.png) no-repeat center;
+        }
+        #m {
+            background-image: url(images/minute.png);
+        }
+        #s {
+            background-image: url(images/second.png);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock">
+        <div id="h"></div>
+        <div id="m"></div>
+        <div id="s"></div>
+    </div>
+
+    <script>
+        //need：simulate the real clock by draw the box and let the three hands move as time.
+                //tech point1：the box will rotate as the time
+                //tech point2：rotate box：C3  :   box.style.webkitTransform: rotate(45deg);
+        //stps：
+        //0.get the three hands box.
+        //1.define a timer, and then define a method to let the interval as 1000ms.
+        //2.get the Date object.
+        //3.get the hour, minute and second from Date object.
+        //4.ratate the boxes as time
+
+
+        //0.get the boxes of hour, minute and second.
+        var hh = document.getElementById("h");
+        var mm = document.getElementById("m");
+        var ss = document.getElementById("s");
+        //1.define a timer, and then define a method to let the interval as 1000ms.
+
+        setInterval(aaa,1);
+        function aaa(){
+            //2.get the Date object.
+            var now = new Date();
+
+            //3.get the hour, minute and second from Date object.
+            var ms = now.getMilliseconds();
+            var s = now.getSeconds()+ms/1000;  //the second between 0-59
+            var m = now.getMinutes()+s/60;     //the minute between 0-59
+            var h = now.getHours()%12+m/60;    //the minute between 0-23
+            //4.ratate the boxes as time
+            ss.style.webkitTransform = "rotate("+s*6+"deg)";
+            mm.style.webkitTransform = "rotate("+m*6+"deg)";
+            hh.style.webkitTransform = "rotate("+h*30+"deg)";
+
+            //compatible with firefox browsers
+            ss.style.MozTransform = "rotate("+s*6+"deg)";
+            mm.style.MozTransform = "rotate("+m*6+"deg)";
+            hh.style.MozTransform = "rotate("+h*30+"deg)";
+        }
+
+    </script>
+
+</body>
+</html>

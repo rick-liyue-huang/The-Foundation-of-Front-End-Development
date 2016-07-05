@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 300px;
+            margin: 50px auto;
+        }
+        ul {
+            list-style: none;
+            height: 30px;
+        }
+        ul li {
+            float: left;
+            height: 30px;
+            width: 60px;
+            background-color: #ccc;
+            font: 400 20px/30px "simsun";
+            text-align: center;
+        }
+        .div1 span {
+            display: block;
+            width: 300px;
+            height: 200px;
+            background-color: pink;
+            display: none;
+        }
+        .div1 .show {
+            display: block;
+        }
+        .current {
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box1">
+    <ul>
+        <li class="current">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+
+    <div class="div1">
+        <span class="show">content1</span>
+        <span>content2</span>
+        <span>content3</span>
+        <span>content4</span>
+        <span>content5</span>
+    </div>
+
+</div>
+
+<div class="box" id="box2">
+    <ul>
+        <li class="current">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+
+    <div class="div1">
+        <span class="show">content1</span>
+        <span>content2</span>
+        <span>content3</span>
+        <span>content4</span>
+        <span>content5</span>
+    </div>
+
+</div>
+<script>
+    //need：onmouseover on li to change background color and show the responding span content
+    //tech point：function and exclusiveness
+    //steps
+    //1.get source
+    //2.bind event
+    //3.the programming
+    //(1).let the li change background color by exclusiveness.
+    var box1 = document.getElementById("box1");
+    var box2 = document.getElementById("box2");
+    fn(box1);
+    fn(box2);
+
+    function fn(aaa){
+        //1.get the event source
+        var arrLi = aaa.getElementsByTagName("li");
+        var arrSpan = aaa.getElementsByTagName("span");
+
+        //2.bind the event
+        for(var i=0;i<arrLi.length;i++){
+
+            arrLi[i].index = i;
+
+            arrLi[i].onmouseover = function () {
+                //3.书写事件驱动程序
+                //(1).利用排他思想，让li变色。
+                for(var j=0;j<arrLi.length;j++){
+                    arrLi[j].className = "";
+                    arrSpan[j].className = "";
+                }
+
+                this.className = "current";
+                arrSpan[this.index].className = "show";
+            }
+        }
+    }
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

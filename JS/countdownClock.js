@@ -15,5 +15,10 @@
         var h = parseInt(ss / 60 /60 % 24);
         var d = parseInt(ss / 60 / 60 / 24);
         
+        s = s < 10 ? "0"+s : s;
+        m = m < 10 ? "0"+m : m;
+        h = h < 10 ? "0"+h : h;
+        d = d < 10 ? "0"+d : d;
+        
         box.innerHTML = "the left time is " + d + "day" + h + "hour" + m + "minute" + s + "second";
     }

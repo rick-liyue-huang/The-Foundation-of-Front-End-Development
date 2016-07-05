@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box {
+            width: 500px;
+            margin: 100px auto;
+        }
+        div {
+            margin: 3px;
+        }
+        button {
+            margin: 3px 30px 3px 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="box1" id="box1">What's your name,please?</div>
+    <div class="box2" id="box2">my name is Rick Huang！</div>
+
+    <button>concat</button><span></span><br>
+    <button>slice(2,5)</button><span></span><br>
+    <button>slice(1)</button><span></span><br>
+    <button>slice(-5)</button><span></span><br>
+    <button>slice(5,2)</button><span></span><br>
+    <button>substr(5,3)</button><span></span><br>
+    <button>substr(5)</button><span></span><br>
+    <button>substr(-5)</button><span></span><br>
+    <button>substring(2,5)</button><span></span><br>
+    <button>substring(1)</button><span></span><br>
+    <button>substring(-5);</button><span></span><br>
+    <button>substring(5,2)</button><span></span><br>
+</div>
+    <script>
+        //needs：click button to get the responding results in span tag.
+        //steps：
+        //1.get the resources
+        //2.bind event
+        //3.event code
+          
+
+        //1.get the resources
+        var arrBtn = document.getElementsByTagName("button");
+        var box1 = document.getElementById("box1").innerHTML;
+        var box2 = document.getElementById("box2").innerHTML;
+
+        var val0 = box1.concat(box2);
+        //slice has two index value, used to slice the original string
+        var val1 = box1.slice(2,5);   //including the first index but not for second one
+        var val2 = box1.slice(1);
+        var val3 = box1.slice(-5);
+        var val4 = box1.slice(5,2);
+        //substr has two arguments, the first one is index and second one is the length
+        var val5 = box1.substr(5,3);
+        var val6 = box1.substr(5);
+        var val7 = box1.substr(-5);
+        //substring has two index value, used to slice the original string
+        var val8 = box1.substring(2,5);   //including the first index but not for second one
+        var val9 = box1.substring(1);
+        var val10 = box1.substring(-5);     //get all original string
+        var val11 = box1.substring(5,2);    //just switch the two arguments
+
+        fn(arrBtn[0],val0);
+        fn(arrBtn[1],val1);
+        fn(arrBtn[2],val2);
+        fn(arrBtn[3],val3);
+        fn(arrBtn[4],val4);
+        fn(arrBtn[5],val5);
+        fn(arrBtn[6],val6);
+        fn(arrBtn[7],val7);
+        fn(arrBtn[8],val8);
+        fn(arrBtn[9],val9);
+        fn(arrBtn[10],val10);
+        fn(arrBtn[11],val11);
+
+
+        function fn(aaa,bbb){
+            //2.bind event
+            aaa.onclick = function () {
+                //3.event code
+                //.get button to assign the value to the nextsibling tag text.
+                this.nextSibling.innerHTML = bbb;
+            }
+        }
+    </script>
+
+</body>
+</html>

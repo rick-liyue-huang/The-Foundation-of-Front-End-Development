@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            float: left;
+            border: 1px solid #CCC;
+            padding: 5px;
+        }
+
+    </style>
+    <script>
+
+        window.onload = function () {
+            
+            var container = document.getElementById("container");
+            var boxes = container.children;
+
+            //get how many pics in the first row (page width / box width)
+            //page width
+            var pageWidth = window.innerWidth;
+            //box width
+            var boxWidth = boxes[0].offsetWidth;
+            //calculate..
+            var column = Math.floor(pageWidth / boxWidth);
+            //alert(column);
+
+            //loop for all the boxes, and get the first row datas, and then arrange the second line
+            var arrHeight = []; // store the row height on every row
+
+            function waterfall() {
+
+                for (var i = 0; i < boxes.length; i++) {
+                    if (i < column) {
+                        //the first row
+                        arrHeight[i] = boxes[i].offsetHeight;
+                    } else {
+                        // the second and following rows, and set the min height
+                        var minHeight = getMin(arrHeight).value;
+                        var minHeightIndex = getMin(arrHeight).minIndex;
+
+                        boxes[i].style.position = "absolute";
+                        //top is the min height
+                        boxes[i].style.top = minHeight + "px";
+                        //left is the minheight box's offsetLeft
+                        boxes[i].style.left = boxes[minHeightIndex].offsetLeft + "px";
+                        //update the array
+                        arrHeight[minHeightIndex] = minHeight + boxes[i].offsetHeight;
+
+                    }
+                }
+            }
+
+            waterfall();
+
+
+            // when page scrolls, determine if the pics load finished
+            window.onscroll = function () {
+                if (bottomed()) {
+                    //alert("到啦");
+                    //触底之后就应该向后台请求数据
+                    //由于现在我们还没有学习后台知识 我们先用写死的变量替代
+                    var json = [
+                        {"src": "animationImg/P_000.jpg"},
+                        {"src": "animationImg/P_001.jpg"},
+                        {"src": "animationImg/P_002.jpg"},
+                        {"src": "animationImg/P_003.jpg"},
+                        {"src": "animationImg/P_004.jpg"},
+                        {"src": "animationImg/P_005.jpg"},
+                        {"src": "animationImg/P_006.jpg"},
+                        {"src": "animationImg/P_007.jpg"},
+                        {"src": "animationImg/P_008.jpg"},
+                        {"src": "animationImg/P_009.jpg"},
+                    ];
+                    //loop through the json array
+                    for (var i = 0; i < json.length; i++) {
+                        //create the new pics by the json object, and append on the end of the current pics
+                        //div.box>img[src=""]
+                        var div = document.createElement("div");
+                        div.className = "box";
+                        var img = document.createElement("img");
+                        img.src = json[i]["src"];
+                        div.appendChild(img);
+                        container.appendChild(div);
+                    }
+                    waterfall();
+                }
+            }
+
+            function bottomed() {
+            
+                var scrollTop = window.pageYOffset;
+                var clientHeight = window.innerHeight;
+                
+                var lastBoxTop = boxes[boxes.length - 1].offsetTop;
+                if ((scrollTop + clientHeight) > lastBoxTop) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+
+            }
+            
+
+            function getMin(arr) {
+      
+                var min = {};
+                min.minIndex = 0;
+                min.value = arr[min.minIndex];
+
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i] < min.value) {
+                        min.value = arr[i];
+                        min.minIndex = i;
+                    }
+                }
+                return min;
+            }
+
+        }
+
+    </script>
+</head>
+<body>
+<div class="container" id="container">
+    <div class="box"><img src="animationImg/P_000.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_001.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_002.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_003.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_004.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_005.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_006.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_007.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_008.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_009.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_010.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_011.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_012.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_013.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_014.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_015.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_016.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_017.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_018.jpg" alt=""/></div>
+    <div class="box"><img src="animationImg/P_019.jpg" alt=""/></div>
+</div>
+</body>
+</html>
+<script>
+
+
+</script>

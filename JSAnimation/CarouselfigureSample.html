@@ -120,10 +120,10 @@
 
         // 1. show and hide the arrow
         wrap.onmousemove = function() {
-            animation(arrow, {"opacity": 1});
+            animation(arrow, {"opacity": 1},,15);
         };
         wrap.onmouseout = function() {
-            animation(arrow, {"opacity": 0});
+            animation(arrow, {"opacity": 0},,15);
         };
 
 
@@ -134,7 +134,7 @@
 
                 animation(lis[i], config[i], function() {
                     flag = true;
-                });
+                }, 15);
             }
         }
 

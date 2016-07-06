@@ -59,15 +59,15 @@
         lis[i].onmouseover = function () {
           
             for (var j = 0; j < lis.length; j++) {
-                animate(lis[j], {"width": 100});
+                animate(lis[j], {"width": 100}, 15);
             }
             //set the pointing li element
-            animate(this, {"width": 800});
+            animate(this, {"width": 800}, 15);
         }
         //3. when mouse leave out, the lis style return to 240
         lis[i].onmouseout = function () {
             for (var k = 0; k < lis.length; k++) {
-                animate(lis[k], {"width": 240});
+                animate(lis[k], {"width": 240}, 15);
             }
         }
     }

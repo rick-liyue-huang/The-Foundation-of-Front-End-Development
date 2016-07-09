@@ -77,3 +77,14 @@ function getFnName( fn ) {
 	return fn.name ||
 			/function (.+)\(/.exec( fn + '' )[ 1 ];
 }
+
+// or
+
+function getFnName( fn ) {								
+						
+	return typeof fn !== 'function' ?
+				undefined:
+				fn.name ||
+				/function (.+)\(/.exec( fn + '' )[ 1 ]
+				
+}

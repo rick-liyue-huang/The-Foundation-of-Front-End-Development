@@ -1,9 +1,10 @@
 
 
-#### provideing a sampe used to verify the SelectorRickH.js is working.
+##### ddddd
 
-
-'''
+`
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -20,7 +21,7 @@
         .c2 { border: 1px solid blue; }
     </style>
     <script>
-
+        // 最终我要的只是一个函数
 
     </script>
     <script src="SelectorRickH.js"></script>
@@ -35,7 +36,7 @@
     <div class="c1 rect"></div>
 </div>
 <hr />
-<p>This is a paragraph...</p>
+<p>我是一个段落</p>
 <div>
     <div class="c rect"></div>
     <div class="c1 rect"></div>
@@ -52,6 +53,4 @@
     }
 </script>
 </html>
-
-
-'''
+`

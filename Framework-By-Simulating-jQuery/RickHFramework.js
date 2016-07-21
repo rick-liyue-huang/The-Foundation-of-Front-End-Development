@@ -2,6 +2,7 @@
  * A simple framework simulating jQuery, named RickHFramework.js,
  * including Selector Module, DOM Module, Event Module, Style Module, Attribute Module and Animation Module.
  * Created by Rick.
+ * 
  */
 
 

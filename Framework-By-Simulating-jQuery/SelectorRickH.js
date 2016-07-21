@@ -1,6 +1,5 @@
 /**
  * To simulate the jQuery Selector
- *
  * Created by Rick Huang
  */
 

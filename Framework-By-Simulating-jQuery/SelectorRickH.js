@@ -155,7 +155,7 @@ var get = function (selector, context, results) {
         each(context, function (i, v) {
 // here context is already the array, so will loop the selector in every context array element.
             if (m[1]) {
-                results = getById(m[1], results);
+                results = getId(m[1], results);
             } else if (m[2]) {
                 results = getClass(m[2], v, results);
             } else if (m[3]) {

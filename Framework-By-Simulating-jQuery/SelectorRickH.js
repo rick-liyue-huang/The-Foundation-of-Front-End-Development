@@ -11,7 +11,7 @@ var select =
 /*
 * support is a object used to substitute the document element in DOM, under some circumstance. here we provide a object
 * named support, and this support object will stop the engine search the special method in the prototype chain. If we
-* always seach along the prototype chain, it will affect the browser performance.
+* always search along the prototype chain, it will affect the browser performance.
 * */
 var support = {};
 
@@ -55,19 +55,11 @@ var myTrim = function (str) {
 /*
  * get the basic dom element
  * */
-var getId = function (id, results) {
-    results = results || [];
-
-// try...catch.. sentence is used to be compatible with the different browsers (especially earlier IE edition)
-    try {
-        results = results.push.apply(results, document.getElementById(id));
-    } catch (e) {
-        myPush(results, document.getElementById(id));
-    }
-
-    return results;
+var getId = function ( id, results ) {
+	results = results || [];
+	results.push( document.getElementById( id ) );
+	return results;
 };
-
 
 /*
 * a special explanation about it, because the getElementsByClassName is a new method since html5. In order to

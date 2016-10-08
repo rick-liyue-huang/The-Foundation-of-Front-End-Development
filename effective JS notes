@@ -5,7 +5,8 @@ item 1: know which JS you are using
 ECMAScript 5 strict mode is enabling in a program by adding a special string constant at the very beginning of the program.
 
 “use strict”;
-
+  
+  
 also similarly, can enable strict mode in a function by placing the directive at the beginning of the function body: 
 function f(x) {
 	“use strict”;

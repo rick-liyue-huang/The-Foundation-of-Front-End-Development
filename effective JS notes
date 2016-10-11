@@ -1,0 +1,1020 @@
+Effective Javascript
+
+item 1: know which JS you are using
+
+ECMAScript 5 strict mode is enabling in a program by adding a special string constant at the very beginning of the program.
+
+“use strict”;
+
+also similarly, can enable strict mode in a function by placing the directive at the beginning of the function body: 
+function f(x) {
+	“use strict”;
+	//….
+}
+
+how to compatible the strict mode with no strict mode
+
+by using IIFE
+
+// no strict-mode directive
+(function() {
+	// file1.js
+	“use strict”;
+	function f() {
+		//...
+		}
+	})();
+
+(function () {
+	//file2.js
+	// no strict mode directive
+	function () {
+		var arguments = [];
+	}
+})();
+
+In order to write files so that they behave the same in either mode. using 
+IIFE. also called strict regardless of whether it it concatenating in a strict or nonstrict context.
+(function() {
+	“use strict”;
+	function() {//...}
+})();
+
+
+Things to remember
+a. decide which versions of JS your application supports
+b. be sure that any JS features you use are supported by all environments where your application runs
+c. always test strict code in environments that perform the strict mode checks
+d. beware of concatenating scripts that differ in their expectations about strict mode.
+
+
+item 2: understand JS’s floating-point number
+
+typeof 17; typeof 98.6; typeof -2.1 // number
+
+all numbers in JS are double-precision floating-point numbers, which means 64bit encoding of numbers
+specified by the doubles. all integers from -2power53 to 2power53
+
+most arithmetic operators work with integers, real numbers or combination of the two
+
+The bitwise arithmetic operators, are special. they implicitly convert them to 32-bit integers, or say they are treated as 320-bit
+ 
+8 | 1; //  9
+
+(8).toString(2); // ‘1000’ ‘00000000000000000000000000001000’
+(1).toString(2); // ‘0001’ ‘00000000000000000000000000000001’
+
+so the result is ‘00000000000000000000000000001001’
+
+and then parseInt(‘1001’, 2); // 9
+
+we will find that all of the bitwise operators work the same way, converting their inputs to integers and performing their operations on the
+integer bit patterns before converting the results back to stand JS floating-point numbers.
+
+things to remember 
+a. JS numbers are double-precision floating-point numbers
+b. integers in JS are just a subset of doubles rather than a separate datatype
+c. bitwise operators treat numbers as if they were 32-bit signed integer
+d. be ware of limitations of precision in floating-point arithmetic
+
+item 3: beware of implicit coercions
+
+JS is a dynamically typed language, 
+the arithmetic operator operators -*/ and % all attempt to convert their arguments to numbers before doing their calculation. 
+the + is subtler, because it is overloaded to perform either numeric addition or string concatenation, depending on the types of its arguments
+2+ 3 // 5
+“hello” + “ world” // hello world
+
+when combine a number and string? JS breaks the tie in favour of strings, converting the number to string
+
+“2” + 3 // “23”
+1 + 2 + “3” // “33”
+1 + “2” + 3 // ‘123’
+
+how to check NaN, NaN is the only JS value that is treated as unequal to itself, you can always test if a value is NaN by checking if for equality to itself
+var a = NaN;
+a !== a; // true
+
+var b = “foo”;
+b !== b; //false
+
+var c = undefined;
+c !== c; // false
+
+var e = {valueOf: “foo”};
+e !== e // false
+
+we can abstract this pattern into a clearly named utility function 
+function isReallyNaN(x) {
+	return x !== x;
+}
+
+objects can also be coerced to primitives, this is most commonly used for converting to strings
+
+“the Math object: “ + Math; // “the Math object: [object Math]”
+"the JSON object: " + JSON; // "the JSON object: [object JSON]”
+
+Objects are converted to strings by implicitly calling their toString method. you can test this out by calling it
+
+Math.toString(); // “[object Math]”
+
+Similarly, objects can be converted to number via their valueOf method
+
+“java” + {toString: function() {return “script”}};  // “javascript”
+
+2 * {valueOf: function() {return 3;}} // 6
+
+
+
+Normally, JS behave the valueOf() over toString() 
+
+so we should avoid the valueOf() method, unless your object really is a numeric abstraction and obj.toString() produces a string representation of obj.valueOf()
+
+one kind of coercion is sometimes known as truthiness. if || and && logically work with boolean values
+
+but accept any values.
+
+falsy values: false 0, -0, “”, NaN, null and undefined
+
+function point (x, y) {
+
+	if (typeof x === “undefined”) {
+
+	x = 320;
+
+	}
+
+	if (typeof y === “undefined”) {
+
+	y = 240;
+
+	}
+
+	return {x: x, y: y};
+
+}
+
+point(); // {x:320, y:240}
+
+point(0,0) // {x:0, y:0}
+
+
+
+Things to remember:
+
+a. type errors can be silently hidden by implicit coercions
+
+b. The + operator is overloaded to do addition or string concatenation depending on its argument type
+
+c. Objects are coerced to numbers via valueOf and to string by toString().
+
+d. Objects with valueOf methods should implement a toString method that provides a string representation of the number produced by valueOf
+
+e. use typeOf or comparison to undefined rather than truthiness to test for undefined values
+
+
+
+
+
+item 4: prefer primitives to object wrapper
+
+the five primitive type of JS are: boolean, number, string, null, undefined.
+
+the typeof null is object, but actually it is distinct type.
+
+At the same time, the standard library provides constructors for wrapping booleans, numbers and strings as objects. we can create a String object that 
+
+wraps a string value
+
+var s = new String(‘hello’);
+
+in some ways, a String object behaves similarly to the string value it wrap. you can concatenate it with other values to create string
+
+s + “ world”; // “hello world”
+
+s[4]; // o
+
+but unlike primitive strings, a String object is a true object
+
+typeof “hello”; // ‘string'
+
+typeof s; // “object"
+
+This is an important difference, because it means that you cannot compare the contents of two distinct String objects using built-in operators.
+
+var s1 = new String(“hello”);
+
+var s2 = new String(‘hello’);
+
+s1 === s2; // false
+
+
+
+Since these wrappers donot behave quite right, they do not serve much of a purpose. The main justification for their existence is their utility methods.
+
+JS makes these convenient  to use with another implicit coercion: you can extract properties and call method of a primitive value. and it acts as though 
+
+you had wrapped the value with its corresponding object type. such as the String prototype object has a toUpperCase method, which confer a string
+
+to uppercase.
+
+we can use this method on a primitive string value
+
+“hello”.toUpperCase();
+
+A string consequence of this implicit wrapping is that you can set properties on primitive values with essentially no effect
+
+“hello”.someProperty = 17;
+
+“hello”.someProperty; // undefined
+
+since the implicit wrapping produces a new String object each time it occurs. the update to the first wrapper object has no lasting effect.
+
+so we note: if we set property on what you expect to be an object, but use a primitive value by mistake, your program will simply silently ignore the update
+
+and continue. this easily cause the error to go undetected and make it harder to diagnose.
+
+Things to remember:
+
+a. Object wrapper for primitive type do not have the same behaviour as their primitive values when compared for equality.
+
+b. Getting and setting properties on primitives implicitly create object wrapper.
+
+
+
+
+
+item 5: avoid using == with Mixed type
+
+“1.0e0” == {values: function() { return true;}};  //true
+
+they firstly both convert to number before being compared. the string 1.0e1 parses as number 1, and the object is converted to number by valueOf method.
+
+Its tempting to use these coercions for tasks like reading a field from a web form and comparing it with a number.
+
+
+
+Actually easy to convert value to numbers explicitly using the Number function or the unary + operator. This is clearer. because it conveys to readers of your code exactly what conversion is being applied, without requiring them to memorize the conversion rules. and strict equality operator is the best.
+
+var today = new Date ();
+
+if (+form.month.value === (today.getMonth() + 1) && +form.day.value === today.getDate()) {
+
+	// happy birthday
+
+}
+
+
+
+Table 1.1 Coercion Rules for the == Operator
+
+Argument Type 1
+
+Argument Type 2
+
+Coercions
+
+null
+
+undefined
+
+None; always true
+
+null or undefined
+
+Any other than null or undefined
+
+None; always false
+
+Primitive string, number, or boolean 
+
+Date object
+
+Primitive => number, Date object => primitive (try toString and then valueOf)
+
+Primitive string, number, or boolean 
+
+Non-Date object
+
+Primitive => number, non-Date object => primitive (try valueOf and then toString) 
+
+Primitive string, number, or boolean 
+
+Primitive string, number, or boolean 
+
+Primitive => number
+
+
+
+ An example,
+
+var date = new Date(“1999/12/31”);
+
+date == “1999/12/31”; // false
+
+because that 
+
+date.toString(); // "Fri Dec 31 1999 00:00:00 GMT-0800 (PST)"
+
+
+
+so we need do by function
+
+var date = new Date(“1999/12/31”);
+function toYMD(date) {
+	var y = date.getYear() + 1900,
+	      m = date.getMonth() + 1,
+             d = date.getDate();
+
+	return y 
+		+ “/“ + (m < 10 ? “0” + m : m)
+		+ “/“ + (d < 10 ? “0” + d : d);
+}
+
+toYMD(date) === “1999/12/31”;
+
+Things to Remember,
+a. The == operator applies a confusing set of implicit coercions when its arguments are of different types
+b. using === to make it clear to your readers that your comparison does not involve any implicit coercions
+c. use your own explicit coercions when comparing values of different type to make your program’s behavor clear.
+
+
+Item 6: Learn the limits of semicolon insertion
+
+one of Js’s conveniences is the ability to leave off statement-terminating semicolon.
+Point.prototype.isOrigin = function () {
+	return this.x === 0 && this.y === 0
+}
+
+But here have some rules,
+Semicolons are only ever inserted before a } token, after one or more newlines, or at the end of the program input. so we can only leave out semicolons at the end of a line, block, or program. 
+so its ok
+
+function square(x) { var n = +x
+
+return n * n }
+
+function area(r) { r = +r; return Math.PI * r * r } function add1(x) { return x + 1 }
+
+and 
+
+we can also do
+
+;(function() { // ...
+
+})() ;(function() {
+
+// ...
+
+})()
+
+for iife
+
+Things to remember,
+
+a. semicolon are only ever inferred before a }, at the end of a line, or at the end of a program
+
+b. semicolons are only ever inferred when the next token cannot be parsed
+
+c. never omit a semicolon before a statement beginning with ( [ + - /
+
+d. when concatenating scripts, insert semicolon explicitly between scripts
+
+e. never put a newline before the argument to return throw break continue ++ —
+
+f. semicolons are never inferred as separators in the head of a for loop or as  empty statements.
+
+
+
+Item 7: Think of string as sequences of 16bit code unit
+
+a. js string consist of 16bit code units, not unicode code points
+
+b. unicode code points 2pow16 and above are represented in js by two code units, known as a surrogate pair
+
+c. surrogate pairs throw off string element counts, affecting length, charAt, charCodeAt and regular expression patterns such as “.”
+
+d. use third party libraries for writing code point-aware string manupulation
+
+e. whenever you are using a library that works with strings, consult the documentation to see how it handles the full range of code point
+
+
+
+variable scope
+
+
+
+Item 8: Minimize use of the global object
+
+Defining global variables pollutes the common namespace shared by everyone, introducing the possibility of accidental name collision.
+
+since the global namespace is the only real way for separate components of a JS program to interact, some uses of the global namespace are unavoidable. a component or library has to define a global name so that other parts of program can use it. otherwise, its best to keep variables as local as possible. 
+
+
+
+function averageScore (players) {
+
+	var i, n, sum;
+
+	sum = 0;
+
+	for (i = 0; n = players.length; i < n; i++) {
+
+	sum += score(players[i]);
+
+	}
+
+	return sum / n;
+
+}
+
+
+
+function score(player) {
+
+	var i, n, sum;
+
+	sum = 0;
+
+	for (i = 0; n = player.levels.length; i < n; i++) {
+
+		sum += player.levels[i].score;
+
+	}
+
+	return sum;
+
+}
+
+
+
+JS global namespace is also exposed as a global object, which is accessible at the top of a program as the initial value of the this keyword.
+
+in browsers, the global object is also bound to the global window variable. 
+
+
+
+its best to limit your use of the global object, it does provide one particular indispensable use. Since the global object provides a dynamic reflection of the global environment, we can use it to query a running environment to detect which features are available on the platform.
+
+if (!this.JSON) {
+
+	this.JSON = {
+
+		parse:  …,
+
+		stringify: …,
+
+	}
+
+} 
+
+
+
+Feature detection is a relatively easy way to make programs robust to the variations in platform feature sets.
+
+
+
+Things to remember
+
+a. avoid declaration global variables
+
+b. declare variables as locally as possible
+
+c. avoid adding properties to the global object
+
+d. use the global object for platform feature detection
+
+
+
+Item 9. Always declare local variable
+
+Forgetting to declare a local variable silently turns it into a global variable.
+
+ function (a, i, j) {
+
+	var temp = a[i];
+
+	a[i] = a[j];
+
+	a[j] = temp;
+
+}
+
+Things to remember 
+
+a. always declare new local variables with var
+b. consider using lint tools to help check for unbound variables
+
+Item 10. Avoid with keywords
+
+Things to remember,
+a. avoid using with statements
+b. use short variable names for respected access to an object
+c. explicitly bind local variables to object properties instead of implicitly binding them with a with statement
+
+
+Item 11. Get comfortable with closure
+
+there’s really nothing to be afraid of. Understanding closure only require learning three essential facts. The first fact is that JS allows you to refer to 
+variables that were defined outside of the current function.
+
+function makeSandwich () {
+	var magicIngredient = “aa”;
+	function make (filling) {
+		return magicIngredient + “ and” + filling;
+	}
+	return make(“jelly”);
+}
+makeSandwich();
+
+The second fact is that functions can refer to variables defined in outer function even after those outer functions have returned! so we can return an inner function to be called sometime later
+
+function sandwichMaker () {
+	var magicIngredient = “aa”;
+	function make (filling) {
+		return magicIngredient + “ and” + filling;
+	}
+	return make;
+} 
+
+var f = sandwichMaker();
+f(“jelly”);
+f(“bananas”);
+f(“marshmallows”);
+
+This is almost identical to the first example, except that instead of immediately calling make inside the outer function.
+ Even though sandwichMaker already returned,, make remembers the value of magicIngrient.
+
+how does this work? the answer is that JS function values contain more information than just the code required to execute when they’re called. they also internally store any variables they may refer to that are defined from their containing scopes are known as closures. the make function is a closure whose code refers to two outer variables: magicIngredient and filling, whenever the make function is called, its code is able to refer to these two variable because they are stored in the closure.
+
+A function can refer to any variable in its scope, including the parameters and variables of outer function
+
+so a more general function is used
+function sandwichMaker (magicIngredient) {
+	function make (filling) {
+		return magicIngredient + “ and “ + filling;
+	}
+	return make;
+}
+
+var hamAnd = sandwichMaker(“ham”);
+hamAnd(“cheese”);
+hamAnd(“mustard”);
+
+var turkeyAnd = sandwichMaker(“turkey”);
+turkeyAnd(“Swiss”);
+
+also can do that
+function sandwichMaker (magicIngredient) {
+	return function (filling) {
+		return magicIngredient + “ and “ + filling;
+	};
+}
+
+The third and final fact to lean about closures is that they can update the value of outer variables. Closure actually store reference to their outer variables, rather than copying their values, so updates are visible to any closure that have access to them.
+
+function box () {
+	var val = undefined;
+	return {
+		set: function(newVal) {val = newVal;},
+		get: function() {return val;},
+		type: function() {return typeof val;}
+	};
+}
+
+var b = box();  b.typeof(); // undefined
+b.set(‘98’);
+b.get(); // 98
+b.type(); // number
+
+this example produces an object containing three closure, each of their closures shares access to the val variable.
+
+Things to remember,
+a. functions can refer to variables defined in outer function
+b. closure can outlive the function that create them
+c. closure internally store references to their outer variable and can both read and update their stored variables.
+
+
+Item 12. Understanding variable hoisting
+
+JS supports lexical scoping: with only a few exception, a reference to a variable foo is bound to the nearest scope in which foo was declared. JS does not support block scoping. variable definitions are not scoped to their nearest enclosing statement or block, but rather to their containing function.
+
+a good way to think about the behavior of JS variable declaration is to understand them as consisting of two pairs: a declaration and an assignment. JS implicitly “hoists” the declaration part to the top of the enclosure function and leaves the assignment in place. in other words,
+the variable is in scope for the entire function, but it is only assigned at the point where the var statement appears.
+
+function trimSections(header, body, footer) {
+	var i, n;
+	for (i = 0; n = header.length; i < n ; i++) {
+		header[i] = header[i].trim();
+	}
+		for (i = 0; n = body.length; i < n ; i++) {
+	body[i] = body[i].trim();
+		}
+	for (i = 0; n = footer.length; i < n ; i++) {
+		footer[i] = footer[i].trim();
+	}
+} 
+
+regardless of whether you prefer this style, its important to understand the scoping rules of JS, both for writing and reading 
+code.
+
+the one exception to JS lack of block scoping is try…catch…
+
+function test( ) {
+	var x = “var”, result = [];
+	result.push(x);
+	try {
+		throw “exception”;
+	 } catch {
+		x = “catch”;
+	 }
+	result.push(x);
+	return result;
+} 
+test();
+
+Things to remember
+a. Variable declaration within a block are implicitly hoisted to the top of their enclosing function
+b. redeclarations of a variable are treated as a single variable
+c. consider manually hoisting local variable declarations to avoid confusion.
+
+
+Item 13. Use immediately invoked function expression to create local scope
+
+function wrapElements (a) {
+	var result = [ ], i, n;
+	for (i = 0, n = a.length; i < n; i++) {
+		result[i] = function () {return a[i]; }
+	}
+	return result;
+}
+
+var wrapped = wrapElements([10, 20, 30, 40, 50]);
+var f = wrapped[0];
+f(0);
+
+The way to make sense of this example is to understand the distinction between binding and assignment. entering a scope at runtime allocates a slot in memory for each variable binding in that scope. The wrapElements function binds three local variables: result, i, and n. so when it is called, wrapElements allocates slots for these three variables. On each iteration of the loop, the loop body allocates a closure for the next function. The bug in the program comes from fact that the programmer apparently expected the function to store the value of i at the time the nested function was created. but in fact, it contains a reference to i. since the value of i changes after each function is created, the inner functions end up seeing the final value of i. This is the key point about closure
+closure store their outer variable by reference, not by value.
+so all the closure created by wrapElements refer to the single shared slot for i that was created before the loop. Since each iteration of the loop increments i until it runs off the end of the array, by the time we actually call one of the closure, it looks up index 5 of the array and returns undefined.
+
+this version looks even a bit more deceptive, because the var declaration appears to be inside the loop. but as always, the variable declarations are hoisted to the top of the loop. so once again there is only a single slot allocation for the variable i.
+
+so the result of the problem is to use the IIFE
+
+function wrapElements (a) {
+	var result = [ ];
+	for (var i = 0, n = a.length; i < n; i++ ) {
+		
+		(function () {
+			var j = i;
+			result[i] = function() { return a[j]; };
+		})();
+	}
+	return result;
+}
+
+function wrapElements (a) {
+	var result = [ ];
+	for (var i = 0, n = a.length; i < n; i++) {
+		(function(j) {
+			result[i] = function() {return a[j];};
+		})(i);
+	}
+	return result;
+}
+
+Things to remember.
+a. understand the difference between binding and assignment, bind variable to scope
+b. closure capture their outer variable by reference, not by value
+c. use immediately invoked function expression to create local scope
+d. be aware of the cases where wrapping a block in an IIFE can change its behavior.
+
+
+Item 14. Beware of unportable scoping of named function expression
+
+just differentiate the function declaration from function expression
+
+a declaration defines a function and binds it to a variable in the current scope. 
+function double(x) { return x * 2; }
+
+where,
+a named function expression will binds the function to a variable f rather than double.
+var f = function(x) {return x * 2; };
+
+the official difference between anonymous and named function expression is that the latter binds its name as a local variable within the function. 
+this can be used to write recursive function
+
+var f = function find (tree, key) {
+	if (!tree) {
+		return null;
+	}
+	if (tree.key === key ) {
+		return tree.value;
+	}
+	return find(tree.left, key) || find(tree.right, key);
+};
+here find is only in scope within the function itself. 
+
+unlike a function declaration, a named function expression cannot be referred to externally by its internal name,
+find(myTree, ‘foo’); // error: find is not defined
+in other word, ‘find’ only can be used in itself inside.
+
+this all can be realized by function declaration
+function find (tree, key) {
+	if (!tree) {
+		return null;
+	}
+	if (tree.key === key) {
+		return tree.value;
+	}
+	return find(tree.left, key) || find (tree.right, key);
+}
+var f = find;
+
+the real usefulness of named function expressions, is for debugging.  most JS environment produce stack trace for error objects, and the name of a function expression is typically used for its entry in a stack trace.
+
+The best way to avoid these problems on system that pollute their function expression scope with objects is to avoid ever adding new property to Object.prototype and avoid using local variables with any of the names of the standard Object.prototype properties.
+
+
+Things to remember.
+
+a. use named function expressions to improve stack traces in error objects and debuggers
+b. beware of pollution of function expression scope with Object.prototype in ES3 and buggy JS environments
+c. bewaring of hoisting and duplicate allocation of named function expressions in buggy JS environment
+d. consider avoiding named function expression or removing them before shipping
+e. if you are shipping in properly implemented ES5 environments, you’ve got nothing to worry about.
+
+Item 5. Beware of unportable scoping of block-local function declaration
+
+
+function f ( ) { return ‘global’; }
+
+function test (x) {
+	function f( ) { return ‘local’; }
+	var result = [ ];
+	if (x) {
+		result.push( f( ) );
+	}
+	result.push( f( ) );
+	return result;
+}
+
+test (true);  // [local local]
+test (false); // [local]
+
+
+the best way to write portable function is to avoid ever putting function declarations in local blocks or substatements.
+if you want to write a nested function declaration, put it at the outer most level of its parent function as shown in the upper code. if on the other hand, you need to choose between functions conditionally, the best way to do this is with var declaration and function expression,
+
+function f () { return ‘gloabal’}
+
+function test (x) {
+	var g = f, result = [ ];
+	if (x) {
+		g = function() { return ‘local’; }
+		result.push(g());
+	}
+	result.push(g());
+	return result;
+}
+
+test(true); // [local local]
+test(false); // [global]
+
+Things to remember
+a. always keep function declaration at the outermost level of a program or a containing function to avoid unportable behavior
+b. use var declarations with condition assignment instead of conditional function declarations.
+
+Item 16: Avoid creating local variables with eval
+
+function test (x) {
+	eval(“var y = x”);
+	return y;
+}
+test (‘hello’);
+
+var y = ‘global’;
+function test (x) {
+	if (x) {
+		eval = (“var y = ‘local’; “);
+	}
+	return
+}
+
+a simple way to ensure that eval does not affect outer scopes is to run it in an explicitly nested scope
+var y = “global”;
+function test (src) {
+	(function ( ) {
+	eval(src);
+	})();
+	return y;
+}
+
+test (“ var y = ‘local’; “); // global
+
+Things to remember
+a. avoid creating variables with eval that pollute the caller’s scope
+b. if eval code might create global variables, wrap the call in a nested function to prevent scope pollution
+
+Item 17. Prefer indirect eval to direct eval
+
+things to remember
+a. wrap eval in a sequence expression with a useless literal to force the use of indirect eval
+b. prefer indirect eval to direct eval whenever possible
+
+
+
+Working with Functions
+
+Item 18. Understand the difference between function, method and constructor calls
+
+the simplest usage pattern is the function call:
+function hello (username) {
+	return “hello “ + username;
+}
+hello (‘rick’); // hello rick
+
+it calls the hello function and binds the name parameter to its given argument
+
+method in JS are nothing more than object properties that happen to be function
+
+var obj = {
+	hello: function() {
+		return “hello, “ + this.username;
+	},
+	username: “rick"
+};
+obj.hello();
+
+
+var obj2 = {
+	hello: obj.hello,
+	username: “leo"
+};
+obj2.hello(); // hello, leo
+
+what really happens in a method call is that the call expression itself determines the binding of this, also known as the call’s receiver. The expression obj.hello() looks up the hello property of obj and calls it with receiver obj. The expression obj2.hello() looks up the hello property of obj2 which happens to be the same function as obj.hello, but calls it with receiver obj2. in general, calling a method on an object looks up the method and then use the object as the method receiver.
+
+since methods are nothing more than functions called on a particular object, there is no reason why an ordinary function cannot refer to this
+
+but we can do this by 
+function hello( ) {
+	return “hello “ + this.username;
+}
+this can be useful for predefining a function for sharing among multiple objects
+var obj1 = {
+	hello: hello,
+	username: ‘rick'	
+};
+
+var obj2 = {
+	hello: hello,
+	username: ‘leo'
+};
+
+however, a function that uses this is not particularly useful to call as a function rather than a method
+
+a nonmethod function call provides the global object as the receiver, which in this case has no property called name and produce undefined.
+
+in ES5, is wrong
+function hello ( ) {
+	“use strict”;
+	return “hello, “ + this.username;
+}
+hello( ); // wrong
+
+The third use of function is as constructors, just like methods and plain functions, constructors are defined with function:
+
+function User (name, passwordHash) {
+	this.name = name;
+	this.passwordHash = passwordHash;
+}
+
+invoking User with the new operator treats it as a constructor
+
+var u = new User(‘rick’, ‘ksahdkjhkjlshdkhskhs’);
+u.username; // ‘rick’
+
+unlike function calls and method calls, a constructor call passes a brand-new object as the value of this and implicitly return the new object as its result. the constructor function primary role is to initialize the object.
+
+Things to remember
+a. method calls provide the object in which the method property is looked up as their receiver
+b. function calls provide the global object as their receiver. calling method with function call syntax is rarely useful.
+c. constructor are called with new and receive a fresh object as their receiver.
+
+
+Item 19. Get comfortable using high-order function
+
+The so called high-ordered function is that taking the callback function as the argument.
+function compareNumber (x, y) {
+	if (x < y) { return -1; }
+	if (x > y) { return 1; }
+	return 0;
+}
+
+[3,2,6,3,9,0,4].sort(compareNumber);
+
+many common operations on arrays have lovely higher-order abstractions that are worth familiar
+
+var names = [‘fred’, ‘wilma’, ‘pebbles’];
+var upper = [ ];
+for (var i = 0, n = names.length; i < n; i++ ) {
+	upper[i] = names[i].toUpperCase();
+}
+upper;
+
+var upper = names.map(function (name) {
+	return name.toUpperCase();
+});
+upper;
+
+var aIndex = “a”.charCodeAt(0);
+var alphabet = “”;
+for (var i = 0; i < 26; i++) {
+	alphabet += String.fromCharCode(aIndex + i);
+}
+alphabet;
+
+var digits = “”;
+for (var i = 0; i < 10; i++) {
+	digits += i;
+}
+digits;
+
+var random = “”;
+for (var i = 0; i < 8; i++) {
+	random += String.fromCode(Math.floor(Math.random() * 26) + aIndex);
+}
+random;
+
+each example create a different string, but they all share common logic. each loop create a string by concatenating the result of some computation to create each individual segment
+
+function buildString(n, callback) {
+	var result = “”;
+	for (var i = 0; i < n; i++) {
+		result += callback(i);
+	}
+	return result;
+}
+
+var alphabet = buildString(26, function(i) {
+	return String.fromCharCode(aIndex + i);
+});
+alphabet;
+
+var digits = buildString(10, function(i) {
+	return i;
+});
+digits;
+
+if you find you need to optimize the efficiency of the operation, you again only have one place where you need to change anything. 
+
+Learning to reach for a higher-order function when you find yourself repeatedly writing the same patterns leads to more concise code.
+
+Things to remember
+a. higher-order function are functions that take other functions as arguments or return function as their result
+b. familiarize yourself with higher-order function in existing libraries
+c. learn to detect common coding patterns that can be replaced by higher-order functions
+
+
+Item 20. Use call to call methods with custom receiver
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

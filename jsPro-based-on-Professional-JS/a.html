@@ -1,0 +1,281 @@
+<!doctype HTML>
+<html>
+    <head lang="en">
+        <meta charset="utf-8">
+        <title>js pro</title>
+    </head>
+    <body>
+
+
+    <script>
+        /*
+        * five primitive type and one complex type
+        * undefined, null, number, string, boolean
+        *  and object
+        *  typeof operatro used to test the data type
+        * */
+        var message = "some string";
+        console.log(typeof message);
+        console.log(typeof 95);
+        console.log(typeof null);
+
+        var foo;
+        console.log(foo === undefined); // true
+        console.log(typeof (foo === undefined)); // boolean
+
+        var fos = undefined;
+        console.log(fos === undefined); // true
+
+        // any uninitialized varaible get the value of undefined.
+        console.log(null === undefined); // false
+        console.log(null == undefined); // true
+
+        /*
+        * sometimes, we firstly initialize an empty object or variable. any time an object
+        * is expected but is not available, null should be used in its place. This helps to keep the paradigm of
+        * null as an empty object pointer and further differentiates it from undefined.
+        *
+        * */
+
+        var found = true;
+        var lost = false;
+
+        console.log(typeof found);
+
+//        Boolean() casting function is called
+        var message = "hello world";
+        var messageAsBoolean = Boolean(message);
+        console.log(typeof messageAsBoolean);
+
+        /*
+        *
+        * Boolean true                         false
+        * String  any nonempty string          ""
+        * Number  any nonzero number           0, NaN
+        * Object  any object                   null
+        * Undefined  n/a                       undefined
+        *
+        * */
+
+        // under the if statement, it will convert to boolean type automatically
+        var message = "hello world";
+        if (message) {
+//
+            console.log("value is true");
+        }
+
+        /*
+        * number type
+        *
+        * */
+
+        var intNum = 33;
+
+        var octalNum = 060;
+        var hexNum = 0xA;
+
+        var floatNum = 1.1;
+
+        // dividing a number by 0 return NaN, which allows other processing to continue.
+        console.log(isNaN(NaN)); // true
+        console.log(isNaN(10));  // false
+        console.log(isNaN("10")); // false
+        console.log(isNaN("blue")); //true
+        console.log(isNaN(true)); // false
+
+        /*
+        * although typically not done, isNaN() can be applied to objects. in that case, the object
+        * valueOf() method is first called to determine if the returned value can be converted into a number.
+        * If not, the toString() method is called and its returned value is tested as well.
+        *
+        * */
+
+        console.log(Number(true));   // 1
+        console.log(Number(false)); //0
+        console.log(Number(null)); //0
+        console.log(Number(undefined)); //NaN
+        console.log(Number("")); // 0
+        console.log(Number("123 is string")); // NaN
+
+        /*
+        * when applied to objects, the valueOf() method is called and the returned value is converted based on the
+        * previously described rules. if that conversion results in NaN, the toString() method is called and the rules
+        * for converting strings are applied.
+        *
+        * */
+
+        /*
+        * here notice: if the first character isnot a number, the minus sign, or the plus sign, parseInt() will
+        * return NaN. which means the empty string return NaN (unlike with Number(), which retrun 0).
+        * if the first character is a number, plus, or minus, then the conversion goes on to the second character and
+        * continues on until either.
+        *
+        * */
+
+        var num1 = parseInt("1234blue");
+        console.log(num1); // 1234
+
+        console.log(parseInt("10", 2)); // 2
+        console.log(parseInt("10", 8));  // 8
+        console.log(parseInt("10", 10)); // 10
+        console.log(parseInt("10", 16));  // 16
+        console.log(parseInt("a", 16)); // 10
+        console.log(parseInt("a", 2)); // NaN
+
+        console.log(parseInt("11", 8));
+
+        /*
+        * converting to a string
+        *
+        * */
+        var age = 11;
+        var ageAsString = age.toString();
+        console.log(ageAsString); // "11"
+        console.log(typeof ageAsString); // string
+
+        var found = true;
+        var foundAsString = found.toString();
+        console.log(foundAsString); // "true"
+
+        var key = null;
+//        console.log(key.toString()); // error
+        var key1 = undefined;
+//        console.log(key1.toString()); // error
+
+//        also note that the toString() has argument
+        var num = 10;
+        console.log(num.toString()); // "10"
+        console.log(num.toString(2)); // "1010"
+        console.log(num.toString(8)); // "12"
+        console.log(num.toString(10)); //"10"
+        console.log(num.toString(16)); // "a"
+
+        // the second method is String(), also can return null and undefined
+        console.log(String(null)); // null
+        console.log(String(undefined)); // undefined
+
+        // we also can convert a value to a string by adding an empty string ""
+        console.log(typeof (123 + "")); // string
+
+
+        /*------------------------*/
+
+        /*
+        *  Object start out as nonspecific groups of data and functionality. objects are created by using the new operator
+        *  followed by the name of the object type to create.
+        *  instance of Object are not very useful on their own, but the concept are important, all of the properties and methods
+        *  of the Object type are also present on other, more specific objects
+        *
+        *  constructor -- the function that was used to create the object
+        *  hasOwnProperty -- indicate whether the given properties exists on the object instance.
+        *  isPrototypeOf -- determine if the object is a prototype of another object.
+        *  propertyIsEnumerable -- indicate if the given properties can be enumerated using the for-in statement.
+        *  toLocalString() -- retruns a string representation of the object that is appropriate for the local of execution environment
+        *  toString() -- return a string representation of the object
+        *  valueOf() -- returns a string, number or boolean equivalent of the object.
+        * */
+
+        var o = new Object();
+
+        /*
+        * Operator
+        *
+        * */
+
+        // unary operators -- increment/decrement
+
+        var age = 29;
+        var anotherAge = --age + 2;
+        console.log(age); // 28
+        console.log(anotherAge); // 30
+
+        var age = 29;
+        var anotherAge = age-- + 2;
+        console.log(age); // 28
+        console.log(anotherAge); // 31
+
+        /*
+        * when used on a string that is a valid representation of a number, convert to a number and apply the change.
+        * the variable is changed from a string to a number
+        * when used on a string that is not a valid number, the variable's value is set to NaN.
+        * when used on a boolean value that is false, convert to 0, and that is true, convert to 1
+        * when used on a floating-point value, apply the change by adding or substracting 1
+        * when used on an object, call its valueOf() method to get a value to work with, apply the other rules. if the
+        * result is NaN, then call toString() and apply the other rules again.
+        *
+        * */
+        var s1 = "2";
+        var s2 = "z";
+        var b = false;
+        var f = 1.1;
+        var o = {
+            valueOf: function () {
+                return -1;
+            }
+        };
+        s1++; // 3
+        s2++; // NaN
+        b++; // 1
+        f--; // 0.100000
+        o--; // -2
+
+        /*
+        * the logical NOT operator can also be used to convert a value into its Boolean equivalent. By using two NOT
+        * operators in a row, you can effectively simulate the behavior of the Boolean() casting function.
+        * */
+
+        console.log(!!"blue"); // true
+        console.log(!!NaN); // false
+        console.log(!!""); // false
+
+    </script>
+    </body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

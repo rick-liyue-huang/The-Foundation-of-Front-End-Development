@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+    * Object-oriented language typically are identified through their use of classes to create multiple objects that
+    * have the same properties and methods. as mentioned previously, JS has no concept of classes, and therefore objects are
+    * different that in class-based language
+    *
+    * JS define object as an "unordered collection of properties each of which contains a primitive value, object, or function.
+    * each property or method is identified by a name that is mapped to value.
+    * objects are hash table: nothing more than a grouping of name-value pairs where the value may be data or a function.
+    * */
+
+    var person = new Object();
+    person.name = 'rick';
+    person.age = 29;
+
+    person.job = "programmer";
+    person.sayName = function () {
+        console.log(this.name);
+    };
+    person.sayName(); // rick
+
+    /*
+    * object literal became the preferred pattern for create such object
+    * */
+    var person = {
+        name: 'rick',
+        age: 29,
+        job: 'software engineer',
+        sayName: function () {
+            console.log(this.name);
+        }
+    };
+
+    /*
+    * JS describe characteristics of properties through the use of internal-only attribute. These attributes are defined by the
+    * specification for implementation in JS engine
+    *
+    * there are two types of properties: data properties and accessor properties
+    * */
+
+    /*
+    * data properties contain a single location for a data value, values are read from and written to this location
+    * data property has four attribute
+    *
+    * [[configurable]] -- indicates if the property may be redefined by removing the property via delete, changing the attribute
+    * into an accessor property, by default is true
+    *
+    * [[enumerable]] -- indicates if the property will be return in a for-in loop. by default is true
+    *
+    * [[writable]] -- indicate if the property's value can be changed, by default is true
+    *
+    * [[value]] -- contain the actual data value for the property, this is the location from which the property's value
+    * is read and the location to which new value are saved.
+    *
+    * when a property is explicitly added to an object as in the previous examples, configurable, enumerable and writable are
+    * all set to be true, while the [[value]] attribute is set to the assigned value.
+    * */
+
+    var person = {
+        name: 'leo'
+    };
+
+    /*
+    * to change any of the default property attributes, you must use Object.defineProperty() method. This method accepts
+    * three arguments
+    * */
+
+    var person = {};
+    Object.defineProperty(person, 'name', {
+        writable: false,
+        value: 'rick'
+    });
+
+    console.log(person.name); //rick
+    person.name = 'claire';
+    console.log(person.name); // rick
+
+    // remember: once a property has been defined as nonconfigurable, it cannot become configurable again
+    // in most cases, we likely won't need the powerful options provided by Object.defineProperty()
+
+    /*
+    * accessor properties do not contain a data value. instead, they contain a combination of a getter function and setter function.
+    * when an accessor property is read from, the getter function is called, and its the function's responsibility to return a valid
+    * value.when an accessor property is written to, a function is called with the new value.
+    *
+    * it also contains four attributes: configurable, enumerable,
+    * [[get]] -- the function to call when the property is read from, default is undefined
+    * [[set]] -- the function to call when the property is written to, default is undefined.
+    * */
+
+    var book = {
+        _year: 2004,
+        edition: 1
+    };
+
+//    console.log(book._year);
+    Object.defineProperty(book, "year", {
+        get: function () {
+            return this._year;
+        },
+        set: function (newValue) {
+            if (newValue > 2004) {
+                this._year = newValue;
+                this.edition += newValue - 2004;
+            }
+        }
+    });
+
+    book.year = 2005;
+//    console.log(book._year); // 2005
+    console.log(book.edition); // 2
+
+    
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

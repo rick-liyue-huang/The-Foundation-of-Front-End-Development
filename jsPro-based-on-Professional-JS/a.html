@@ -228,6 +228,31 @@
         console.log(!!NaN); // false
         console.log(!!""); // false
 
+        // there are no block-level variables in JS, so a variable defined inside the loop is accessible outside the loop as well
+        var count = 10;
+        for (var i = 0; i < count; i++) {
+//            console.log(i);
+        }
+        console.log(i); // 10
+
+        var num = 0;
+        for (var i = 1; i < 10; i++) {
+            if (i % 5 == 0) {
+                break;
+            }
+            num++;
+        }
+        console.log(num); // 4
+
+        var num = 0;
+        for (var i = 0; i < 10; i++) {
+            if (i % 5 == 0) {
+                continue;
+            }
+            num++;
+        }
+        console.log(num);
+
     </script>
     </body>
 

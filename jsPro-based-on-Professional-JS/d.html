@@ -118,8 +118,413 @@
 //    console.log(book._year); // 2005
     console.log(book.edition); // 2
 
-    
+    // defining multiple properties
 
+    var book = {};
+
+    Object.defineProperties(book, {
+        _year: {
+            value: 2004
+        },
+        edition: {
+            value: 1
+        },
+        year: {
+            get: function () {
+                return this._year;
+            },
+            set: function (newValue) {
+                if (newValue > 2004) {
+                    this._year = newValue;
+                    this.edition += newValue - 2004;
+                }
+            }
+        }
+    });
+
+    // the uppon code defines two data properties and an accessor property called year
+
+    /*
+    * its also possible to retrieve teh property descriptor for a given property by using teh JS Object.getOwnPropertyDescriptor().
+    * it receive two arguments: the object name and the property name.
+    * */
+
+    var descriptor = Object.getOwnPropertyDescriptor(book, "_year");
+    console.log(descriptor.value); //2004
+    console.log(descriptor.configurable); // false
+    console.log(typeof descriptor.get); // undefined
+
+    var descriptor = Object.getOwnPropertyDescriptor(book, "year");
+    console.log(descriptor.value); // undefined
+    console.log(descriptor.enumerable); //false
+    console.log(typeof descriptor.get); // function
+
+    /*
+    * Object creation
+    *
+    * The Factory Pattern -- in JS developers create functions to encapsulate the creation of objects with specific interface
+    * */
+
+    function createPerson(name, age, job) {
+        var o = new Object();
+        o.name = name;
+        o.age = age;
+        o.job = job;
+        o.sayName = function () {
+            console.log(this.name);
+        };
+        return o;
+    }
+
+    var person1 = createPerson('rick', 29, 'software engineer');
+    var person2 = createPerson('leo', 36, 'doctor');
+
+    // the upon factory pattern did not address the issue of object identification -- what type of object an object is
+
+    /*
+    * constructor pattern
+    * */
+
+    function Person(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.sayName = function () {
+            console.log(this.name);
+        };
+    }
+    var person1 = new Person('leo', 36, 'software engineer');
+    var person2 = new Person('rick', 23, 'doctor');
+
+    /*
+    * there is no object being created explicitly,
+    * the properties and methods are assigned directly onto the this object
+    * there is no return statement
+    *
+    * constructor function always begin with an uppercase letter.
+    *
+    * to create a new instance of Person, use the new operator, calling a constructor in this manner essentially causes the following four
+    * steps
+    * 1. create a new object
+    * 2. assign the this value of the constructor to the new object, so this points to the new object
+    * 3. execute the code inside the constructor, add properties to the new object
+    * 4. return the new object
+    * */
+
+    // each of these objects has a constructor property that points back to Person
+    console.log(person1.constructor === Person); // true
+
+    console.log(person1 instanceof Object); // true
+    console.log(person1 instanceof Person); // true
+
+    /*
+    * Constructor as Function
+    *
+    * */
+    // use as a constructor
+    var person = new Person('claire', 23, 'student');
+//    person.sayName(); // claire
+
+    // call as a function
+//    Person('claire', 10, 'student');
+//    window.sayName(); // claire
+
+    // call in the scope of another object
+//    var o = new Object();
+//    Person.call(o, 'claire', 10, 'student');
+//    o.sayName(); // claire
+
+    /*
+    * prototype pattern
+    *
+    * whenever a function is created, its prototype property is also created according to a specific set of rules.
+    * by default, all prototype automatically get a property called constructor that points back to the function on which it is a
+    * property. Person.prototype.constructor == Person. Depending on the constructor, other property and methods may be added to the
+    * prototype.
+    *
+    * when defining a custom constructor, the prototype gets the constructor property only by default; all other methods are inherited from
+    * Object. each time the constructor is called to create a new instance, that instance has an internal pointer to the constructor's
+    * prototype. this internal pointer is __proto__
+    *
+    * we can say: Person.prototype points to the prototype object but Person.prototype.constructor points back to Person. the prototype
+    * contains the constructor property and the other properties that were added. each instance of Person, person1 and person2 has internal
+    * properties that point back to Person.prototype only.each has no direct relationship with the constructor. even though [[prototype]] is
+    * not accessible in all implementations, the isPrototypeOf() method can be used to determine if this relationship exists between objects.
+    * isPrototypeOf() returns true if [[prototype]] points to the prototype on which the method is being called.
+    * */
+    console.log(Person.prototype.isPrototypeOf(person1)); // true
+    console.log(Person.prototype.isPrototypeOf(person2)); // true
+
+    // the prototype's isPrototypeOf() method is called on both person1 and person2. since both instance have a link to Person.prototype.
+
+    console.log(Object.getPrototypeOf(person1) === Person.prototype); // true
+    // JS5 adds a new method called Object.getPrototypeOf()
+
+    /*
+    * whenever a property is accessed for reading on an object, a search is started to find a property with that name. the search begins
+    * on the object instance itself. if a property with the given name is found on the instance, then that value is returned, if the property is
+    * not found, then the search continues up the pointer to the prototype, and the prototype is searched for a property with the same
+    * name, if the property is found on the prototype, then that value is returned. so when person1.sayName() is called, a two-step process happens
+    * . this is how prototypes are used to share properties and methods among multiple objects instance.
+    * The instance also can overwrite the prototype's property by the same name.
+    *
+    * */
+    function Person() {
+
+    }
+    Person.prototype.name = 'leo';
+    var person1 = new Person();
+    person1.name = 'rick';
+    console.log(person1.name); // rick
+    console.log(person2.name); // leo
+    console.log(person1.hasOwnProperty('name')); // true
+    console.log(person2.hasOwnProperty('name')); // false
+
+    delete person1.name; // delete the instance property of name
+    console.log(person1.name); // leo
+    console.log(person1.hasOwnProperty('name')); // false
+
+    // we can confirm a property is its prototype
+    function hasPrototypeProperty(object, name) {
+        return !object.hasOwnProperty(name) && (name in object);
+    }
+
+    /*
+    * alternate prototype syntax
+    *
+    *
+    * */
+
+    function Person() {
+    }
+    Person.prototype = {
+//        constructor: Person,
+        name: 'rick',
+        age: 36,
+        job: 'software engineer',
+        sayName: function () {
+            console.log(this.name)
+        }
+    };
+
+    var friend = new Person();
+    console.log(friend instanceof Object); // true
+    console.log(friend instanceof Person); // true
+    console.log(friend.constructor == Person); // false
+    console.log(friend.constructor == Object); // true
+
+    function Person() {
+    }
+    Person.prototype = {
+        constructor: Person,
+        name: 'rick',
+        age: 36,
+        job: 'software engineer',
+        sayName: function () {
+            console.log(this.name)
+        }
+    };
+
+    var friend = new Person();
+    console.log(friend instanceof Object); // true
+    console.log(friend instanceof Person); // true
+    console.log(friend.constructor == Person); // true
+    console.log(friend.constructor == Object); // false
+
+
+    /*
+    * dynamic nature of prototype
+    * */
+//    var boy = new Pe();
+//    Pe.prototype.sayHi = function () {
+//        console.log('hi');
+//    };
+//    boy.sayHi(); // hi
+
+    // since the link between the instance and prototype is simply a pointer, not a copy, the search finds the new sayHi property
+    // on the prototype and returns the function stored there.
+
+    /*
+    * although properties and methods may be added to the prototype at any time, and they are reflected instantly by all object instances,
+    * you cannot overwrite the entire prototype and expect the same behavior.
+    * */
+
+    function Persons() {
+    }
+    var girl = new Persons();
+
+    // note: redefine a new prototype
+    Persons.prototype = {
+        constructor: Persons,
+        name: 'rick',
+        age: 29,
+        job: 'software engineer',
+        sayName: function () {
+            console.log(this.name)
+        }
+    };
+//    girl.sayName(); // error
+
+    // here a new instance of Persons is created before the prototype object is overwritten. so cause an error.
+
+    /*
+    * native object prototype
+    * */
+
+    console.log(typeof Array.prototype.sort); // function
+    console.log(typeof String.prototype.substr);  // function
+
+    // also can add method on the native object prototype
+    String.prototype.startWith = function (text) {
+        return this.indexOf(text) == 0;
+    };
+    var msg = 'hello world';
+    console.log(msg.startsWith('hello')); //true
+
+    /*
+    * Combination Constructor and Prototype Pattern
+    * The constructor pattern defines instance properties, whereas the prototype pattern defines methods and shared properties
+    * */
+
+    function Person(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.friends = ['rick', 'leo'];
+    }
+    Person.prototype = {
+        constructor: Person,
+        sayName: function () {
+            console.log(this.name);
+        }
+    };
+
+    var p1 = new Person('claire', 16, 'software engineer');
+    var p2 = new Person('danel', 26, 'student');
+
+    p1.friends.push('marli');
+    console.log(p1.friends); // rick leo marli
+    console.log(p2.friends); // rick leo
+    console.log(p1.friends === p2.friends); // false
+    console.log(p1.sayName === p2.sayName); // true
+
+
+    /*
+    * dynamic prototype pattern
+    * */
+
+    function P(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+
+        if (typeof this.sayName != 'function') {
+            P.prototype.sayName = function () {
+                console.log(this.name);
+            };
+        }
+    }
+
+    var f = new P('leo', 36, 'student');
+    f.sayName(); // leo
+
+
+    /*
+    * Parasitic Constructor Pattern
+    * */
+    function Pe(name, age, job) {
+        var o = new Object();
+        o.name = name;
+        o.age = age;
+        o.job = job;
+        o.sayName = function () {
+            console.log(this.name);
+        };
+        return o;
+    }
+
+    var fr = new Pe('rick', 36, 'programmer');
+    fr.sayName(); // rick
+
+    // this is exactly the same as the factory pattern except that the function is called as a constructor, using the new operator
+
+    /*
+    * parasitic constructor pattern may create a special array that has an extra method. since you donnot have direct access
+    * to the Array constructor
+    * */
+
+    function SpecialArray() {
+
+        // create the array
+        var values = new Array();
+
+        // add the values
+        values.push.apply(values, arguments);
+
+        // assign the method
+        values.toPipedString = function () {
+            return this.join("|");
+        };
+
+        // return it
+        return values;
+    }
+
+    var colors = new SpecialArray('red', 'blue', 'green');
+    console.log(colors.toPipedString()); // red|blue|green
+
+
+    /*
+    * Durable constructor pattern
+    * */
+    function Person(name, age, job){
+//create the object to return
+    var o = new Object();
+//optional: define private variables/functions here
+//attach methods
+    o.sayName = function(){
+        alert(name); };
+    //return the object
+    return o;
+    }
+
+
+    /*
+    * JS only has implementation inheritance, by prototype chain
+    * */
+    function SuperType() {
+        this.proterty = true;
+    }
+
+    SuperType.prototype.getSuperValue = function () {
+        return this.property;
+    };
+    function SubType() {
+        this.subproperty = false;
+    }
+
+    // inherit from SuperType
+    SubType.prototype = new SuperType();
+
+    SubType.prototype.getSubValue = function () {
+        return this.subproperty;
+    };
+    var instance = new SubType();
+    console.log(instance.getSuperValue()); // true
+
+    // all reference types inherit from Object by default
+    console.log(instance instanceof Object); // true
+    console.log(instance instanceof SuperType); //true
+    console.log(instance instanceof SubType); //true
+
+    console.log(Object.prototype.isPrototypeOf(instance)); //true
+    console.log(SuperType.prototype.isPrototypeOf(instance)); //true
+    console.log(SubType.prototype.isPrototypeOf(instance)); //true
+
+
+    /*
+    * the best pattern -- parasitic combination inheritance
+    * */
 </script>
 </body>
 </html>

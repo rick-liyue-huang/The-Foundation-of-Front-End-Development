@@ -53,11 +53,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="d.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="d.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/d.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
+            <state relative-caret-position="9450">
               <caret line="525" column="59" selection-start-line="525" selection-start-column="59" selection-end-line="525" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="e.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/e.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="36">
+              <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="f.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/f.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -79,6 +99,8 @@
         <option value="$PROJECT_DIR$/b.html" />
         <option value="$PROJECT_DIR$/c.html" />
         <option value="$PROJECT_DIR$/d.html" />
+        <option value="$PROJECT_DIR$/e.html" />
+        <option value="$PROJECT_DIR$/f.html" />
       </list>
     </option>
   </component>
@@ -89,8 +111,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="400" />
-    <option name="y" value="622" />
+    <option name="x" value="132" />
+    <option name="y" value="333" />
     <option name="width" value="1440" />
     <option name="height" value="873" />
   </component>
@@ -120,6 +142,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -140,7 +163,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -225,15 +247,16 @@
       <workItem from="1479730028768" duration="1509000" />
       <workItem from="1479767138085" duration="15876000" />
       <workItem from="1479793408793" duration="12828000" />
-      <workItem from="1479877572246" duration="13459000" />
+      <workItem from="1479877572246" duration="16662000" />
+      <workItem from="1479970059457" duration="5505000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43672000" />
+    <option name="totallyTimeSpent" value="52380000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="400" y="622" width="1440" height="873" extended-state="0" />
+    <frame x="132" y="333" width="1440" height="873" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08541667" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -296,6 +319,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/d.html">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9450">
+          <caret line="525" column="59" selection-start-line="525" selection-start-column="59" selection-end-line="525" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/a.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4554">
+          <caret line="253" column="25" selection-start-line="253" selection-start-column="25" selection-end-line="253" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/b.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2844">
+          <caret line="158" column="33" selection-start-line="158" selection-start-column="33" selection-end-line="158" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/c.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10584">
+          <caret line="588" column="0" selection-start-line="588" selection-start-column="0" selection-end-line="588" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d.html">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
@@ -360,8 +423,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/d.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
+        <state relative-caret-position="9450">
           <caret line="525" column="59" selection-start-line="525" selection-start-column="59" selection-end-line="525" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/e.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/f.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
           <folding />
         </state>
       </provider>

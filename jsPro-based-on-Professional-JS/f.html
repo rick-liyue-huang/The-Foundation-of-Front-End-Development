@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    /*
+    * the BOM -- browser object model
+    * 1. understanding the window object, the core of the BOM
+    * 2. controlling window, frames, and pop-ups
+    * 3. page information from the location object
+    * 4. using the navigator object to learn about the browser
+    * */
+
+    // window object, which represents an instance of the browser.
+    // the window object serves a dual purpose in browsers, acting as the JS interface to the browser window and the JS Global object.
+    // This means that every object, variable, and function defined in a web page uses window as its Global object and has access to
+    // methods like parseInt()
+
+    /*
+    * since the window object doubles as JS Global object, all variables and functions declared globally become properties and methods
+    * of the window object.
+    * */
+    var age = 29;
+    function sayAge() {
+        console.log(this.age);
+    }
+    console.log(window.age); // 29
+    sayAge(); // 29
+    window.sayAge(); // 29
+
+    // window position: screenLeft and screenTop properties that indicate the window's location in relationship to
+    // the left and top of the screen.
+    var leftPos = (typeof window.screenLeft == "number") ?
+            window.screenLeft : window.screenX;
+    var topPos = (typeof window.screenTop == "number") ?
+            window.screenTop : window.screenY;
+
+    /*
+    * this example uses the ternary operator to determine if the screenLeft and screenTop property exist.
+    * if they do (which is the case in IE, safari, opera, and chrome), they are used, if they do not exist (in firefox)
+    *  screenX and screenY are used.
+    * */
+
+    // move the window to the upper-left coordinate
+    window.moveTo(0, 0);
+
+    // move the window down by 100 pixels
+    window.moveBy(0, 100);
+    // move the window to position (200, 300)
+    window.moveTo(200, 300);
+
+    // move the window left by 50 pixel
+    window.moveBy(-50, 0);
+
+    /*
+    * window size
+    * window size includes innerWidth, innerHeight, outerWidth and outerHeight
+    * innerHeight and innerWidth indicate the size of the page viewport inside the browser window (minus border and toolbars)
+    *
+    * */
+//    document.documentElement.clientHeight and document.documentElement.clientWidth provide the width and height
+//    provide the width and height of the page viewport in IE, firefox, safari, opera and chrome.
+    // in IE 6, document.body.clientWidth.
+    // it is possible to get the dimensions of the page viewport.
+    var pageWidth = window.innerWidth,
+        pageHeight = window.innerHeight;
+
+    if (typeof pageHeight != "number") {
+        if (document.compatMode == "CSS1Compat") {
+            pageWidth = document.documentElement.clientWidth;
+            pageHeight = document.documentElement.clientHeight;
+        } else {
+            paegWidth = document.body.clientWidth;
+            pageHeight = document.body.clientHeight;
+        }
+    }
+
+    // resizeTo() and resizeBy() methods
+    window.resizeTo(100, 100);
+
+    // resize to 200 150
+    window.resizeBy(200, 150);
+
+    // navigating and opening window
+    window.open(); //can be used both to navigate to particular URL and to open a new browser window.
+    // it has four arguments: the URL to load, the window target, a string of features and Boolean value indicating
+    // that the new page should take the place of the currently loaded page in the browser histories.
+    window.open("http://www.wrox.com", "topFrame");
+
+    
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

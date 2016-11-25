@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="bd user disabled"></div>
+
+<script>
+    /*
+    * Node.Element_node(1)
+    * node.attribute_node(2)
+    * node.text_node(3)
+    * node.document_node(9)
+    * */
+
+    if (someNode.nodeType == 1) {
+        value = someNode.nodeName; // will be the element's tag name
+    }
+
+    // node relationship
+    if (someNode.nextSibling === null) {
+        console.log('last node in the parents childnodes list');
+    } else if (someNode.previousSibling === null) {
+        console.log("first onde in the parents childnodes list");
+    }
+
+    //manipulate nodes
+//    var returnedNode = someNode.appendChild(newNode);
+//    console.log(returnedNode == newNode); // true
+//    console.log(someNode.lastChild == newNode); // true
+
+    // insert as last last child
+    returnNode = someNode.insertBefore(newNode, null);
+    console.log(newNode == someNode.lastChild); // true
+
+    // insert as the new first child
+    returnNode = someNode.insertBefore(newNode, someNode.firstChild);
+    console.log(returnNode == newNode); // true
+    console.log(newNode == someNode.firstChild); // true
+
+    // inset before last child
+    returnNode = someNode.insertBefore(newNode, someNode.lastChild);
+    console.log(newNode == someNode.childNodes[someNode.childNodes.length - 2]); // true
+
+    // replace first child
+    var returnedNode = someNode.replaceChild(newNode, someNode.firstChild);
+
+    // replace last child
+    var returnedNode = someNode.replaceChild(newNode, someNode.lastChild);
+
+    // remove first child
+    var formerFirstChild = someNode.removeChild(someNode.firstChild);
+    var formerLastChild = someNode.removeChild(someNode.lastChild);
+
+    // locating elements
+    // dom extension
+//    at the core of Selectors API level 1 are two methods: querySelector() and querySelectorAll().
+    // get the body element
+    var body = document.querySelector("body");
+
+    // get the element with the ID 'myDiv'
+    var myDiv = document.querySelector("#myDiv");
+
+    // get first element with a class of "selected"
+    var selected = document.querySelector(".selected");
+
+    // get first image with class of "button"
+    var img = document.querySelector("img.button");
+
+    // querySelectorAll() accepts the same single argument as querySelector() - the CSS query, it will return a nodeList
+
+    // get all <em> elements in a <div>
+    var ems = document.getElementById("myDiv").querySelectorAll("em");
+
+    // get all elements with class of "selected"
+    var selecteds = document.querySelectorAll(".selected");
+
+    // get all <strong> elemnets inside of <p> elements
+    var strongs = document.querySelectorAll("p strong"); // !!!
+
+    var i, len, strong;
+    for (i = 0, len = strongs.length; i++) {
+        strong = strongs[i]; // or strongs.item[i]
+        strong.className = "important";
+    }
+
+//    the matchesSelector() method will return true or false
+    if (document.body.matchesSelector("body.page1")) {
+        // true
+    }
+
+    // element traversal
+//    childElementCount, firstElementChild, lastElementChild, previousElementSibling, nextElementSibling
+
+    // HTML5
+
+    // Class-related additions
+//    getElementsByClassName() method
+    // get all elements with a class containing "username" and "current",
+    var allCurrentUsernames = document.getElementsByClassName("username current");
+
+    // get all elements with a class of "selected" that exist in myDiv's subtree
+    var selected = document.getElementById("myDiv").getElementsByClassName('selected');
+
+    // HTML5 introduce a way to manipulate class names in a much simpler and safer manner through the addition of the
+    //classList property for all elements.
+
+    // remove the "disabled" class
+    div.classList.remove("disabled");
+
+    // add the "current" class
+    div.classList.add("current");
+
+    // toggle the "user" class
+    div.classList.toggle("user");
+
+    // figure out what's on the element now
+    if (div.classList.contains("bd") && !div.classList.contains("disabled")) {
+        // do something
+    }
+    for (var i = 0, len = div.classList.length; i < len; i++) {
+//        doSomething(div.classList[i]);
+    }
+
+    // Focus Management
+    // HTML5 adds functionality to aid with focus management in DOM.
+    var button = document.getElementById('myButton');
+    button.focus();
+    console.log(document.activeElement === button); // true
+    // it will get active element by focus
+    // by default, document.activeElement is set to document.body when the document is first loaded.
+    var button = document.getElementById("myButton");
+    button.focus();
+    console.log(document.hasFocus()); // true
+
+    // HTML5 changes to HTMLDocument
+    // the readyState Property, including loading and complete state
+    if (document.readyState == "complete") { // means that the document is finished loading
+        // do something
+    }
+
+    // Compatibility Mode
+    if (document.compatMode == "CSS1Compat") {
+        console.log("standards mode");
+    } else {
+        console.log("quirks mode");
+    }
+
+    // head Property
+    var head = document.head || document.getElementsByTagName("head")[0];
+
+    // character set properties
+    console.log(document.charset); // "utf-8"
+    document.charset = "utf-8";
+
+    // markup insertion
+    // innerHTML property
+    var div;
+    div.innerHTML = "hello & welcome, <b> \"reader\"!</b>";
+
+
+    // scrollIntoView() method
+
+    // make sure this element is visible
+    document.forms[0].scrollIntoView();
+
+//    scrollByLines(lineCount),  scrollByPages(paegCount)
+
+
+    // DOM --- accessing element styles
+    var myDiv = document.getElementById('myDiv');
+    myDiv.style.background = "black";
+    myDiv.style.width = "100px";
+    myDiv.style.height = "200px";
+    myDiv.style.border = "1px solid red";
+
+    // some Dimensions
+
+    /*
+    * offsetHeight -- the amount of vertical space, in pixels, taken up by the element, including its height, the height
+    * of a horizontal scrollbar, the top border height and bottom border height
+    * offsetLeft -- the number of pixels between the element's outside left border and the containing element's inside left border
+    * offsetWidth -- the amount of horizontal space taken up by the element, including its width, the width of a vertical scrollbar,
+    * the left border width and the right border width
+    *
+    * offsetTop -- the number of pixels between the element's outside top border and the containning elements inside top border.
+    *
+    * the offsetLeft and offsetTop properties are in relationship to the containing element, which is stored in the offsetParent property.
+    *
+    *
+    * */
+
+    /*
+    * the client dimension of an element comprise the space occupied by the element's content and its padding.
+    * client dimension does not include border.
+    * */
+
+    function getViewport() {
+        if (document.compatMode == "BackCompat") {
+            return {
+                width: document.body.clientWidth,
+                height: document.body.clientHeight
+            };
+        } else {
+            return {
+                width: document.documentElement.clientWidth,
+                height: document.documentElement.clientHeight
+            };
+        }
+    }
+
+    /*
+    * scroll dimension
+    * scrollHeight -- the total height of the content if there were no scrollbars present
+    * scrollWidth -- the total width of the content if there were no scrollbars present
+    * scrollTop -- the number of pixels that are hidden in the top of the content area. this property can
+    * be set to change the scroll position of the element
+    * scrollLeft -- the number of pixels that are hidden to the left of the content area. this property can be set to change the scroll
+    * positon of the element.
+    * */
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

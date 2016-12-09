@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // 判断对象有某个属性
+//    if (s1 in o) {}
+//
+//    var has = false;
+//    for (var k in o) {
+//        if (k == s1) {
+//            has = true;
+//            break;
+//        }
+//    }
+
+    // 浏览器能力检测
+//    if (document.getElementsByClassName) {
+//        // has this method
+//    } else {
+//        // no this method
+//    }
+//
+//    if (o.age) {
+//
+//    }
+
+    // 如果希望使用s3 来判断 对象 o 是否有该属性
+//    if (o[s3]) {
+//
+//    }
+
+    // 鸭子辩型
+
+    // 条件运算符
+    // > == === >= <= != !===
+
+    // 创建对象可以使用 new 与 直接量
+    // 构造函数是可以复用的
+
+    // 值类型 和 引用类型
+
+    // 按值传递： 将变量的数据完整的拷贝一份，复制给新的变量
+    // 引用类型表示变量存储的是数据的地址，引用。 内存中只有一个数据对象，是将o中地址复制一份，复制给o2.
+    // 这样就是指向同一个对象。因此一个改变影响到另外一个对象。
+    // 基本类型就是将这些数据复制一份。因此这是分开的两个不同的东西，他们之间不再互相影响
+    // 引用类型只是拷贝地址，因此都是指向同一个地址。因此更改一个影响另外一个。
+
+    // 注意基本类型不能完全储存一个数据，但是引用类型可以完全储存数据，因为只是储存地址
+
+    var o3 = {
+        n: [1, 2, 3],
+        m: {n: 123}
+    };
+
+    // 如果传入num 就打印num值， 如果没有传入，就打印没有参数
+//    function fn(num) {
+//        if (num) {
+//            console.log(num);
+//        } else {
+//            console.log('no num');
+//        }
+//    }
+//
+//    fn();
+
+    // 短路的形式 --
+    var num = num || "no num";
+    console.log(num);
+
+    //||
+    // 如果第一个为真， 就返回第一个表达式， 否则返回第二个表达式
+
+    // &&
+    // 如果第一个为假，就返回第一个表达式，否则就返回第二个表达式
+
+    // 表达式1 && 表达式 2 && 表达式1
+    // 先验证是否满足表达式1，如果满足就进行表达式2的验证， 如果验证失败返回 假， 验证成功就返回 真
+
+
+    // delete 删除
+    // boolean delete 数据
+
+    // 用法：
+    /*
+    * 1. 删除数组中一个元素
+    * 2. 删除对象的属性或者方法
+    * 3. 删除一个没有用var 声明 的变量
+    * */
+
+    var arr = [1, 2, 3, 4];
+    console.log(arr);
+    console.log(arr.length);
+
+    var isTrue = delete arr[2];
+    console.log(arr);
+    console.log(arr.length);
+    console.log(arr[2]); // undefined
+
+    // delete 只是删除元素的内容，但是不会删除元素本身。 只是将元素变为 undefined
+
+    var o ={name: 'leo'};
+    var isTrue = delete o.name;
+    console.log(o.name); // undefined
+
+    console.log(o);
+
+    //3
+    var n = 1;
+    m = 2;
+    delete n;
+    delete m;
+    console.log(delete n); // fasle
+    console.log(delete m); // true
+    console.log(n);
+//    console.log(m); // cause an error, m is not defined
+
+    // 报错会结束代码的运行。
+
+    // try catch finally(无论是否异常都执行)
+
+    // 自己操作异常，
+    // throw new Error(错误消息)
+
+    /*
+    * 函数的创建
+    * 1. 声明函数
+    * 2. 函数表达式
+    * 3.
+    * */
+
+    /*
+    * 函数声明 hoisting, 预解析， 首先将所有的声明都读一遍， 包括变量的声明
+    * */
+
+    /*
+    * 函数字面量， lambda 表达式， 函数作为 表达式存在， 凡是将数据和运算符连接起来，都叫做表达式
+    * */
+    
+//    fn = function () {
+//    } // 将报错， 因为这里面 fn 还没有被声明，因此
+
+    var a; // 如果在这里面设置断点， 则在浏览器中，设置断点，将不会停留在这里。 这是因为运行不会从声明开始
+     if (true) {
+         function f() {
+             console.log(123);
+         }
+     }
+     f();
+     // 这里面f()只是提升到前面并不执行，
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

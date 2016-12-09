@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<br><br><br>
+<script>
+
+    /*
+    * 传统的面向过程
+    * */
+    var p = document.createElement('p');
+    var txt = document.createTextNode('....');
+    p.appendChild(txt);
+
+    /*
+    * 现在的面向对象
+    * 由执行者 变为 调用者
+    * */
+//    $('<p>this is a paragraph</p>'); //
+
+    // 函数就是反复执行的代码块。
+
+    function tag(tag) {
+        return document.getElementsByTagName(tag);
+    }
+
+    function id(id) {
+        return document.getElementById(id);
+    }
+    var link = id('link');
+//    link.style.backgroundColor = 'red';
+
+    // 因此封装到 对象中
+    var rick1 = {
+        tag: function (tagName) {
+            return document.getElementsByTagName(tagName);
+        },
+        id: function (idName) {
+            return document.getElementById(idName);
+        }
+    };
+
+    rick1.tag('body')[0].style.border = '10px solid red';
+
+    // 形参 就是一个占位符号
+
+
+    // 对象的组织结构， 分类方法, 变成一个模块。防止命名冲突。
+    var rick2 ={
+        // 获取元素
+        getElem: {
+            tag: function () {
+            },
+            id: function () {
+            }
+        },
+        css: {
+            addStyle: function () {
+            },
+            removeClass: function () {
+            },
+            toggle: function () {
+            }
+        }
+    };
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

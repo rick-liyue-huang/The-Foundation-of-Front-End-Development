@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    var name = 'rick';
+    var age = 23;
+    var sex = 'male';
+
+    var p = {
+        'name': 'rick',
+        'age': 34,
+        'sex': 'male',
+        'sayhello': function () {
+            console.log('hello');
+        }
+    };
+
+    p['sayhello']();
+
+    //使用json 对象的方法有一个缺点
+    // 无法复用
+
+    // 因此使用构造函数来进行
+    var Person = function(name, age, sex) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.sayHello = function () {
+            console.log('hello');
+        }
+    };
+    var p1 = new Person();
+    var p2 = new Person();
+    console.log(p1 === p2);
+
+
+//    写一个函数打印一段文字
+    function msg(text) {
+        console.log(text);
+    }
+    var Student = function (name, scores) {
+        this.name = name;
+        this.scores = scores;
+        this.say = function () {
+            console.log('hello, this is ' + this.name + ' my score is ' +
+            this.scores.math + ' , ' + this.scores.reading);
+        }
+    };
+
+    var p3 = new Student('leo', {
+        math: 98,
+        writing: 69,
+        reading: 90
+    });
+    p3.say();
+
+    // 函数里面都有一个属性，prototype， 由该函数创建的对象，会自动的连接到该属性上
+    function Fn() {
+
+    }
+    Fn.prototype.num = 123;
+    var f = new Fn();
+    console.log(f.num); // 123
+    // 当访问对象某一个属性的时候，首先会在当前对象中查找，如果没有就会在构造方法的定义中查找，如果还没有就去其原型中查找。
+
+    function Fn2(name) {
+        this.name = name;
+    }
+    Fn2.prototype.sayHello = function () {
+        console.log('hello');
+    };
+
+    //几个概念 --
+    /*
+    * 对象中有一个属性 叫做 __proto__
+    * 通过调试可以发现 对象的__proto__与创建它的函数的prototype是一个东西
+    *
+    * __proto__ 是非标准的属性， 所以尽量不要用它。
+    *
+    * 原型： F.prototype 原型属性，是构造函数的F 的原型属性
+    * o.__proto__ 原型对象 是对象o 的原型对象
+    *
+    * 因此， 在访问一个对象属性的时候，首先在当前对象中查找，如果没有就在其原型对象中查找。
+    * */
+
+
+
+
+</script>
+</body>
+</html>

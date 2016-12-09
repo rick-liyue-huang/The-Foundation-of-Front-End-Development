@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    * 面向对象的特征： 封装性， 继承性， 多样性
+    * 封装性： 打包整个函数，不让别人看到内部，可以重复使用， 就是将复杂包裹起来，让简单的东西预留在外面
+    * 继承性： 自己没有别人有，拿过来就行, 让别人称为自己的
+    *  在JS 中，有两种继承模型： 原型继承 和 组合继承
+    *  1.
+    *  原型继承： 如果需要让一个对象有某一个行为（属性， 行为），那么可以考虑将这个行为加到原型对象中，那么这个对象就继承自原型对象，
+    *  从而获得该行为
+    *
+    *  2.
+    *  组合继承： 就是将其他的对象成员加入到自己的身上
+    * */
+    var o1 = {name: 'leo', age: 19, gender: 'male'};
+    var o2 = {score: {
+        math: 60,
+        chinese: 50
+    }};
+    // 让o2 继承自o1, 也就是 o1的成员加入到o2
+//    for (var k in o1) {
+//        o2[k] = o1[k];
+//    }
+
+    // 由于 for in 循环中的对象可以随意替换，因此o2可以继承自任意的对象
+    // 封装， 这里希望o2可以继承自任意的对象，所以为了简化继承的代码， 给o2提供一个方法，叫做extend
+     o2.extend = function (obj) {
+        for (var k in obj) {
+            this[k] = obj[k];
+        }
+    };
+
+    o2.extend(o1);
+
+    o2.extend({
+        id: function (id) {
+
+        },
+        tag: function (tag) {
+
+        },
+        showError: function (msg) {
+            throw new Error(msg);
+        }
+    });
+
+
+
+    // 回到 原型继承：
+    /*
+    * 对象继承自其原型对象， 所谓的原型式继承就是在对象的原型对象中加东西即可， 就是通过组合式继承的方法将成员加入到原型中
+    * */
+
+    // 1. 利用对象的动态特性添加成员
+    var o = {};
+    o.name = 'rick';
+    var Person = function () {};
+    Person.prototype.sayHello = function () {
+        console.log('hahah');
+    };
+    // 此时原型对象是对象， 可以利用动态特性添加成员，添加的成员都会被构造函数创建的对象继承
+
+
+    // 2. 利用覆盖原型对象, 注意一定要给新的原型对象添加一个constructor属性
+
+    function Person1() {}
+    Person1.prototype = {
+        constructor: Person1,
+        sayGoodBy: function () {},
+        sayName: function () {}
+    };
+    var p1 = new Person1();
+    console.log(p1 instanceof Person1); // true
+    console.log(p1.constructor.name); // Object -> Person1
+
+    // 3. 利用组合式继承添加原型成员
+    // 对象.prototype.extend(obj);
+
+
+
+    /*
+    * 经典的继承方法 --- 在实际的开发中，如果希望获得一个继承自对象o 的对象， 可以使用Object.create 方法，这是ES5提供的
+    * Object.create(作为原型对象的对象)
+    *
+    * 缺点就是 类型无关， o1 和 o2 的类型无关
+    * */
+
+    var o1 = {name: 'rick'};
+    var o2 = Object.create(o1);
+    console.log(o2.name); //rick
+
+
+    // 他会创建一个新的对象，让它继承自参数对象
+    // 创建新对象就有构造函数
+    // 继承对象就有原型对象
+    function create(obj) {
+        function F() {}
+        //要有继承
+        F.prototype = obj;
+        return new F();
+    }
+    var o3 = create(o1);
+
+    // 在实际开发中，如果是为了兼容所用的浏览器，有两种做法
+    /*
+    * 1.在原生对象中提供方法
+    *
+    * */
+    if (!Object.create) {
+        Object.create = function (obj) {
+            function F() {}
+            //要有继承
+            F.prototype = obj;
+            return new F();
+        }
+    }
+
+    var o4 = Object.create(o1);
+    var _ = 0; // 用于设置IE8的断点来调试
+
+    /*
+    * 2.统一用新的方法
+    * */
+    var o5 = create(obj);
+    /*
+    * 无论浏览器是否支持该功能，都应该使用自己定义方法来完成， 但是
+    * 在方法内部，判断浏览器是否具有该功能，如果有该功能
+    * 则使用浏览器提供的功能，否则就自己实现
+    * */
+    var create = function (obj) {
+        if (Object.create) {
+            return Object.create(obj);
+        } else {
+            function F() {}
+            //要有继承
+            F.prototype = obj;
+            return new F();
+        }
+    };
+
+    //这个函数只是为了明白如何处理浏览器的兼容!!!
+
+
+    /*
+    * Object 和 其他对象的关系
+    * 原型继承 --- 通过修改原型链上面的对象，让当前对象具有某些方法，其实即使操作原型链
+    * 原型对象一直向上找，会找到null
+    *
+    * 要求看到一个对象就知道它的原型链是什么样子的
+    * var arr = [];  arr -> Array.prototype -> Object.prototype -> null
+    *
+    * var o = new Object() o -> Object.prototype -> null
+    * */
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

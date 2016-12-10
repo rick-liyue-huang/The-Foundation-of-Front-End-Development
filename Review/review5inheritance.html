@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+
+<p><br></p>
 <script>
     /*
     * 面向对象的特征： 封装性， 继承性， 多样性
@@ -112,22 +114,22 @@
     * 1.在原生对象中提供方法
     *
     * */
-    if (!Object.create) {
-        Object.create = function (obj) {
-            function F() {}
-            //要有继承
-            F.prototype = obj;
-            return new F();
-        }
-    }
-
-    var o4 = Object.create(o1);
-    var _ = 0; // 用于设置IE8的断点来调试
+//    if (!Object.create) {
+//        Object.create = function (obj) {
+//            function F() {}
+//            //要有继承
+//            F.prototype = obj;
+//            return new F();
+//        }
+//    }
+//
+//    var o4 = Object.create(o1);
+//    var _ = 0; // 用于设置IE8的断点来调试
 
     /*
     * 2.统一用新的方法
     * */
-    var o5 = create(obj);
+//    var o5 = create(obj);
     /*
     * 无论浏览器是否支持该功能，都应该使用自己定义方法来完成， 但是
     * 在方法内部，判断浏览器是否具有该功能，如果有该功能
@@ -159,9 +161,127 @@
     * */
 
 
+    /*
+    * 什么事构造函数 --
+    * 构造 -- 就是设计，组合，将没有的东西概念实现
+    * 构造函数 -- 首先是函数， 任何函数都可以作为构造函数来使用，它的作用是初始化对象
+    * new 是什么？
+    * 是实例化，就是在创建对象
+    *
+    * 比喻， new 好比有了一个新对象，但是没有任何成员， var obj = {}
+    * 构造函数就是在为他初始化，简单来说就是给他添加属性和方法。
+    * 好比
+    * obj.name = 'rick';
+    * obj.age = 34;
+    * obj.gender = 'male'
+    *
+    * 构造方法的意义： 复用
+    * 将代码简化，得到 var obj = new Person('rick', 34, 'male');
+    * 构造函数如何初始化，就看 this
+    * 如果诶呦构造函数如何给对象添加成员： 对象。成员 = 值
+    * 构造对象的整个过程：
+    * 1. new 申请内存，创建对象
+    * 2. 调用构造函数，构造函有一个隐式参数， 即 this
+    * 3. 刚创建出来的对象的引用赋值只给this, 由函数处理
+    * 4， 在构造函数中利用this。成员 = 值，来给对象添加成员
+    * */
+
+    console.log(Object instanceof Function);
+    console.log(Function instanceof Object); //
+
+    /*
+    直接继承和间接继承都是来源于 JAVA
+    * 直接继承：在JS 中一个构造函数Person 创建的对象，上面继承自它的原型Person.prototype,而Person.prototype是继承自Object.prototype,
+    * 所以我们称Person的实例直接继承自Object.prototype,因为中间没有切入其他的对象。
+    *
+    * 间接继承： 就是说Person 的实例与Object.prototype 中间隔了一层到多层
+    * function Animal() {}
+    * var am = new Animal();
+    *
+    * function Person() {}
+    * Person.prototype = am;
+    *
+    * var p = new Person()
+    *
+    * p 间接地继承自Object.prototype.
+    * */
+
+    /*
+    * __proto__, prototype,
+    *
+    * // 相同点：
+    * 1. 这两个都是属性，就是存储引用的变量。
+    * 2. 同一个构造函数与构造函数的实例对象，这两个属性的引用对象是同一个对象
+    *
+    * 不同点：
+    * 1.在不同的角度使用的不同的属性。
+    * prototype使用在构造函数后面， __proto__使用在对象后面
+    * 2. 描述不同。
+    * 对象的原型对象，构造函数的原型属性
+    *
+    * 3. __proto__ 是非标准属性。
+    * 使用我们在描述对象的时候是说对象会连接到原型对象上。
+    *
+    * 作用，
+    * 在实现继承额时候，一般都是使用构造函数的prototype属性， 在分析的时候可以使用_proto__
+    *
+    * */
 
 
 
+    /*
+    * 为什么绑定方法的时候要带有对象
+    * */
+    var fn = document.getElementsByTagName;
+    fn.call(document, 'p')[0].style.border = '1px solid red';
+
+
+    // es5 加入了 bind
+    var fn = document.getElementsByTagName.bind(document);
+    fn('p')[0].style.border = '1px solid red';
+
+
+    //
+    function Func() {}
+    var f1 = new Func();
+    Func.prototype = {
+        name: 'rick'
+    };
+    var f2 = new Func();
+    console.log(f1.name); // undefined, 改变了访问的方式
+    console.log(f2.name); // rick
+
+    //
+    function Func1() {}
+    var f11 = new Func();
+    Func1.prototype.name = 'leo';
+    var f22 = new Func1();
+    console.log(f11.name); // leo
+    console.log(f22.name); // leo
+
+
+    // 函数的prototype 属性的constructor就是当前函数
+    // Array === Array.prototype.constructor true
+    // 所有的函数的prototype 属性所表示的对象都继承自 Object.prototype
+    // 即 函数.prototype.__proto__ == Object.prototype; true
+    // but  Object.prototype.__proto__ == null;  true
+
+
+
+    /*
+    * Object的对象与原型对象的关系
+    * */
+
+    function Person2(name) {
+        this.name = 'rick';
+    }
+    var p = new Person2();
+    // 浏览器分析的结论：
+    //1.由于构造函数什么都没写，因此p中也是什么都没写
+    // 2. 对象p 的原型对象就是构造函数Person2 的原型属性
+    // 即 p.__proto__ 就是 Person2.prototype
+
+    // 经典的对象原型和函数三角形就出现了
 
 
 </script>

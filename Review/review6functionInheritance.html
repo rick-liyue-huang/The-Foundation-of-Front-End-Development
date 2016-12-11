@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .bd {
+            width: 800px;
+            height: 300px;
+            border: 1px solid red;
+        }
+    </style>
 </head>
 <body>
+    <div class="bd">
+
+    </div>
+
+    <textarea class="bd">
+
+    </textarea>
 <script>
 
     //Object 原型中的常用方法
@@ -176,12 +190,135 @@
     console.log(fnSum(2,3,5)); // 10
 
     // 第二种方法 吸收了MVC思想
-    onload = function () {
-        var fnSum = new Function();
+//    onload = function () {
+//        var fnSum = new Function();
+//    };
+
+
+    /*
+    * Function , eval()
+    * 他们都可以将字符串作为JS 代码来执行
+    * eval('''''')
+    * */
+    eval('var a = 10;');
+//    console.log();
+    var str = '{name:"rick", age: 19}';
+//    str = str.replace('{', "").replace("}", "");
+//    console.log(str);
+//    var arr = str.split(',');
+//    console.log(arr);
+//
+//    var o = {};
+//    for (var k in arr) {
+//        var tempArr = arr[k].split(":");
+//
+//        // 去空格
+//        var key = tempArr[0].trim();
+//        var value = tempArr[1].trim();
+//
+//        o[key] = value;
+//    }
+//
+//    console.log(o.name);
+//    console.log(o.age);
+
+    // 上面的代码可以通过这一句实现
+    var o2 = eval("(" + str + ")");
+    console.log(o2.name); // rick
+    console.log(o2.age); //19
+
+
+    /*
+    * 1. ajax
+    * 服务器与浏览器交互，服务器发给浏览器的数据是一个字符串
+    * 霸么要执行这个代码，就需要将字符串作为代码执行，这个就要用到eval
+    * */
+
+    /**
+     * 2. 所见即所得 通过 div 和 textarea
+     * */
+
+    var txt = document.getElementsByClassName('bd')[1];
+
+    txt.onkeyup = function () {
+        try {
+            console.log(this.value);
+//            eval(this.vale);
+        } catch (e) {
+
+        }
+
     }
 
 
+    // {} 1.对象， 2. 代码块
 
+    // eval 和 new Function 都可以实现字符串执行代码, eval 会污染全局变量，
+    // 在实际开发中，如果考虑效率就是用eval, 但是安全性就考虑new Function
+    // new Function, 等价于 定义一个函数，在函数内部执行。
+
+    /*
+    * 总结：
+    * 1.对象都有原型对象，对象默认继承自原型对象
+    * 2.函数被定义后，默认就有原型属性，原型属性也是对象
+    * 3.函数的原型属性默认继承自Object.prototype
+    * 4.原型对象中constructor 指向对应的构造函数
+    * 5.所有的函数都是Function 的实例
+    * 6. 函数也是对象
+    *
+    * prototype 是函数的原型属性
+    * __proto__ 是对象的原型对象
+    *
+    * */
+
+    /*
+    * 函数本身也是对象，因此具有 prototype 和 __proto__
+    *
+    * 任何函数的__proto__， 都指向 Function.prototype
+    * Foo 是 Function 的实例
+    * Function 是 Foo 的构造函数
+    * 原型对象就是构造函数的原型属性
+    * 所以
+    * Foo.__proto__ 就是 构造函数的原型属性，即Function.prototype
+    *
+    * 同时，
+    * 默认函数的原型属性继承自 Object.prototype
+    * Function 是函数， Function.prototype 是函数的原型属性
+    * Function.prototype 继承自Object.prototype
+    * */
+
+
+    // 函数原型链
+//    Foo.__proto__ 就是 Function.prototype
+ //   Function.prototype.__proto__ 就是 Object.prototype
+
+    // 就是将函数当做对象看。
+
+
+    /*
+    * 根据结论： Function, 和函数， 和 Function.prototype 之间的关系
+    * Array 是 Function 的实例， 继承自 Function.prototype
+    * Date 是 Function 的实例， 继承自Function.protoype
+    *
+    * Object 是 Function 的实例， 继承自Function.prototype
+    *
+    * Function 是 Function的实例， 继承自Functioin.prototype
+    * 结论： Function.__proto__ 就是Function.prototype
+    *
+    * */
+    function Foo() {}
+
+    function Foo1() {}
+    function Foo2() {}
+
+    // 与对象相关的，叫做实例属性或者对象属性
+    // 在函数中添加的属性，这些属性对于实例来说，就叫做 静态属性
+
+    // $('p').each 实例成员，   $.each() 静态成员
+
+
+    // Object instanceOf Function; true
+    // Function instanceOf Object; true
 
 
 </script>

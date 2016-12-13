@@ -26,14 +26,14 @@
 //    console.log(o instanceof Foo); // false
 
     //2
-    function Fn() {}
-    function Foo() {}
-    var f = new Fn();
-    // f -> Fn.prototype -> Object.prototype -> null
-
-    var o;
-    Fn.prototype = o = new Foo();
-    var f = new Fn();
+//    function Fn() {}
+//    function Foo() {}
+//    var f = new Fn();
+//    // f -> Fn.prototype -> Object.prototype -> null
+//
+//    var o;
+//    Fn.prototype = o = new Foo();
+//    var f = new Fn();
     // f - > o -> Foo.protoype -> Oject.prototype -> null
 
     //3 .
@@ -49,11 +49,11 @@
 //    console.log(a); // 10
 
 //     =>
-    var a;
-    if ('b' in window) {
-        a = 10;
-    }
-    console.log(a); // undefined
+//    var a;
+//    if ('b' in window) {
+//        a = 10;
+//    }
+//    console.log(a); // undefined
 
 
     // 5.
@@ -105,20 +105,20 @@
 //        });
 //    }
 //    f(); // 函数不能出现在语句的位置
-    var i = 0;
-    if (true) {
-        console.log(1);
-        function f() {
-            console.log('true');
-        }
-        console.log(2);
-    } else {
-        console.log(3);
-        function f() {
-            console.log('false');
-        }
-        console.log(4);
-    }
+//    var i = 0;
+//    if (true) {
+//        console.log(1);
+//        function f() {
+//            console.log('true');
+//        }
+//        console.log(2);
+//    } else {
+//        console.log(3);
+//        function f() {
+//            console.log('false');
+//        }
+//        console.log(4);
+//    }
 
 
 //    7. 函数作用域链问题
@@ -161,44 +161,44 @@
 
     // 同名情况，顺序不能修改
 
-    function Foo() {
-        getName = function () {
-            console.log(1);
-        };
-        return this;
-    }
-
-    var getName;
-
-    function getName() {
-        console.log(5);
-    }
-
-
-
-    Foo.getName = function () {
-        console.log(2);
-    };
-    Foo.prototype.getName = function () {
-        console.log(3);
-    };
-
-    getName = function () {
-        console.log(4);
-    };
+//    function Foo() {
+//        getName = function () {
+//            console.log(1);
+//        };
+//        return this;
+//    }
+//
+//    var getName;
+//
+//    function getName() {
+//        console.log(5);
+//    }
+//
+//
+//
+//    Foo.getName = function () {
+//        console.log(2);
+//    };
+//    Foo.prototype.getName = function () {
+//        console.log(3);
+//    };
+//
+//    getName = function () {
+//        console.log(4);
+//    };
 
     // 一次执行代码，画图
 
 
 
-    Foo.getName();  // 2
-    getName();      //4
-    Foo().getName();  // 1
-    getName();         //1
-    new Foo.getName();   // 2 , 返回一个空对象
-    (new Foo()).getName();  //3  new Foo() 返回Foo的对象， Foo的对象到原型中去找
-
-    new new Foo().getName(); //3   new ((new Foo()).getName())
+//    Foo.getName();  // 2
+//    getName();      //4
+//    Foo().getName();  // 1
+//    getName();         //1
+//    new Foo.getName();   // 2 , 返回一个空对象
+//    (new Foo()).getName();  //3  new Foo() 返回Foo的对象， Foo的对象到原型中去找
+//
+//    new new Foo().getName(); //3   new ((new Foo()).getName())
 
 
 
@@ -252,10 +252,77 @@
 
 
     // 10.
-    var f;
-    function f() {}
+//    var f;
+//    function f() {}
+//
+//    console.log(f === f.name); // false
 
-    console.log(f === f.name); // false
+    // 11.
+//    var num = 123;
+//    function f1() {
+//        console.log(num);
+//    }
+//    function f2() {
+//        var num = 456;
+//        f1();
+//    }
+//    f2(); // 123
+
+    // 12.
+
+//    var num = 123;
+//    function f1(num) {
+//        console.log(num);
+//    }
+//    function f2() {
+//        var num = 456;
+//        f1(num);
+//    }
+//    f2(); // 456
+
+
+    // 13.
+
+//    var num = 123;
+//    function f1() {
+//        console.log(num);
+//    }
+//    function f2() {
+//        num = 456;
+//        f1();
+//    }
+//    f2(); // 456
+
+    // 14.
+
+//    (function (a) {
+//        console.log(a);
+//        var a = 10;
+//        function a() {}
+//    })(100);
+
+//    (function (a) {
+//        var a;
+//        function a() {}
+//        console.log(a);
+//        a = 10;
+//    })(100); // 函数体
+
+
+    // 15.
+    var n = 1;
+    function f() {
+        console.log(n);
+        var n = 2;
+        console.log(n);
+    }
+    f();
+
+
+    // 16.
+
+
+
 
 
 

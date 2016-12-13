@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    * 闭包：在函数内部定义的变量外部不能访问。
+    * 封闭和包裹，在函数中定义的变量，函数外部不能访问。因此函数就是闭包。
+    *
+    * 要解决什么问题： 就是要想办法访问函数内部的数据
+    *
+    * 闭包 是一个受到保护的变量空间
+    *
+    * */
+//    function foo() {
+//        var num = 123;
+//    }
+//    var res = num;
+//    console.log(res); // 只能间接访问。
+
+//    function foo() {
+//        var num = 123;
+//        return num;
+//    }
+//    var r1 = foo();
+//    var r2 = foo();
+//    console.log(r1 === r2); // true
+//
+
+//    function foo() {
+//        var num = Math.random();
+//        return num;
+//    }
+//
+//    var r1 = foo();
+//    var r2 = foo();
+//    console.log(r1 + '\n' + r2); //  不同
+
+    /**
+     * 如果使用return 返回函数内的数据，理论上讲不是在访问同一个数据
+     * 因为函数运行会分配内存空间，那么数据也会再次创建
+     */
+    // 出现这个原因是是因为函数在调用的时候数据会被重新创建一次
+
+//    要解决这个问题，只需要保证函数foo只调用一次即可
+//    function foo() {
+//        var num = Math.random();
+//
+//        return function () {
+//            return num;
+//        }
+//    }
+//    var fn = foo();
+//    var r1 = fn();
+//    var r2 = fn();
+//    console.log(r1 + "\n" + r2); // 相同
+
+    // fn是一个在函数内定义的函数，那么在执行的时候可以访问到上一级作用域中的num，
+//    因此在最外面就可以间接访问num了。
+
+
+    /*
+    * 函数的本质是什么
+    * Function 的实例，或者就是对象
+    * 写一个函数，让函数返回对象
+    * */
+//    function Foo() {
+//        var o = {num: 123};
+//        return o;
+//    }
+//    var obj = Foo();
+
+    // 调用函数，在函数内部创建一个对象
+//    o 中存储的只是对象的引用， return 是将o中的数据拷贝一份再返回
+//    返回的结果被obj接收， 此时obj存储的是对象的引用
+//    利用obj就可以访问到对象
+
+//    扩展， 当对象是Function的实例时候
+//    function Foo() {
+//        var o = new Function();
+//        return o;
+//    }
+//
+//    var fn = Foo();
+//    fn();
+//    Foo 返回的是在内部创建的o 这个对象
+//    所以本质上就相当于
+//    fn = new Function...
+
+    //类比
+//    var node = id(idName);
+//    function id(idName) {
+//        return document.getElementById(idName);
+//    }
+
+    // 在函数内部是可以创建对象，返回对象的
+//    但是函数其实也是一个对象
+//    function Foo() {
+//        return function () {
+//            console.log('called');
+//            console.log('....');
+//        }
+//    }
+
+//    这个函数Foo 是一个函数，如果函数不调用，没有任何问题
+//    但是函数Foo调用，他会返回一个函数
+//    接收这个函数，可以调用它
+//    var fn = Foo(); // called
+//    fn(); // ....
+
+
+    function func1() {
+        var arr = [Math.random(), Math.random(), Math.random()];
+        return function () {
+            return arr;
+        }
+    }
+
+    var fn = func1();
+    var array = fn();
+    for (var i = 0, j = 0; i < array.length, j < array.length; i++, j++) {
+        console.log(array[i] + '\n' + array[j]);
+
+    }
+
+
+//    function func() {
+//        var n = Math.random();
+//        var m = Math.random();
+//    }
+
+    function func() {
+        var n = Math.random();
+        var m = Math.random();
+
+//        return [
+//                function () {
+//            return n;
+//        },
+//                function () {
+//                    return m;
+//                } ];
+
+        return {
+            get_N: function () { return n; },
+            get_M: function () { return m; }
+        }
+    }
+//    var fns = func();
+//    var n1 = fns[0]();
+//    var m1 = fns[1]();
+//    console.log(n1 + ' , ' + m1);
+//
+//    var n2 = fns[0]();
+//    var m2 = fns[1]();
+
+    var o = func();
+    var n = o.get_N();
+    var m = o.get_M();
+
+    // 在函数中定义一个变量
+    function Foo() {
+        var num;
+    }
+//    在调用Foo后，提供两个方法， 分别对num进行读取和赋值
+//    function Foo() {
+//        var num;
+//
+//        return {
+//            get_num: function () {
+//                return num;
+//            },
+//            set_num: function (value) {
+//                num = value;
+//            }
+//        };
+//
+//    }
+//
+//    var o = Foo();
+//    console.log(o.get_num());
+//    o.set_num(123);
+//    console.log(o.get_num());
+//
+
+    function Foo() {  // 不正确的
+        var num;
+
+//        return {
+//            __num__: num,
+//            set_num: function (value) {
+//                num = value;
+//            }
+//        };
+
+        var tempO = {};
+        tempO.__num__ = num;
+        tempO.set_num = function (v) {
+            num = v;
+        };
+        return tempO;
+
+    }
+
+    var o = Foo();
+    console.log(o.get_num());
+    o.set_num(123);
+    console.log(o.get_num());
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

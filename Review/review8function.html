@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            border: 1px solid deeppink;
+            margin: 0;
+            padding: 5px;
+            height: 100px;
+        }
+        p {
+            border: 1px solid green;
+            margin: 0;
+            padding: 5px;
+            height: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p><span>haha</span></p>
+    <p></p>
+    <p></p>
+</div>
+<div>
+    <p></p>
+    <p></p>
+    <p></p>
+</div>
+<div>
+    <p></p>
+    <p></p>
+</div>
+<script>
+
+    /*
+    * 1 函数名.name
+    * 2. 函数名.length
+    *  形参的个数， arguments.length 是实际传入的参数个数
+    *  判断是否相等： 函数名.length === arguments.length
+    *
+    *  3. 函数名.caller // 已被删除 获得调用函数的函数
+    *
+    *  4. 函数名.callee 当前函数的引用， 如果函数foo，那么函数中arguments.callee 就是表示 foo的引用，
+    *  一般在使用的时候就是描述匿名函数的递归表示
+    *
+    *  5. arguments 是伪数组，不是数组
+    * */
+
+    function foo() {
+        console.log(foo.caller);
+    }
+    foo(); // null, 因为全局调用, 可以判断是否为全局函数
+
+    function f() {
+        foo();
+    }
+    f();
+    /*
+    * f() {
+     foo();
+     }
+    * */
+
+    (function () {
+        // 实现递归，自己调用自己 callee
+    })();
+
+
+
+    /*
+    * 递归： 就是自己调用自己
+    * 学会如何写递归，以及如何跳出
+    * 1.什么时候递归
+    * 2.什么时候跳出递归
+    * */
+
+//    fibonacci (兔子数列)
+
+    function fibnacci(n) {
+        if ((n === 1) || (n === 0) ) {
+            return 1;
+        } else {
+            return fibnacci(n-1) * n;
+        }
+    }
+
+    // 临界条件就是跳出条件。
+    console.log(fibnacci(10));
+    for (var i = 0; i < 10; i++) {
+        console.log(fibnacci(i));
+    }
+
+    function f2(n) {
+        var sum = 1;
+        for (var i = 1; i <= n; i++) {
+            sum *= i;
+        }
+        return sum;
+    }
+    for (var i = 0; i <= 10; i++) {
+        console.log(f2(i));
+    }
+
+    // 利用递归分析划归的思想，计算求 n 的 m 次方
+    function pw(n, m) {
+        if (m === 0) return 1;
+
+        return pw(n, m-1) * n;
+
+    }
+    console.log(pw(0,10));
+    console.log(pw(1,4));
+    console.log(pw(2,5));
+
+    /*
+    * 递归在 DOM中的应用 ----- 将boy 中的所有子标签都获取到
+    * 需要一个函数，调用函数，返回body 下面所有的子标签
+    * */
+//    var nodes = document.body.getElementsByTagName('*');
+//    for (var i = 0; i < nodes.length; i++) {
+//        nodes[i].style.borderColor = 'red';
+//    }
+    // 就是自己实现这个功能
+
+    /*
+    * 1. 首先要有一个函数 find
+    * 2. 调用的时候就是执行var nodes = find()
+    * */
+    // 3.要获得的是body下的所有元素， 但是元素的层级是不确定的
+    // 通过递归得到的结论是， 需要一个方法，返回某个元素的子元素
+//    简单的做法： getChildren(node, list)
+//    将node 的子元素加到 list
+    var getChildren = function (node, list) {
+//        要将node的所有子元素放到list中 （只要是元素）
+        for (var i = 0; i < node.childNodes.length; i++) {
+            var subNode = node.childNodes[i];
+//            判断是否为元素标签
+            if (subNode.nodeType === 1) {
+                list.push(subNode);
+            }
+        }
+    };
+    function find() {
+        var arr = [];
+
+        getChildren(document.body, arr);
+        return arr;
+    }
+    var nodes = find();
+
+    for (var i = 0; i < nodes.length; i++) {
+        nodes[i].style.border = '3px solid red';
+    }
+
+
+    // 已经获得子节点，子节点的子节点就是后代节点
+
+    var getChildren1 = function (node, list) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+            var subnode = node.childNodes[i];
+            if (subnode.nodeType === 1) {
+                list.push(subnode);
+
+                getChildren1(subnode, list);
+            }
+        }
+    };
+
+    function find1() {
+        var arr = [];
+
+        getChildren1(document.body, arr);
+
+        return arr;
+    }
+    var nodes1 = find1();
+    for (var i = 0; i < nodes1.length; i++) {
+        nodes1[i].style.border = '3px solid pink';
+    }
+
+    //写一个方法，返回某一个节点下所有的满足条件的后代节点
+//    条件为某一个标签的名字
+
+
+    // 复杂的方法 ---- 获得后代节点的样式
+
+    var find2 = function (node) {
+        var arr = [];
+
+        for (var i = 0; i < node.childNodes.length; i++) {
+            if (node.childNodes[i].nodeType === 1) {
+                arr.push(node.childNodes[i]);
+
+
+                // 获得子节点的子节点
+                arr = arr.concat(find2(node.childNodes[i])); // 这是返回新数组
+            }
+        }
+        return arr;
+    };
+
+    var nodes2 = find2(document.body);
+    for ( var i = 0; i < nodes2.length; i++) {
+        nodes2[i].style.border = '5px solid black';
+    }
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    //1
+//    function Fn() {}
+//    function Foo() {}
+//    var o = new Fn();
+//    console.log(o instanceof Fn); //true
+    // o -> Fn.prototype (原来的)
+    // Fn.prototype 是否在o的原型链上
+
+//    Fn.prototype = new Foo();
+//    console.log(o instanceof Fn); // false，
+    // new Foo()是否在o的原型链上
+
+//   因此instanceOf 只考虑这个对象是否在原型链上。
+
+
+//    console.log(o instanceof Foo); // false
+
+    //2
+    function Fn() {}
+    function Foo() {}
+    var f = new Fn();
+    // f -> Fn.prototype -> Object.prototype -> null
+
+    var o;
+    Fn.prototype = o = new Foo();
+    var f = new Fn();
+    // f - > o -> Foo.protoype -> Oject.prototype -> null
+
+    //3 .
+//    typeof (typeof a.fn == 'function') && a.fn;
+
+
+
+//    词法作用域
+//    4.
+//    if ('a' in window) {
+//        var a = 10;
+//    }
+//    console.log(a); // 10
+
+//     =>
+    var a;
+    if ('b' in window) {
+        a = 10;
+    }
+    console.log(a); // undefined
+
+
+    // 5.
+//    if (true) {
+//        function f() {
+//            console.log('f');
+//        }
+//    } else {
+//        function f() {
+//            console.log('false')
+//        }
+//    }
+//    f(); //true
+
+
+    // 6.
+//    预解析不是在执行代码，将所有的声明都加载都内存中，告诉解析器都有什么东西。然后一步步执行代码，从上到下
+//    if (true) {
+//        var f = function () {
+//            console.log('true');
+//        };
+//    } else {
+//        var f = function () {
+//            console.log('false');
+//        };
+//    }
+//    f();
+//    var f;
+//    if (true) {
+//        f = function () {
+//            console.log('true');
+//        };
+//    } else {
+//        f = function () {
+//            console.log('false');
+//        };
+//    }
+//    f();
+
+
+    // 进一步变式
+//    if (true) {
+//        (function f() {
+//            console.log('true');
+//        });
+//    } else {
+//        (function f() {
+//            console.log('false');
+//        });
+//    }
+//    f(); // 函数不能出现在语句的位置
+    var i = 0;
+    if (true) {
+        console.log(1);
+        function f() {
+            console.log('true');
+        }
+        console.log(2);
+    } else {
+        console.log(3);
+        function f() {
+            console.log('false');
+        }
+        console.log(4);
+    }
+
+
+//    7. 函数作用域链问题
+
+    /*
+    function Foo() {
+        getName = function () {
+            console.log(1);
+        };
+        return this;
+    }
+
+    Foo.getName = function () {
+        console.log(2);
+    };
+    Foo.prototype.getName = function () {
+        console.log(3);
+    };
+
+    var getName = function () {
+        console.log(4);
+    };
+
+    function getName() {
+        console.log(5);
+    }
+
+
+
+    Foo.getName();
+    getName();
+    Foo().getName();
+    getName();
+    new Foo.getName();
+    new Foo().getName();
+
+    new new Foo().getName();
+
+    */
+
+    // 同名情况，顺序不能修改
+
+    function Foo() {
+        getName = function () {
+            console.log(1);
+        };
+        return this;
+    }
+
+    var getName;
+
+    function getName() {
+        console.log(5);
+    }
+
+
+
+    Foo.getName = function () {
+        console.log(2);
+    };
+    Foo.prototype.getName = function () {
+        console.log(3);
+    };
+
+    getName = function () {
+        console.log(4);
+    };
+
+    // 一次执行代码，画图
+
+
+
+    Foo.getName();  // 2
+    getName();      //4
+    Foo().getName();  // 1
+    getName();         //1
+    new Foo.getName();   // 2 , 返回一个空对象
+    (new Foo()).getName();  //3  new Foo() 返回Foo的对象， Foo的对象到原型中去找
+
+    new new Foo().getName(); //3   new ((new Foo()).getName())
+
+
+
+
+    // 8.
+    /*
+    (function (a) {
+        console.log(a);
+        var a = 10;
+        function a() {}
+    })(100);
+
+    */
+
+    // 同名的情况下，函数声明会替换变量声明。--- 重复的var 无效
+    // =>
+//    (function (a) {
+//        var a;
+//        function a() {
+//        }
+//        console.log(a);
+//        a = 10;
+//    })(100);
+
+
+//    function a() {}
+//    var a;
+//    console.log(a); // fuction a() {}
+
+//    function a() {}
+//    var a = 10;
+//    console.log(a); // fuction a() {}
+
+
+    // 9.
+//    var a = 1;
+//    function a() {
+//        a = 1;
+//    }
+//    a();
+//    console.log(a);
+//    =>
+
+//    var a;
+//    function a() {
+//        a = 1;
+//    }
+//    a = 1;
+//    a(); // a 已经被赋值，因此不再是函数，因此抛出错误。
+//    console.log(a);
+
+
+    // 10.
+    var f;
+    function f() {}
+
+    console.log(f === f.name); // false
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

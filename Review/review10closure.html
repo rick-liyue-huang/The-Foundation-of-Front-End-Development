@@ -112,19 +112,19 @@
 //    fn(); // ....
 
 
-    function func1() {
-        var arr = [Math.random(), Math.random(), Math.random()];
-        return function () {
-            return arr;
-        }
-    }
-
-    var fn = func1();
-    var array = fn();
-    for (var i = 0, j = 0; i < array.length, j < array.length; i++, j++) {
-        console.log(array[i] + '\n' + array[j]);
-
-    }
+//    function func1() {
+//        var arr = [Math.random(), Math.random(), Math.random()];
+//        return function () {
+//            return arr;
+//        }
+//    }
+//
+//    var fn = func1();
+//    var array = fn();
+//    for (var i = 0, j = 0; i < array.length, j < array.length; i++, j++) {
+//        console.log(array[i] + '\n' + array[j]);
+//
+//    }
 
 
 //    function func() {
@@ -186,30 +186,118 @@
 //    console.log(o.get_num());
 //
 
-    function Foo() {  // 不正确的
-        var num;
-
-//        return {
-//            __num__: num,
-//            set_num: function (value) {
-//                num = value;
-//            }
+//    function Foo() {  // 不正确的
+//        var num;
+//
+////        return {
+////            __num__: num,
+////            set_num: function (value) {
+////                num = value;
+////            }
+////        };
+//
+//        var tempO = {};
+//        tempO.__num__ = num;
+//        tempO.set_num = function (v) {
+//            num = v;
 //        };
+//        return tempO;
+//
+//    }
+//
+//    var o = Foo();
+//    console.log(o.get_num());
+//    o.set_num(123);
+//    console.log(o.get_num());
 
-        var tempO = {};
-        tempO.__num__ = num;
-        tempO.set_num = function (v) {
-            num = v;
-        };
-        return tempO;
 
-    }
+    /*
+    * 闭包的应用有两个模型
+    * 1.实现私有数据
+    * 2. 实现缓存数据
+    *
+    * */
 
-    var o = Foo();
-    console.log(o.get_num());
-    o.set_num(123);
-    console.log(o.get_num());
+//    带有缓存功能的函数
+    var count = 0;
+//    var fib = function (n) {
+//        count++;
+//        // 面试求兔子数列，用 callee
+//        if (n < 0) throw new Error('num cannot be negative');
+//        if (n === 0 || n === 1) return 1;
+//        return arguments.callee(n - 1) +
+//                arguments.callee(n - 2);
+//    };
+//    for (var i = 0; i < 10; i++) {
+//        console.log(fib(i));
+//    }
+//
+//    fib(5);
+//    console.log(count);
 
+    //写法调整 --- 第二种方法
+//    var fib = (function () {
+//        var arr = [];
+//        return function (n) {
+//            count++;
+//            if (n < 0) throw  new Error('num cannot be negative');
+//
+//            var res = arr[n]; // 先从数组中取
+//            if (res !== undefined ) {
+//                return res;
+//            } else {
+//
+//                // 如果是1或者0，则将1返回给res
+//                // 否则递归结果交给res
+//                if (n === 0 || n === 1) {
+//                    res = 1;
+//                } else {
+//                    res = arguments.callee(n - 1) +
+//                            arguments.callee(n - 2);
+//                }
+//
+//                arr[n] = res; // 将计算的结果放到数组中，那么下一次再计算的时候就不用计算了。
+//                return res;
+//            }
+//
+//        };
+//    })();
+//    count = 0;
+//    fib(100);
+//    console.log(count);
+
+    /*
+    * 首先计算第n项
+    * 在计算的时候首先看缓存里面是否有该数据
+    * 如果缓存里面没有数据，就递归，并将计算的结果放到对应的缓存位置上
+    *
+    * 如果缓存中有数据，就直接使用。
+    *
+    * */
+
+    // 第三种方法
+//    var fib = function (n) {
+//        var res = fib[n];
+//
+//        if (res !== undefined) {
+//
+//            return res;
+//        } else {
+//
+//            if (n === 0 || n === 1) {
+//                res = 1;
+//            } else {
+//                res = arguments.callee(n - 1) +
+//                                arguments.callee(n - 2);
+//            }
+//            fib[n] = res;
+//            fib.length++;
+//            return res;
+//        }
+//    };
+//    fib.length = 0;
+//
+//    fib(5);
 
 
 </script>

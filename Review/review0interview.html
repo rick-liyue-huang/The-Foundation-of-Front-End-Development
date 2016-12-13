@@ -310,17 +310,31 @@
 
 
     // 15.
-    var n = 1;
-    function f() {
-        console.log(n);
-        var n = 2;
-        console.log(n);
-    }
-    f();
+//    var n = 1;
+//    function f() {
+//        console.log(n);
+//        var n = 2;
+//        console.log(n);
+//    }
+//    f();
 
 
     // 16.
+    function Foo() {
+        var num;
+        var o = {num:num};
+        num = o.num;
+        return function () {
+            return o;
+        };
+    }
 
+    var fn = Foo();
+    var get1 = fn().num;
+    console.log(get1);
+    fn().num = '123';
+    var get2 = fn().num;
+    console.log(get2);
 
 
 

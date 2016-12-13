@@ -236,35 +236,37 @@
 //    console.log(count);
 
     //写法调整 --- 第二种方法
-//    var fib = (function () {
-//        var arr = [];
-//        return function (n) {
-//            count++;
-//            if (n < 0) throw  new Error('num cannot be negative');
-//
-//            var res = arr[n]; // 先从数组中取
-//            if (res !== undefined ) {
-//                return res;
-//            } else {
-//
-//                // 如果是1或者0，则将1返回给res
-//                // 否则递归结果交给res
-//                if (n === 0 || n === 1) {
-//                    res = 1;
-//                } else {
-//                    res = arguments.callee(n - 1) +
-//                            arguments.callee(n - 2);
-//                }
-//
-//                arr[n] = res; // 将计算的结果放到数组中，那么下一次再计算的时候就不用计算了。
-//                return res;
-//            }
-//
-//        };
-//    })();
-//    count = 0;
-//    fib(100);
-//    console.log(count);
+    var fib = (function () {
+        var arr = [];
+        return function (n) {
+            count++;
+            if (n < 0) throw  new Error('num cannot be negative');
+
+            var res = arr[n]; // 先从数组中取
+            if (res !== undefined ) {
+                return res;
+            } else {
+
+                // 如果是1或者0，则将1返回给res
+                // 否则递归结果交给res
+                if (n === 0 || n === 1) {
+                    res = 1;
+                } else {
+                    res = arguments.callee(n - 1) +
+                            arguments.callee(n - 2);
+                }
+
+                arr[n] = res; // 将计算的结果放到数组中，那么下一次再计算的时候就不用计算了。
+                return res;
+            }
+
+        };
+    })();
+    count = 0;
+    fib(100);
+    console.log(count);
+
+    
 
     /*
     * 首先计算第n项

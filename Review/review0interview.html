@@ -320,21 +320,629 @@
 
 
     // 16.
+//    function Foo() {
+//        var num;
+//        var o = {num:num};
+//        num = o.num;
+//        return function () {
+//            return o;
+//        };
+//    }
+//
+//    var fn = Foo();
+//    var get1 = fn().num;
+//    console.log(get1);
+//    fn().num = '123';
+//    var get2 = fn().num;
+//    console.log(get2);
+
+
+
+    // 测试题
+    // 1. 创建对象的方法有哪些
+    /*
+    * var o = {};
+    * var o = new Object();
+    * function Object () {}
+    *
+    * Object.create();
+    * copy
+    * var copy = function(obj) {
+    *   var o = {};
+    *   for (var k in obj) {
+    *       o[k] = obj[k];
+    *   }
+    * }
+    * */
+
+
+    /*
+    * 2.使用字面量的方法创建对象下面两种方法有什么不同
+    *
+    * ES5 提供了一个JSON.parse的方法
+    * 该方法将json格式的字符串换成对象，但是要求字符串必须满足json协议，键必须加引号
+    * */
+
+    /*
+    * 3. 使用下面的代码创建的对象
+    * */
+//    var Person = function () {
+//        name = 'jim';
+//        age = 10;
+//        gender = 'male';
+//    };
+//    var person = new Person();
+//    console.log(person.name); // undefined//  因为没有 this.name
+
+    /*
+    * 4.创建对象 Student(name, age, gender)
+    *
+    * */
+//    var Student = function (name, age, gender) {
+//        this.name = name;
+//        this.age = age;
+//        this.gender = gender;
+//    };
+//    var s = new Student('rick', 10, 'male');
+//    // or
+//    var s = new Student();
+//    s.name = 'leo';
+//    s.age = 19;
+//    s.gender = 'female';
+
+    /*
+    * 5. 对象
+    *
+    * o.name, o.sayHello
+    * or
+    * o['name'] or o['sayHello']()
+    * */
+//    var o = {
+//        name: 'rick',
+//        age: 19,
+//        gender: 'male',
+//        sayHello: function () {
+//            console.log('haha');
+//        }
+//    };
+
+    /*
+    *
+    * 6. 通过电压和电阻得到电流，写函数
+    * */
+
+//    function I(U, R) {
+//        if (R === 0) throw new Error('R CANNOT BE ZERO');
+//        return U / R;
+//    }
+
+
+    /*
+    * 7. 写一个函数，参数要求是一个字符串，如果不是字符串就报错，如参数是以#开头就返回id元素
+    *
+    * */
+//    function get(selector) {
+//        if (typeof selector !== 'string') throw new Error('selector is not the string');
+//
+//        // 正式的判断格式
+//        var firstChar = selector.slice(0, 1);
+//        if (firstChar === '#') {
+//            return [document.getElementById(selector.slice(1))]; // 变成数组
+//        } else if (firstChar === '.') {
+//            return document.getElementsByClassName(selector.slice(1));
+//        } else {
+//            return document.getElementsByTagName(selector.slice(1));
+//        }
+//    }
+
+    /*
+    *
+    * 8. 如何验证写在构造函数中的方法都占内存的。
+    * 就是判断两个方法是否不相等，只要不相等就是占内存的
+    * */
+//    var fn = function () {
+//        this.sayhello = function () {
+//        }
+//    };
+//    var p1 = new fn();
+//    var p2 = new fn();
+//    console.log(p1.sayhello === p2.sayhello); // false
+//    console.log(p1.hasOwnProperty('sayhello')); // true -> 就是自己的方法。因此也是占内存的
+
+    /*
+    * 9. 构造函数Person创建的对象p。 对象p的原型对象如何获取
+    *
+    * p.__proto__, and  Person.prototype
+    * */
+
+    /**
+     * 10. 给对象添加属性的方法
+     * 利用动态属性添加，  o.xxx = xxx
+     * 构造函数中添加  this.xxx =  xxx
+     *
+     * 原型中添加 xxx.prototype.xxx = xxxx
+     * 字面量添加
+     * extend
+     * 关联数组  o['xxx'] = xxx
+     *
+     */
+
+
+    /*
+    * 11. 代码
+    * */
+
+//    var Person = function () {
+//        this.name = 'rick';
+//    };
+//    var p1 = new Person();
+//    p1.name = 'leo';
+//    var p2 = new Person();
+//    console.log(p2.name); // rick
+
+    /*
+    * 12. 给对象添加方法的办法有哪些 同 10
+    *
+    * */
+
+
+    /*
+    * 13. 使用继承让Student 对象有name, age, 和 gender属性，以及 study 的方法
+    * 原型式，组合式继承
+    * */
+
+//    var o = {name: 'rick', age: 19, gender: 'male'};
+//    var Student = function () {};
+//    Student.prototype = o;
+//
+//    Student.prototype.study = function () {
+//        console.log('study');
+//    };
+//    var s = new Student();
+
+
+    // or
+
+//    var obj = Object.create(o);
+//    obj.study = function () {
+//
+//    }
+
+
+    /*
+    * 14. 代码
+    * */
+
+//    var Person = function () {
+//        this.name = 'tom';
+//    };
+//    Person.prototype.name = 'jim';
+//
+//    var p = new Person();
+//    console.log(p.name); // tom => 因为构造函数里面有，意味着对象自己有这个属性。
+
+
+    /*
+    *
+    * 15. 如何兼容的获得对象类型名， 就是函数名
+    * */
+//    var getType = function (obj) {
+//        if (obj.constructor.name) {
+//            return obj.constructor.name;
+//        } else {
+//            return /function(.+?)\(/.exec(obj.constructor + "")[1];
+//        }
+//    }
+
+
+    /*
+    *
+    * 16. 代码
+    * */
+
+//    var Car = function (name) {
+//        this.carName = name;
+//    };
+//
+//    var Person = function (pName, cName) {
+//        this.name = pName;
+//        this.car = new Car(cName);
+//    };
+//
+//    var extend = function (obj) {
+//        var o = {};
+//        for (var k in obj) {
+//            o[k] = obj[k];
+//        }
+//        return o;
+//    };
+//
+//    var p1 = new Person('rick', 'bmw');
+//    var p2 = p1;
+//    var p3 = extend(p1);
+//
+//    console.log(p1.name + '...' + p1.car.carName); // rick bmw
+//    console.log(p2.name + '...' + p2.car.carName); // rick bmw
+//    console.log(p3.name + '...' + p3.car.carName); // rick bmw
+//
+//    p2.name = 'leo';
+//    p2.car.carName = 'benz';
+//
+//    console.log(p1.name + '...' + p1.car.carName); // leo  benz
+//    console.log(p2.name + '...' + p2.car.carName); // leo benz
+//    console.log(p3.name + '...' + p3.car.carName); // rick benz
+
+
+    /*
+    * 17. 如何判断属性或者方法是被继承的，而不是被自己实现的
+    * */
+//    var Fn = function () {};
+//    Fn.prototype.name = 'rick';
+//    Fn.prototype.age= undefined;
+//    var f = new Fn();
+//    // hasOwnPropety
+//
+//    console.log(('age' in f) && !f.hasOwnProperty('age'));
+
+    // 如果属性值就是undefined 或者 null ,那么f.age 就无法判断，
+
+
+    /*
+    * 18. 如何将一个json格式的字符串转换成对象，有多少种方法
+    *  eval(),   new Function() JSON.parse(), 必须将键加 ""， 字符串操作
+    * */
+
+
+    /*
+    * 19. 需要实现继承，有几种方法
+    * 原型继承， 组合继承
+    * */
+
+    /*
+    *
+    * 20. 如果需要所有的对象都具有一个inherit方法，该方法有一个对象参数，p.inherit(obj), 返回一个新的对象，该对象继承自p 和 obj
+    *
+    * 每一个对象都有inherit 方法， 给 Object.prototype 添加
+    * 继承自p 在方法中 p 用什么表示，即 this
+    * 首先选择组合式继承--- 多继承。 但是应该在原型上采用组合式继承 设计模式 design pattern GO4
+    * 继承自obj
+    * */
+
+//    Object.prototype.inherit = function (obj) {
+//        var o = {};
+//        for (var k in this) {
+//            o[k] = this[k];
+//        }
+//        for (var k in obj) {
+//            o[k] = obj[k];
+//        }
+//        return o;
+//    };
+
+
+    /*
+    * 21. 如果要求所有函数都有inherit方法，该方法有一个对象参数 obj， Person.inherit(obj), 返回一个对象，该对象继承自Person.prototype
+    *
+    * */
+
+//    Function.prototype.inherit = function () {
+//        return Object.create(this.prototype);
+//    };
+//
+//    Function.prototype.inherit = function (obj) {
+//        var o = Object.create(this.prototype);
+//        for (var k in obj) {
+//            o[k] = obj[k];
+//        }
+//        return o;
+//    };
+
+    /*
+    * 22. 函数的原型属性和原型对象有什么异同
+    * 1.函数属性 函数.prototype, 函数.__proto__
+    * 表示由该函数创建的对象继承自该函数的prototype
+    * 函数.__proto__的原型对象 或者Function.__proto__, 表示该函数继承自Function.protoype 或者 函数.__proto__
+    *
+    * */
+
+
+    /*
+    *
+    * 23.什么是原型继承 --- 所有的对象都能找到由对象构成的，一直到 Object.prototype一条原型链，
+    * 凡是原型链上面的对象成员，当前对象都可以继承。
+    * 因此原型继承就是修改原型链上面的对象，似的当前对象具有默写属性
+    * */
+
+    /*
+    * 24. 优缺点。 可以共享成员， 节约内存。 但是非常消耗性能。增加链式搜索
+    *
+    * */
+
+
+    /*
+    * 25. 解释一下属性搜索原则
+    *  从当前对象开始，直到原型链上网上找，一直到Object.prototype, 如果一直没有就返回 undefined.
+    * */
+
+
+    /*
+    * 26. 代码
+    *
+    * */
+
+//    var Person = function () {
+//        this.name = 'rick';
+//    };
+//    Person.prototype.name = 'leo';
+//    var p = new Person();
+//    p.name = 'jack';
+//    delete p.name;
+//    console.log(p.name); // leo
+
+    /*
+    * 27. 原型对象有什么用， 允许复用属性和方法
+    * 例如在JQUERY中采用原型组合混合式继承
+    * */
+
+    /*
+    * 28. 函数的原型对象是什么？ -- Function.prototype
+    *
+    * */
+
+    /*
+    * 29. Object 继承自什么 ？ Object是函数, Function.prototype
+    * */
+
+    /*
+    * 30. 任何函数都是继承自 Function.prototype
+    * */
+
+
+    /*
+    * 31. 代码
+    *
+    * Foo -> Function.prototype -> Object.prototype -> null
+    * Func -> Function.protoype -> Object.prototype -> null
+    * p -> Func.prototype -> Foo.prototype -> Object.prototype -> null
+    * */
+
+//    function Foo() {}
+//    function Func() {}
+//    Func.prototype = new Foo();
+//    var p = new Func();
+
+
+    /*
+    * 32. 代码
+    *
+    * */
+
+//    function Foo1() {}
+//    function Foo2() {}
+//    Foo1.prototype = new Foo2();
+//    var o = new Foo1();
+//    console.log(o instanceof Foo1); // true
+//
+//    function Foo1() {}
+//    function Foo2() {}
+//    var o = new Foo1();
+//    Foo1.prototype = new Foo2();
+//    console.log(o instanceof Foo1); // false, 破坏了原型链
+
+    /*
+    * 33. 作用域： 什么叫做词法作用域： 函数内部能够返回外部的，与代码的编写有关，与执行无关。
+    * 展开到原型链。
+    * */
+
+    /*
+    * 34. 代码
+    * */
+//    var num = 123;
+//    function func() {
+//        num = 456;
+//    }
+//    console.log(num); // 123
+//
+//
+//    function func() {
+//        num = 456;
+//    }
+//    var num;
+//    num = 123;
+//    console.log(num); // 123
+
+
+    /*
+    * 35.
+    * */
+//    var num = 123;
+//    function num() {
+//        console.log(num);
+//    }
+//    console.log(num); // 123
+
+    /*
+    *
+    * 36.
+    * */
+
+    var foo = 1;
+    function fn() {
+        foo = 10;
+        function foo() {}
+    }
+    fn();
+    console.log(foo);
+
+
+//    var foo;
+//    function fn() {
+//        foo = 10;
+//        function foo() {}
+//    }
+//    foo = 1;
+//    fn();
+//    console.log(foo);
+
+    /*
+    * 37.
+    * */
+
+//    var num = 123;
+//    var func = function () {
+//        console.log(num);
+//        var num = 123;
+//        console.log(num);
+//    };
+//    func(); // undefined 123
+
+    /*
+    *
+    * 38*/
+    var num = 123;
+    function foo1() {
+        console.log(num);
+    }
+    function foo2() {
+        var num = 456;
+        foo1();
+    }
+    foo2();// 123  作用域链
+
+
+
+    /*
+    * 39. 闭包： 在函数内部定义的变量外部无法访问，这个函数就叫做闭包
+    *
+    * */
+
+    /*
+    * 40
+    * */
     function Foo() {
-        var num;
-        var o = {num:num};
-        num = o.num;
-        return function () {
-            return o;
+        var o = {name: 'rick'};
+        return {
+            o:o,
+            set_Name: function (name) {
+                o.name = name;
+            }
         };
     }
 
-    var fn = Foo();
-    var get1 = fn().num;
-    console.log(get1);
-    fn().num = '123';
-    var get2 = fn().num;
-    console.log(get2);
+    var o = Foo();
+    console.log(o.name); // 这里面返回的是 return {}, 里面没有name, 所以是 undefined
+    console.log(o.o.name); // rick
+    o.set_Name('tom');
+    console.log(o.o.name); // tom
+
+
+    /*
+    * 41
+    * */
+
+
+//    var arr = [
+//        {name: 'jim'},
+//        {name: 'tom'},
+//        {name: 'rick'},
+//        {name: 'leo'}
+//    ];
+//    for (var i = 0; i < arr.length; i++) {
+//        arr[i].sayhello = function () {
+//            console.log(arr[i].name);
+//        };
+//    }
+//
+//    for (var k in arr) {
+//        arr[k].sayhello();
+//    }
+
+    // 报错。。。
+
+    /*
+    * 写一个函数，返回一个有姓名，性别， 和年龄 的对象， 要求， 对象的参数有函数参数调用传递得到，并且要求对象的数据不允许修改
+    *
+    * */
+
+    var createPerson = function (name, age, gender) {
+
+        //私有数据的典型应用。
+        return {
+            get_name: function () {
+                return name;
+            },
+            get_age: function () {
+                return age;
+            },
+            get_gender: function () {
+                return gender;
+            }
+        };
+    };
+    var p = createPerson('rick', 19, 'male');
+
+
+    // 递归深度复制
+
+
+//    var deepClone = function (obj) {
+//        var o = {};
+//        copy(o, obj);
+//        return o;
+//    };
+//
+//    // 常常如下组织代码
+//
+//    var copy = function (o1, o2) {
+//        // 将😯o2 的属性拷贝到o1上
+//        for (var k in o2) {
+//
+//            // 判断 o2[k] 是不是对象，如果是对象表示o2p[k], o1[k] 都是对象
+////            也就是说需要将o2[k] 这个对象的属性拷贝到o1[k]上面
+//            if (typeof( o2[k] ) === 'object' ) {
+//                o1[k] = {};
+//                copy(o1[k], o2[k]);
+//            } else {
+//                o1[k] = o2[k];
+//            }
+//        }
+//    };
+//
+//    var c = {carname: 'bmw'};
+//    var p = {name: 'rick', car:c};
+//
+//    console.log(p.name);
+//    console.log(p.car.carname);
+//
+//    var p2 = deepClone(p);
+//
+//    console.log(p2.name);
+//    console.log(p2.c.carname);
+//
+
+
+    /*
+    * 面试
+    * */
+    function setName(obj) {  // 走到函数内部有两个结论： 有两个变量
+        obj.name = 'diaosi'; // 一个是obj
+        obj = new Object(); // 一个是 per都是指向什么都没有的对象
+        obj.name = 'funv'; // 让obj 来找到对象，给其添加name
+    };
+
+    var per = new Object(); // 对象上什么数据都没有
+    setName(per); // 将其传入，传入的东西是什么，对象的引用
+    console.log(per.name);
+
+
+
+
+
+
+
+
+
+
 
 
 

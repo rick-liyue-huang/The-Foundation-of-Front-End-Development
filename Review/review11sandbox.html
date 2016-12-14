@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    /*
+    * 沙箱模式 --- 在 JS 中讨论隔离，要隔离的是什么 ， 自然只有函数餐能实现隔离
+    *
+    * 想要实现沙盒只能使用函数
+    *
+    * IIFE 就是sandbox
+    * */
+    (function () {
+
+    })();// 模拟块级元素
+
+    // 块级作用域求和
+    var sum = 0;
+    (function () {
+        for (var i = 0; i <= 100; i++) {
+            sum += i;
+        }
+    })();
+//    console.log(i);// error
+    console.log(sum); // 5050
+//使用沙箱后，在北部定义的代码，访问数据，在沙箱内部是一个完整的生态链
+//    也就是说只要保证变量有var， 那么内部和外部就完全隔离
+//    如果要声明多个数据在沙箱中，也不会出现污染全局的问题
+
+    // 有两个污染
+    var id = function (idName) {
+        return document.getElementById(idName);
+    };
+    var cName = function (cName) {
+        return document.getElementsByClassName(cName);
+    };
+
+//    少污染
+    var o = {
+        id : function (idName) {
+            return document.getElementById(idName);
+        },
+        cName : function (cName) {
+            return document.getElementsByClassName(cName);
+        }
+    };
+
+//    如果封装构造函数，无疑又会引起污染
+//    因此用沙箱
+    (function () {
+        function itcast() {}
+        itcast.prototype.extend = function () {};
+        window.I = window.itcast = itcast;
+
+
+    })(); // 完全将代码隔离开，在沙箱内部是一个独立的结构，允许根据需求
+//    使用各种代码，然后将需要对外公开的代码返回出来。
+
+
+     /*
+     * 复用
+     * 1. 对象 -》 得到一个新的对象
+     * 2. 函数 -》 创建新的对象，反复调用
+     *
+     * */
+
+    (function () {
+        var f = function (name, age) {
+            this.name = name;
+            this.age = age;
+        };
+
+        f.prototype = new Foo();
+        function Foo() {}
+
+        window.f = f;// 因为内部无法访问，以你需要复用，即复制到window.f
+    })(); // 并不会污染全局变量
+
+    var o1 = new f('rick', 10);
+    var o2 = new f('leo', 20);
+    console.log(o1.name);
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

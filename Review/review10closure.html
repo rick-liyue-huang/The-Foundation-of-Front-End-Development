@@ -301,6 +301,223 @@
 //
 //    fib(5);
 
+    /*
+    * 闭包案例 ---
+    *
+    * 假定不考虑闭包，可以定一个数组来存储fib数列
+    * 这时候不用计算，可以直接从数组中取就可以
+    * 因此采用一种新方法，如果数组中有就直接取出来
+    * 如果没有则计算，同时将计算的结果放入数组，以便以后使用
+    * */
+//    var fibs =[1, 1 ,2 , 3, 5, 8, 13, 21, 34, 55];
+//    用数组来求递归的fib数列
+
+//    var fibs = [];
+//
+//    var fib = function (n) {
+//        // 如果数组中有就直接取出来
+//        if (fibs[n]) {
+//            return fibs[n];
+//        } else {
+
+//                var temp;
+//            // 需要计算
+////            递归计算
+//            if (n == 0 || n == 1) { return 1; }
+//            else { temp =  fib(n - 1) + fib(n - 2); }
+////           传统的递归运算直接计算，没有办法直接将数据存储到数组中
+//
+////            将得到的结果存储到数组的第n项
+//            fibs[n] = temp;
+//
+//            return temp;
+//        }
+//    }
+
+
+//    =》
+
+    // 最后的算法，利用闭包和数组以及递归
+    var fib = (function () {
+
+        var fibs = []; // 只有fib才能访问
+
+        return function (n) {
+
+            if (fibs[n]) {
+                return fibs[n];
+            } else {
+
+                var temp;
+                if (n === 0 || n === 1) {
+                    return 1;
+                } else {
+                    temp = fib(n-1) + fib(n-2);
+                }
+
+                fibs[n] = temp;
+
+                return temp;
+            }
+        };
+    })();
+
+//    jQuery 中的缓存案例
+
+/*
+* 存的是什么？
+* 键值对结构可以存储数据
+* 最简单的缓存结构
+*
+* */
+//    var cache = {};
+
+//   要求写一个函数， 用户提供键与值，将其存储到缓存中
+
+//    var fn = function (k, v) {
+//        cache[k] = v;
+//    };
+
+//    如果说将提供键来访问数据
+    /*
+    * 1. 直接访问cache[k]
+    * 2. 实现函数返回
+    * var foo = function(k) {return cache[k]}
+    *
+    * 在实际的开发中，缓存是常常被使用的手段
+    * 缓存的尺寸一定要在一定的范围内，例如50条
+    * */
+
+
+//    var cache = (function () {
+//
+//        length = 0
+//        var internalCache = {};
+//        return function (k, v) {
+//            // 如果传入v 表示存储数据， 如果只有一个k则读取数据
+//            if (v) {
+//                if (!internalCache[k]) {
+//                    length++;
+//                }
+//                internalCache[k] = v;
+//
+//            } else {
+//                return internalCache[k];
+//            }
+//        };
+//    })();
+//
+//    console.log(cache('name'));
+//    cache('name', 'rick');
+//    console.log(cache('name'));
+//
+//    for (var i = 0; i < 100; i++) {
+//        cache(i + '', i);
+//    }
+//    console.log(length);
+
+//    var cache = (function () {
+//
+//        length = 0;
+//        internalCache = {};
+//
+//        arr = [];
+//
+//        return function (k, v) {
+//            // 如果传入v 表示存储数据， 如果只有一个k则读取数据
+//            if (v) {
+//                if (!internalCache[k]) {
+//                    arr.push(k); // 缓存中没有才加进去，这用于记录缓存的
+//                    length++;
+//                }
+//                internalCache[k] = v;
+//
+//            } else {
+//                return internalCache[k];
+//            }
+//        };
+//    })();
+//
+//    console.log(cache('name'));
+//    cache('name', 'rick');
+//    console.log(cache('name'));
+//
+//    for (var i = 0; i < 100; i++) {
+//        cache(i + '', i);
+//    }
+//    console.log(length);
+
+    // 哟啊保证缓存最大的值为50， 一般最先删除第一条
+//    使用数组既可以存储加入的顺序
+
+
+//    每次加入数据的时候判断长度是否到达50
+//    var cache = (function () {
+//
+////        length = 0; // length 由数组的长度决定 arr.length
+//        internalCache = {};
+//
+//        arr = [];
+//
+//        return function (k, v) {
+//            // 如果传入v 表示存储数据， 如果只有一个k则读取数据
+//            if (v) {
+//                if (!internalCache[k]) {
+////                    length++;
+//
+////                    如果是新加入键值对，实际上放在这里面
+//                    if (arr.length >= 50) {
+//                        // 删除
+//                        var deleteKey = arr.shift();
+//                        delete internalCache[deleteKey];
+//                    }
+//
+//
+//                    arr.push(k); // 缓存中没有才加进去，这用于记录缓存的
+//
+//                }
+//                internalCache[k] = v;
+//
+//            } else {
+//                return internalCache[k];
+//            }
+//        };
+//    })();
+//
+//    console.log(cache('name'));
+//    cache('name', 'rick');
+//    console.log(cache('name'));
+//
+//    for (var i = 0; i < 100; i++) {
+//        cache(i + '', i);
+//    }
+//    console.log(length);
+
+
+    var createCache = function () {
+        var internalCache = {};
+        var arr = [];
+        return function (k, v) {
+            if (v) {
+                if (!internalCache[k]) {
+//
+                    if (arr.length >= 50) {
+                        // 删除
+                        var deleteKey = arr.shift();
+                        delete internalCache[deleteKey];
+                    }
+                    arr.push(k); // 缓存中没有才加进去，这用于记录缓存的
+                }
+                internalCache[k] = v;
+            } else {
+                return internalCache[k];
+            }
+        };
+    };
+
+    var type2Catche = createCache();
+    var selectCache = createCache();
+
 
 </script>
 </body>

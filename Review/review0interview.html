@@ -766,13 +766,13 @@
     * 36.
     * */
 
-    var foo = 1;
-    function fn() {
-        foo = 10;
-        function foo() {}
-    }
-    fn();
-    console.log(foo);
+//    var foo = 1;
+//    function fn() {
+//        foo = 10;
+//        function foo() {}
+//    }
+//    fn();
+//    console.log(foo);
 
 
 //    var foo;
@@ -799,15 +799,15 @@
     /*
     *
     * 38*/
-    var num = 123;
-    function foo1() {
-        console.log(num);
-    }
-    function foo2() {
-        var num = 456;
-        foo1();
-    }
-    foo2();// 123  作用域链
+//    var num = 123;
+//    function foo1() {
+//        console.log(num);
+//    }
+//    function foo2() {
+//        var num = 456;
+//        foo1();
+//    }
+//    foo2();// 123  作用域链
 
 
 
@@ -819,21 +819,21 @@
     /*
     * 40
     * */
-    function Foo() {
-        var o = {name: 'rick'};
-        return {
-            o:o,
-            set_Name: function (name) {
-                o.name = name;
-            }
-        };
-    }
-
-    var o = Foo();
-    console.log(o.name); // 这里面返回的是 return {}, 里面没有name, 所以是 undefined
-    console.log(o.o.name); // rick
-    o.set_Name('tom');
-    console.log(o.o.name); // tom
+//    function Foo() {
+//        var o = {name: 'rick'};
+//        return {
+//            o:o,
+//            set_Name: function (name) {
+//                o.name = name;
+//            }
+//        };
+//    }
+//
+//    var o = Foo();
+//    console.log(o.name); // 这里面返回的是 return {}, 里面没有name, 所以是 undefined
+//    console.log(o.o.name); // rick
+//    o.set_Name('tom');
+//    console.log(o.o.name); // tom
 
 
     /*
@@ -924,66 +924,66 @@
     /*
     * 面试
     * */
-    function setName(obj) {  // 走到函数内部有两个结论： 有两个变量
-        obj.name = 'diaosi'; // 一个是obj
-        obj = new Object(); // 一个是 per都是指向什么都没有的对象
-        obj.name = 'funv'; // 让obj 来找到对象，给其添加name
-    }
-
-    var per = new Object(); // 对象上什么数据都没有
-    setName(per); // 将其传入，传入的东西是什么，对象的引用
-    console.log(per.name);
+//    function setName(obj) {  // 走到函数内部有两个结论： 有两个变量
+//        obj.name = 'diaosi'; // 一个是obj
+//        obj = new Object(); // 一个是 per都是指向什么都没有的对象
+//        obj.name = 'funv'; // 让obj 来找到对象，给其添加name
+//    }
+//
+//    var per = new Object(); // 对象上什么数据都没有
+//    setName(per); // 将其传入，传入的东西是什么，对象的引用
+//    console.log(per.name);
 
 
 
 
 
 //    函数调用模式的面试题
-    var length = 10;
-    function fn() {
-        console.log(this.length);
-    }
-
-    var obj = {
-        length: 5,
-        method: function (fn) {
-            fn(); // 10
-            arguments[0](); // 方法调用， 访问arguments 对象键位0 的数据
-//            就是调用fn，但是fn现在在 arguments里面
-
-
-//            类比
-            /*
-            * function foo() {}
-            * var o = {};
-            * o.f = foo;
-            * o.f() === o['f'](), 所以对象是arguments， 所以this 指的就是 arguments,而 arguments.length 就是 实参的个数
-            * */
-        }
-    };
-    obj.method(fn, 122); // 2
+//    var length = 10;
+//    function fn() {
+//        console.log(this.length);
+//    }
+//
+//    var obj = {
+//        length: 5,
+//        method: function (fn) {
+//            fn(); // 10
+//            arguments[0](); // 方法调用， 访问arguments 对象键位0 的数据
+////            就是调用fn，但是fn现在在 arguments里面
+//
+//
+////            类比
+//            /*
+//            * function foo() {}
+//            * var o = {};
+//            * o.f = foo;
+//            * o.f() === o['f'](), 所以对象是arguments， 所以this 指的就是 arguments,而 arguments.length 就是 实参的个数
+//            * */
+//        }
+//    };
+//    obj.method(fn, 122); // 2
 
 //    面试题
 
-    var scope = 'global';
-    function log() {
-        var args = Array.prototype.join.call(arguments, ', ');
-        console.log(this.scope + ':' + args);
-    }
-
-    var dog = {
-        scope: 'dog',
-        yelp: function () {
-            var scope = 'dog.yelp';
-            log('wow');
-        }
-    };
-
-    dog.yelp();
-
-    dog.yelp();
-    dog.yelp.apply(dog);
-    log.call(dog, 'created');
+//    var scope = 'global';
+//    function log() {
+//        var args = Array.prototype.join.call(arguments, ', ');
+//        console.log(this.scope + ':' + args);
+//    }
+//
+//    var dog = {
+//        scope: 'dog',
+//        yelp: function () {
+//            var scope = 'dog.yelp';
+//            log('wow');
+//        }
+//    };
+//
+//    dog.yelp();
+//
+//    dog.yelp();
+//    dog.yelp.apply(dog);
+//    log.call(dog, 'created');
 
 
     //
@@ -1003,12 +1003,29 @@
 
 //    另外， 在使用对象的时候，如果不再使用对象了，将变量对象设为 null
 
-    var o = {num: 123, fn: function () {
-        console.log(this.num);
-    }};
-    var num = 456;
-    var foo = o.fn;
-    foo(); // => 函数调用模式，因此 this 是全局 456
+//    var o = {num: 123, fn: function () {
+//        console.log(this.num);
+//    }};
+//    var num = 456;
+//    var foo = o.fn;
+//    foo(); // => 函数调用模式，因此 this 是全局 456
+
+    //
+
+    function fn(aa) {
+        var results = [];
+        for (var i = 0, n = aa.length; i < n; i++) {
+            results[i] = function () {
+                return aa[i];
+            };
+        }
+        return results;
+    }
+    var o = fn([10, 20, 30]);
+    console.log(o);
+    var f = o[0];
+    console.log(f);
+    console.log(f());
 
 
 

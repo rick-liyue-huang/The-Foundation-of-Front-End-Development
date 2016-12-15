@@ -166,7 +166,11 @@
         list[i].style.backgroundColor = 'yellow';
     }
 
-
+    // 借用构造函数继承模型
+    var Student = function (name, age, genger) {
+        Person.call(this, name, age, genger);
+        this.gender = genger;
+    }
 
 
 </script>

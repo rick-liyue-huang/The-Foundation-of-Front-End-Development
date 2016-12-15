@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p, div, img, span, a {
+            display: block;
+            width: 300px;
+            height: 50px;
+            border: 1px solid red;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<a href=""></a>
+<img src="" alt="">
+    <div>
+    </div>
+    <div></div>
+    <p></p>
+    <span>123</span>
+<script>
+    /*
+    * 函数的四种调用方式
+    * 1.函数模式
+    * 2.方法模式
+    * 3.构造器模式
+    * 4.上下文方式
+    *
+    * 不同的东西就是   this
+    * 函数有一个默认的参数， 就是 this
+    *
+    *
+    * */
+
+
+//    定义一个函数，如果单独调用，而不语任何东西相关联，就是函数模式
+    function foo() {}
+
+//    定义一个函数，如果将函数复制给一个对象的成员，那么利用该对象来调用就是方法模式
+    function foo2() {}
+    var o = {};
+    o.f = foo2;
+
+    o.f(); // 这就是方法模式
+
+//    定义一个函数，使用 new 来调用创建对象，就是 constructor mode
+    function foo3() {}
+    new foo3(); // 这就是构造器模式
+
+//    区别
+
+    /*
+    * 函数模式： this 就是 window 全局对象
+    * 方法模式： this 就是 调用该方法的对象
+    * 构造器模式： this 就是 new 出来的新对象
+    * */
+
+    /*
+    * 构造函数如果没有return 默认就是 返回当前对象
+    *
+    * 如果有 return，
+    * 如果 return 的是基本类型， 可以忽略 return 后面的东西 // null undefined, boolean, number, string
+    *
+    * 如果 return 的是 引用类型， {} [], 就返回后面的return 后面的东西
+    *
+    * 如果
+    * */
+    var Person = function () {
+        this.name = 'rick';
+        return [];
+    };
+    var p = new Person();
+
+//    例子
+    var createPerson = function (name) {
+        return {
+            get_name: function () {
+                return name;
+            }
+        };
+    };
+    var p1 = createPerson(); // 工厂模式
+    var p = new createPerson(); // 继承模式
+
+    /*
+    * 上下文，
+    * 在函数调用中， 函数模式，方法模式， 构造器模式， this 都是固定的
+    * 而上下文模式
+    * this 是由上下文决定的
+    *
+    *
+    * */
+    function foo() {
+        console.log(this);
+    }
+    foo();
+    var o = {fn:foo, name: 'rick'};
+    o.fn();
+    new foo();
+
+
+//    上下文模式表示， 可以在调用的时候指定 this 是什么
+//    call apply
+//    由于可以指定this， 可以模仿的调用有几种， 方法模式 和 函数模式
+    foo.apply();
+    foo.apply(null); // 表示函数模式
+
+    var o1 = {name: 'mac'};
+    foo.apply(o1); // o1.foo, 也叫作 借用方法调用
+
+//    apply 的参数， 第一个参宿表示指定的this 对象， 第二个参数要求是一个数组。
+
+//    案例, 给页面上所有的div p 标签添加背景色。
+
+    var divs = document.getElementsByTagName('div');
+    var ps = document.getElementsByTagName('p');
+
+//    yellow
+//    dom.style.backgroundColor = 'yellow';
+
+//    for (var i = 0; i < divs.length; i++) {
+//        divs[i].style.backgroundColor = 'yellow';
+//    }
+//    for (var i = 0; i < ps.length; i++) {
+//        ps[i].style.backgroundColor = 'yellow';
+//    }
+//
+//
+////    验证数组方法
+//    var arr = ['a'];
+//
+////    console.log(arr.length);
+//    console.log(arr.push('b', 'c', 'd'));
+
+
+// 都是伪数组
+
+//    如果函数调用 func(1, 2, 3)
+//    那么使用apply 模式 就是使用 func.apply(o, [1,2,3])
+//    等价
+
+//    var list = [];
+////    list.push(divs);
+//    list.push.apply(list, divs);
+//    list.push.apply(list, ps);
+
+
+    var list = [].concat.apply([].slice.apply(ps), divs); // slice 是将伪数组变为真数组
+    var i;
+    for (i = 0; i < list.length; i++) {
+        list[i].style.backgroundColor = 'purple';
+    }
+
+    var tag = function (tag, results) {
+        results = results || [];
+        results.push.apply(results, document.getElementsByTagName(tag));
+        return results;
+    };
+
+    var list = tag('div');
+    list = tag('p', list);
+    for (var i = 0; i < list.length; i++) {
+        list[i].style.backgroundColor = 'yellow';
+    }
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

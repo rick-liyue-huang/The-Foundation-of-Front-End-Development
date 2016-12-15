@@ -83,6 +83,91 @@
     var o1 = new f('rick', 10);
     var o2 = new f('leo', 20);
     console.log(o1.name);
+
+
+
+
+    /*
+    * 优化缓存方法
+    *
+    * */
+
+//    var createCache = function () {
+//        var internalCache = {};
+//        var arr = [];
+//        return function (k, v) {
+//            if (v) {
+//                if (!internalCache[k]) {
+////
+//                    if (arr.length >= 50) {
+//                        // 删除
+//                        var deleteKey = arr.shift();
+//                        delete internalCache[deleteKey];
+//                    }
+//                    arr.push(k); // 缓存中没有才加进去，这用于记录缓存的
+//                }
+//                internalCache[k] = v;
+//            } else {
+//                return internalCache[k];
+//            }
+//        };
+//    };
+//
+//    var type2Catche = createCache();
+//    var selectCache = createCache();
+
+//    如果存储的是一个键值对，除了使用数组和对象外，还可以将数据存储在函数名上面，优点少一个内存， 缺点是数据暴露在外面。
+
+//    1.将键值对提取出来放到函数上
+//    var createCache1 = function () {
+//        var arr = [];
+//        var cache = function (k, v) {
+//            if (v) {
+//                if (!cache[k]) {
+//                    if (arr.length >= 3) {
+//                        var deleteKey = arr.shift();
+//                        delete cache[deleteKey];
+//                    }
+//                    arr.push(k);
+//                }
+//                cache[k] = v;
+//            } else {
+//                return cache[k];
+//            }
+//        };
+//        return cache;
+//    };
+
+//    var classCache = createCache1();
+
+//    既然键值对存储在函数名上，那么表示直接使用 函数名[key] 就可以访问数据了
+//    表明函数体可以简化
+//    classCache('name1', 'rick');
+//    console.log(classCache['name1']); // rick
+
+
+//    优化自定义缓存方法，简化函数
+
+    var createCache1 = function () {
+        var arr = [];
+        var cache = function () {
+
+            //        在jq中很明确，调用函数是在加载
+//        并没有修改数据的意思，因此不需要判断是否有该键存在
+            if (arr.length >= 3) {
+
+                delete cache[arr.shift()];
+            }
+            arr.push(k);
+            cache[k] = v;
+        };
+        return cache;
+
+    };
+
+
+
+
 </script>
 </body>
 </html>

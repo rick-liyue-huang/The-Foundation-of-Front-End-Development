@@ -938,7 +938,77 @@
 
 
 
+//    函数调用模式的面试题
+    var length = 10;
+    function fn() {
+        console.log(this.length);
+    }
 
+    var obj = {
+        length: 5,
+        method: function (fn) {
+            fn(); // 10
+            arguments[0](); // 方法调用， 访问arguments 对象键位0 的数据
+//            就是调用fn，但是fn现在在 arguments里面
+
+
+//            类比
+            /*
+            * function foo() {}
+            * var o = {};
+            * o.f = foo;
+            * o.f() === o['f'](), 所以对象是arguments， 所以this 指的就是 arguments,而 arguments.length 就是 实参的个数
+            * */
+        }
+    };
+    obj.method(fn, 122); // 2
+
+//    面试题
+
+    var scope = 'global';
+    function log() {
+        var args = Array.prototype.join.call(arguments, ', ');
+        console.log(this.scope + ':' + args);
+    }
+
+    var dog = {
+        scope: 'dog',
+        yelp: function () {
+            var scope = 'dog.yelp';
+            log('wow');
+        }
+    };
+
+    dog.yelp();
+
+    dog.yelp();
+    dog.yelp.apply(dog);
+    log.call(dog, 'created');
+
+
+    //
+//    var a = 2;
+//    var o = {a:3, foo:foo};
+//    var p = {a: 4};
+//
+//    o.foo(); //3
+//    (p.foo = o.foo)();
+//
+//    function foo() {
+//        console.log(this.a);
+//    }
+//    (p.foo)(); //4
+//    p.foo(); // 4
+
+
+//    另外， 在使用对象的时候，如果不再使用对象了，将变量对象设为 null
+
+    var o = {num: 123, fn: function () {
+        console.log(this.num);
+    }};
+    var num = 456;
+    var foo = o.fn;
+    foo(); // => 函数调用模式，因此 this 是全局 456
 
 
 

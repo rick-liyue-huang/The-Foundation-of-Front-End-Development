@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            width: 160px;
+            height: 170px;
+            background: url("./images/jd1.png") no-repeat;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box"></div>
+
+
+    <script>
+        var box = document.getElementById('box');
+        box.onmouseover = function () {
+            this.style.backgroundImage = "url('./images/jd2.png')";
+        };
+        box.onmouseout = function () {
+            this.style.background = "url('./images/jd1.png') no-repeat";
+        };
+    </script>
+</body>
+</html>

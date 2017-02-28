@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // target: switch the variables, a <=> b
+    var aa = 1;
+    var bb = 2;
+    console.log('aa: ' + aa + ' --- ' + 'bb: ' + bb);
+
+    var temp;
+
+    temp = aa;
+
+    aa = bb;
+
+    bb = temp;
+
+    console.log("aa: " + aa + " ------ " + "bb: " + bb);
+
+//    the second method
+//    求两个数的和，然后减去其中一个交换给另一个
+
+    aa = aa + bb;
+    bb = aa - bb;
+    aa = aa - bb;
+    console.log("aa: " + aa + "  ---- " + "bb: " + bb);
+
+
+
+
+</script>
+</body>
+</html>

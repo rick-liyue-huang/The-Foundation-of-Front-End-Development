@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // boolean
+    console.log(2&&1); // 1
+
+    console.log(0&&1); // 0
+
+    console.log(2||1); // 2
+
+    console.log(0||1); // 1
+
+    var a = 1;
+    var b = 2;
+    a++;
+    var num = ++a + (a++) + a + (++b) + b++;
+    console.log(num); // 16
+
+    console.log(0&&1); //0
+    console.log(1&&0); // 0
+    console.log(1&&10); // 10
+
+    console.log(0||1); // 1
+    console.log(1||0); // 1
+    console.log(1||5); // 1
+    console.log(5||1); // 5
+
+    console.log(1&&2&&3); //3
+    console.log(0&&1&&2); //0
+    console.log(1&&0&&2); //0
+
+    console.log(0||1||2); // 1
+    console.log(1||0||2); // 1
+
+
+//    && > ||
+
+    console.log(3&&0||2); // 2
+    console.log(3||0&&2); // 3
+    console.log(0||2&&3); // 3
+
+
+    console.log(1+1&&3); //3
+    console.log(0&&1+1); // 0
+    console.log(1||2&&3-1); //  1
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

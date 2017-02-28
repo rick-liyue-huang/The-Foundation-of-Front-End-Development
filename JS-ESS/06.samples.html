@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box" id="box"></div>
+    <button id="btn">click me to change the box width of 500px</button>
+<script>
+
+    /*案例一，改变盒子宽度*/
+//    永远记住， 获取事件源， 绑定事件， 书写驱动程序
+
+//    获取事件源
+    var btn = document.getElementById('btn');
+    var box = document.getElementById('box');
+
+//    绑定事件，
+    btn.onclick = function () {
+
+//        并且书写驱动事件程序
+        box.style.width = '500px';
+    };
+</script>
+</body>
+</html>

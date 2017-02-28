@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /*
+    var a = 1;
+    function fn() {
+//        a = b = 1;
+        var b = 2, c = 3;
+        console.log(c);
+    }
+    fn();
+    console.log(b);
+    */
+
+    var a = 1;
+    function fn() {
+        a = b = 2;
+    }
+    fn();
+    console.log(a); // 2
+    console.log(b); // 2
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    console.log(Number.MAX_VALUE);
+    console.log(Number.MIN_VALUE);
+    console.log(1/0); // Infinity
+    console.log(-1/0); // -Infinity
+
+    console.log(undefined + 11); // NaN
+    console.log('aaa'/2); // NaN
+    console.log(2 + 'aaa'); // 2aaa
+    console.log(NaN == NaN); // false
+    console.log(undefined === undefined); //true
+    console.log(isNaN('abc')); //true
+    console.log(isNaN('+')); // true
+//    任何不是数字的变量数值都是返回true
+
+    console.log(isNaN(NaN)); //true
+
+//    true 0以外的数字， "string", Object都是 true
+//    false 0 undfined, null, 都是 false
+    console.log(undefined == null);// true
+    console.log(undefined === null); // false
+    console.log(null + 10); // 10, null 相当于0
+    console.log(undefined + 10); //NaN
+    console.log(null + 'aaa'); /// nullaaa
+
+//    数据类型转换
+
+//    1.转换为字符串，+ ""
+    var bool = true;
+    var num = 111;
+    var aaa;
+    var bbb = null;
+    console.log(typeof (bool + "") ); // string
+    console.log(typeof (num + "")); // string
+    console.log(typeof (bbb + "")); //string
+
+//    String()
+    console.log(typeof (String(bool))); //string
+    console.log(typeof (String(num))); // string
+
+
+//    .toString()
+    console.log(typeof (num.toString())); // string
+    console.log(typeof (bool.toString())); // string
+
+//    2. 转换为数字类型
+
+    var str = '111';
+    var bool1 = true;
+
+    console.log(typeof (str - 0) ); // number
+    console.log(typeof (1 * str)); // number
+    console.log(typeof (str + 0)); // string
+
+    console.log(typeof (bool1 - 0)); // number
+    console.log(typeof (bool1 * 1)); // number
+
+    console.log(typeof (Number(str))); // number
+
+    console.log(Number('abc')); // NaN
+
+    // 3.parseInt, parseFloat
+    var str2 = '123.456abc';
+    console.log(parseInt(str2)); // 123
+    console.log(parseFloat(str2)); // 123.456
+
+    var str3 = 'abc123.4556';
+    console.log(parseInt(str3)); // NaN
+    console.log(parseFloat(str3)); // NaN
+
+    // 4. !!将任意类型变为boolean value
+
+    console.log(!!undefined); // false
+    console.log(!!null); // false
+    console.log(!!""); //false
+
+    console.log(!!123); // true
+    console.log(!!"abc"); // true
+
+    console.log(!!Object); // true
+    console.log(!!Function); // true
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -83,15 +83,113 @@
 
 
 //    将字符串数组用 | 隔离开
-    var arr = ['aa', 'bb', 'cc', 'dd'];
-    var arr1 = [];
-    for (var i = 0; i < arr.length; i++) {
-        arr1[arr1.length] = arr[i] + '|';
-        if (i = arr.length - 1) {
-            arr1[arr1.length] = arr[i];
+//    var arr = ['吕布', '赵云', '典韦', '关羽', '马超', '张飞'];
+//    var str = arr[0];
+//    var separate = "|";
+//    for (var i = 1; i < arr.length; i++) {
+//        str += separate + arr[i];
+//    }
+//    console.log(str);
+
+//    将数组中值为0的去掉，不为0的存入新的数组
+//    var arr = ['aa', 'bb', 0, 'cc', 0, 'dd'];
+//    var newArr = [];
+//    for (var i = 0; i < arr.length; i++) {
+//        if (arr[i] !== 0) {
+//            newArr[newArr.length] = arr[i];
+//        }
+//    }
+//    console.log(newArr);
+
+
+//    翻转数组
+// method 1
+//    var arr = ['aa', 'bb', 'cc'];
+//    var newArr = [];
+//    for (var i = 0; i < arr.length; i++) {
+//        newArr[newArr.length] = arr[arr.length - 1 - i];
+//    }
+//    console.log(newArr);
+
+//method 2
+//    var arr = ['aa', 'bb', 'cc'];
+//    var newArr = [];
+//    for ( var i = arr.length - 1; i >= 0; i--) {
+//        newArr[newArr.length] = arr[i];
+//    }
+//    console.log(newArr);
+
+//    method 3
+//    var arr = ['aa', 'bb', 'cc', 'dd'];
+//    for (var i = 0; i < arr.length / 2; i++) {
+//        var temp = arr[i];
+//        arr[i] = arr[arr.length - 1 - i];
+//        arr[arr.length - 1 - i] = temp;
+//    }
+//    console.log(arr);
+
+
+//    sorting problems: 比较轮数n-1, 比较次数n-1, 符合条件的交换位置， 双重for loop
+//1. method 1
+//    var arr = [4, 5, 3, 8, 6, 9, 1];
+//    var temp;
+//    for (var i = 0; i < arr.length - 1; i++) {
+//        for (var j = 0; j < arr.length - 1; j++) {
+//            if (arr[j+1] < arr[j]) {
+//                temp = arr[j];
+//                arr[j] = arr[j+1];
+//                arr[j+1] = temp;
+//            }
+//        }
+//    }
+//    console.log(arr);
+
+//    method 2.
+//    var m = 0, n = 0;
+//    var arr = [4, 5, 3, 8, 6, 9, 1];
+//    for (var i = 0; i < arr.length - 1; i++) {
+//        for (var j = 0; j < arr.length - 1 - i; j++) {
+//            if (arr[j] > arr[j + 1]) {
+//                var temp = arr[j];
+//                arr[j] = arr[j+1];
+//                arr[j+1] = temp;
+//            }
+//            m++
+//        }
+//        n++;
+//    }
+//    console.log(arr);
+//    console.log(m);
+//    console.log(n);
+
+    // method 3.
+
+    var arr = [4, 5, 3, 8, 6, 9, 1];
+    var m = 0, n = 0;
+
+//    如果本次比较没有移动任何元素，就表示比较完成。
+    for (var i = 0; i < arr.length - 1; i++) {
+
+        var bool = true; // 开闭原则
+
+        for (var j = 0; j < arr.length - 1 - i; j++) {
+            if (arr[j] > arr[j+1]) {
+                var temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+                bool = false;
+            }
+            m++;
         }
+        if (bool) {
+            break;
+        }
+        n++;
     }
-    console.log(arr1);
+    console.log(arr);
+    console.log(m);
+    console.log(n); 
+
 
 </script>
 </body>

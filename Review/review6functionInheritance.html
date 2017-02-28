@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .bd {
+            width: 800px;
+            height: 300px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div class="bd">
+
+    </div>
+
+    <textarea class="bd">
+
+    </textarea>
+<script>
+
+    //Object 原型中的常用方法
+    // 1. 带有下划线的除了 __proto__,其他的不考虑
+    // 2. constructor 是构造函数的引用，就是构造函数
+
+    // 3.
+    var Person = function () {
+        this.name = 'rick';
+    };
+    var p1 = new Person();
+    var p2 = new Person.prototype.constructor;
+
+    Person.prototype.init = Person;
+    var p3 = new Person.prototype.init();
+
+    // 4. hasOwnProperty
+    var o = {name: 'leo'};
+    function Person1() {}
+    Person1.prototype = o;
+    var p = new Person1();
+    console.log(p.name); //leo
+    var isTrue = p.hasOwnProperty('name');
+    console.log(isTrue); // false
+
+    // 5. isPrototypeOf()
+    // boolean obj1.isPrototypeOf(obj2), obj1 是否是obj2的原型对象
+    var Person2 = function () {};
+    var p = new Person2();
+    console.log(p.isPrototypeOf(Person2)); // false
+    console.log(p.isPrototypeOf(Person2.prototype)); // false
+
+    console.log(Person2.prototype.isPrototypeOf(p));  // true
+    console.log(Person2.prototype.isPrototypeOf(Person2));  // false
+
+    var o = {};
+    function Person3() {}
+    Person3.prototype = o;
+    var p = new Person3();
+    console.log(o.isPrototypeOf(p)); // true
+
+
+    // 6. propertyIsEnumerable . 枚举 for-in
+    var o = {};
+    for (var k in o) {
+        console.log(k);
+    }
+
+    // 这个方法判断属性是否可以被枚举，同时判断属性是否是自己的
+
+    // 因此该方法表示判断属性必须是自己提供的，同时可以被枚举的，那么就返回true，否则就返回false
+
+    // 在es3中，是对 hasOwnProperty的升级版
+    // 在es5中， 引入了对象特性attribute的概念，才会使得这个方法有一些作用
+
+    // boolean 对象.prototypeIsEnumerable(属性名称)；
+
+    var o = {name : 'rick'};
+    o.__proto__.age = 10;
+    console.log(o.propertyIsEnumerable('name')); //true
+    console.log(o.propertyIsEnumerable('age'));  //false
+
+
+    // 7. toString, toLocaleString, valueOf
+    var d = new Date();
+    console.log(d.toDateString()); // Sat Dec 10 2016
+    console.log(d.toLocaleDateString());  // 0/12/2016
+
+    function Person4() {
+        this.toString = function () {
+            return 'toString';
+        };
+        this.toLocaleString = function () {
+            return 'toLocalestring';
+        };
+    }
+    var d1 = new Person4();
+    console.log(d1.toString()); // toString
+    console.log(d1.toLocaleString());  // toLocalestring
+
+    // 借用方法
+    console.log(toString.call(1));  // [object Number]
+    console.log(toLocaleString.call(1));  //1
+
+    console.log(new Number(1).toString());  // 1
+    console.log(new Number(1).toLocaleString()); // 1
+
+    console.log(toString.call(new Date())); // [object Date]
+
+    // 对于对象来说，我们需要将其，有内部的方法，
+    var o = {}; // valueOf
+    if (!!o) {
+        console.log(1); // 1
+    }
+
+
+    var a = [1,2,3];
+    console.log(a.valueOf()); // [1, 2, 3]
+
+
+    //instanceOf()
+    console.log([] instanceof Array); // true
+
+    function Fn() {}
+    function Foo() {}
+    var o1 = new Fn();
+    console.log(o1 instanceof Foo); // false
+    Fn.prototype = new Foo();
+    var o = new Fn();
+    console.log(o instanceof Foo); // true
+
+    // 规律：
+    /*
+    * 任何的一个对象都有一条原型链，
+    * 那么 只要是在该链上的构造函数，这个判断都是true
+    * */
+
+
+    /*
+    * 创建函数的方法
+    * 1. 声明式， 2. 表达式 3. new Function (这里看出函数也是对象)
+    * */
+
+    //结论： 任意的函数都是Function 的实例
+    console.log( Array instanceof Function); // true
+    function Pesona() {}
+    console.log(Pesona instanceof Function); //true
+    console.log(Date instanceof Function); // true
+
+    console.log(Function instanceof Function);
+
+
+    // new Function的语法规则
+//    var 函数名 = new Function(arg1, arg2, ..., body);
+//    Function 构造函数所有的参数都是字符串类型的
+    // 最后一个参数也是字符串， 表示的是生成函数的函数体
+    function max(a, b) {
+        return a > b ? a : b;
+    }
+    var fnMax = new Function('a', 'b', 'return a > b ? a : b;');
+    var res = fnMax(3, 5);
+    console.log(res); // 5
+
+
+    //写一个函数，求传入参数的和
+    // 1. 有两个参数的时候
+//    function sum(a, b) {
+//        return a + b;
+//    }
+//    var fnSum = new Function ('a', 'b', 'return a + b;');
+//    console.log(fnSum(4,5)); // 9
+
+    // 多个参数的时候
+    function sum() {
+        var total = 0, len = arguments.length;
+        for (var i = 0; i < len; i++) {
+            total += arguments[i];
+        }
+        return total;
+    }
+    var res = sum(1,3,4);
+    console.log(res); // 8
+
+    var fnSum = new Function('var total = 0, len = arguments.length;' +
+            'for (var i = 0; i < len; i++) {' +
+        'total += arguments[i];' +
+    '}' +
+    'return total;');
+    console.log(fnSum(2,3,5)); // 10
+
+    // 第二种方法 吸收了MVC思想
+//    onload = function () {
+//        var fnSum = new Function();
+//    };
+
+
+    /*
+    * Function , eval()
+    * 他们都可以将字符串作为JS 代码来执行
+    * eval('''''')
+    * */
+    eval('var a = 10;');
+//    console.log();
+    var str = '{name:"rick", age: 19}';
+//    str = str.replace('{', "").replace("}", "");
+//    console.log(str);
+//    var arr = str.split(',');
+//    console.log(arr);
+//
+//    var o = {};
+//    for (var k in arr) {
+//        var tempArr = arr[k].split(":");
+//
+//        // 去空格
+//        var key = tempArr[0].trim();
+//        var value = tempArr[1].trim();
+//
+//        o[key] = value;
+//    }
+//
+//    console.log(o.name);
+//    console.log(o.age);
+
+    // 上面的代码可以通过这一句实现
+    var o2 = eval("(" + str + ")");
+    console.log(o2.name); // rick
+    console.log(o2.age); //19
+
+
+    /*
+    * 1. ajax
+    * 服务器与浏览器交互，服务器发给浏览器的数据是一个字符串
+    * 霸么要执行这个代码，就需要将字符串作为代码执行，这个就要用到eval
+    * */
+
+    /**
+     * 2. 所见即所得 通过 div 和 textarea
+     * */
+
+    var txt = document.getElementsByClassName('bd')[1];
+
+    txt.onkeyup = function () {
+        try {
+            console.log(this.value);
+//            eval(this.vale);
+        } catch (e) {
+
+        }
+
+    }
+
+
+    // {} 1.对象， 2. 代码块
+
+    // eval 和 new Function 都可以实现字符串执行代码, eval 会污染全局变量，
+    // 在实际开发中，如果考虑效率就是用eval, 但是安全性就考虑new Function
+    // new Function, 等价于 定义一个函数，在函数内部执行。
+
+    /*
+    * 总结：
+    * 1.对象都有原型对象，对象默认继承自原型对象
+    * 2.函数被定义后，默认就有原型属性，原型属性也是对象
+    * 3.函数的原型属性默认继承自Object.prototype
+    * 4.原型对象中constructor 指向对应的构造函数
+    * 5.所有的函数都是Function 的实例
+    * 6. 函数也是对象
+    *
+    * prototype 是函数的原型属性
+    * __proto__ 是对象的原型对象
+    *
+    * */
+
+    /*
+    * 函数本身也是对象，因此具有 prototype 和 __proto__
+    *
+    * 任何函数的__proto__， 都指向 Function.prototype
+    * Foo 是 Function 的实例
+    * Function 是 Foo 的构造函数
+    * 原型对象就是构造函数的原型属性
+    * 所以
+    * Foo.__proto__ 就是 构造函数的原型属性，即Function.prototype
+    *
+    * 同时，
+    * 默认函数的原型属性继承自 Object.prototype
+    * Function 是函数， Function.prototype 是函数的原型属性
+    * Function.prototype 继承自Object.prototype
+    * */
+
+
+    // 函数原型链
+//    Foo.__proto__ 就是 Function.prototype
+ //   Function.prototype.__proto__ 就是 Object.prototype
+
+    // 就是将函数当做对象看。
+
+
+    /*
+    * 根据结论： Function, 和函数， 和 Function.prototype 之间的关系
+    * Array 是 Function 的实例， 继承自 Function.prototype
+    * Date 是 Function 的实例， 继承自Function.protoype
+    *
+    * Object 是 Function 的实例， 继承自Function.prototype
+    *
+    * Function 是 Function的实例， 继承自Functioin.prototype
+    * 结论： Function.__proto__ 就是Function.prototype
+    *
+    * */
+    function Foo() {}
+
+    function Foo1() {}
+    function Foo2() {}
+
+    // 与对象相关的，叫做实例属性或者对象属性
+    // 在函数中添加的属性，这些属性对于实例来说，就叫做 静态属性
+
+    // $('p').each 实例成员，   $.each() 静态成员
+
+
+    // Object instanceOf Function; true
+    // Function instanceOf Object; true
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

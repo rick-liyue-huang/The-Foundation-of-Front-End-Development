@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // 在JS 中类型是很弱的概念
+//    在 JS 中数据是有类型的，但是变量是没有类型约束的
+
+    console.log(typeof []); // object
+    console.log(typeof {}); // object
+    console.log(typeof 123); // number
+    console.log(typeof "");  // string
+    console.log(typeof true); // boolean
+    console.log(typeof new Date()); //object
+    console.log(typeof /123/); // object
+    console.log(typeof function () {
+    }); // functioin
+
+    function Person() {
+    }
+    var p = new Person();
+    console.log(typeof p); // 常常描述为Person 对象
+//    构造函数的名字就是对象的类型的名字
+    console.log(p instanceof Person); // true
+
+    // 有时候需要明确对象的类型以便做赋值的处理
+    // $(???)
+//    string   -> 选择器， html
+//    function -> onload
+//    DOM -> jq 对象
+
+//每一个对象都有一个constructor 属性，
+    /*
+    * constructor 构造器， 描述的是其构造函数
+    * */
+    function Fn() {}
+    var o = new Fn();
+    console.log(o.constructor === Fn); // true
+
+    // 每一个对象都连接到其原型对象上，对象的constructor属性是其原型对象提供的。
+    var obj = {};
+    console.log(obj.constructor); // Object() { [native code] }
+
+    // 如何获得对象的类型？
+
+    function Person() {}
+    var p = new Person();
+    // 1.获得对象的构造函数
+    var ctr = p.constructor;
+    // 2.将函数转换为字符串
+    var s = "" + ctr;
+    // 3. 将function 与 （ 之间的字符串截取出来
+    //3.1 传统的字符串处理函数
+    var start = s.replace("function", "|").indexOf("|");
+    if (start != -1) {
+        var end = s.replace('function', "|").indexOf("(");
+        if (end != -1) {
+            var name = s.replace("function", "|").slice(start + 2, end);
+            console.log("|" + name + "|");
+        }
+    }
+
+    // <string>.replace(<string>, <string>)
+    // <string>.indexOf(<string>); // 找不到就返回-1
+
+    // <string>.slice(startIndex, endIndex)
+
+    //3.2
+    s = s.replace('function', "|"); // | 名字（）{}
+    var start = s.replace("function", "|").indexOf("|");
+    if (start != -1) {
+        var end = s.indexOf("(");
+        if (end != -1) {
+            var name = s.slice(start + 2, end);
+            console.log("|" + name + "|");
+        }
+    }
+
+    // 3.3
+    s = s.replace('function', "|"); // | 名字（）{}
+    var start = s.indexOf("|");
+    var end = s.indexOf("(");
+    if (start != -1 && end != -1) {
+        var name = s.slice(start + 2, end);
+        console.log("|" + name + "|");
+    }
+
+    // 3.4 利用正则表达式
+//    var r = /function(.+?)\(/;
+//    var name = r.exec(s)[1];
+//    console.log("|" + name + "|");
+
+    // 3.5  函数有一个name 属性
+    console.log(ctr.name); // Person
+
+
+    /*
+    * 通用的获得对象的类型， 其实就是获得函数名称
+    * */
+    function getFnName(fn) {
+//        if (typeof fn !== 'function') return; // 尽量不写花括号
+
+        // 这里就保证是函数
+//        if (fn.name) {
+//            return fn.name;
+//        } else {
+//            return /function(.+)\(/.exec(fn + '')[1];
+//        }
+
+/*       return fn.name ?
+                 fn.name :
+               /function(.+)\(/.exec(fn + "")[1];
+ */
+
+        // 逻辑中断 || &&
+//        return fn.name || /function(.+)\(/.exec(fn + "")[1];
+
+        return typeof fn !== 'function' ?
+                undefined:
+                fn.name || /function(.+)\(/.exec(fn + "")[1];
+
+    }
+
+    
+
+    function PersonRick() {}
+    var o = new PersonRick();
+    var name = getFnName(o.constructor);
+    console.log(name); // PersonRick
+
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

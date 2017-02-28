@@ -6,7 +6,124 @@
 </head>
 <body>
 
+<script>
+    /*
+    * event flow -- describes the order in which events are received on the page,
+    *
+    * event bubbling -- IE is called event bubbling, because an event is said to start at the most specific element, and then
+    * flow upward toward the least specific node.
+    *
+    * event capturing -- Netscape  is called event capturing, an event is start from the least specific element
+     *
+     * event flow specified by DOM level2 events has three phase: the event capturing phase, at the target, and the event bubbling phase.
+     * event capturing occurs first, providing the opportunity to intercept events if necessary, next, the actual target receives tha event.
+     * the final phase is bubbling, which allows a final response to the event.
+     *
+     * event handlers -- a function that is called in response to an event is called an event handler (or an event listener), and begin with
+     * on, onclick, onload
+    * */
 
+    // the most frequently use of event handler
+    var btn = document.getElementById("btn");
+    btn.addEventListener('click', function () {
+        console.log(this.id);
+    });
+
+    var handler = function () {
+        console.log(this.id);
+    };
+
+    btn.addEventListener('click', handler, false);
+    btn.removeEventListener('click', handler, false); //  works!!! because the handler is not the same one
+
+    // ie event
+    btn.attachEvent('onclick', function () {
+        console.log('clicked');
+    });
+
+    // to accommodate event handling in a cross-browser way, many developers end up either using a JS
+
+    var EventUtil = {
+        addHandler: function (element, type, handler) {
+            if (element.addEventListener) {
+                element.addEventListener(type, handler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+
+        removeHandler: function (element, type, handler) {
+            if (element.removeEventListener) {
+                element.removeEventListener(type, handler, false);
+            } else if (element.detachEvent) {
+                element.detachEvent("on" + type, handler);
+            } else {
+                element["on"+type] = null;
+            }
+        }
+    };
+
+    var btn = document.getElementById("mybtn");
+    var handler = function () {
+        console.log("clicked");
+    };
+
+    EventUtil.addHandler(btn, "click", handler);
+
+    // other code here
+    EventUtil.removeHandler(btn, "click", handler);
+
+    // event object -- all of the relevant information is gathered and stored on an object called event.
+
+    var btn = document.getElementById('mybtn');
+    btn.onclick = function (event) {
+        console.log(event.type); // 'click'
+    };
+
+    btn.addEventListener('click', function (event) {
+        console.log(event.type);
+        console.log(event.target == this);
+    }, false);
+
+
+    var btn = document.getElementById("myBtn");
+    var handler = function (event) {
+        switch (event.type) {
+            case "click" :
+                console.log("clicked");
+                break;
+
+            case "mouseover":
+                event.target.style.backgroundColor = "red";
+                break;
+
+            case "mouseout":
+                event.target.style.backgroundColor = "";
+                break;
+        }
+    };
+
+    btn.onclick = handler;
+    btn.onmousemove = handler;
+    btn.onmouseout = handler;
+
+    // stopPropagation()
+    var btn = document.getElementById("myBtn");
+    btn.onclick = function (event) {
+        console.log("clicked");
+        event.stopPropagation();
+    };
+    document.body.onclick = function (event) {
+        console.log("body clicked");
+    }; // the click event never reaches document.body, so the onclick event handler is never executed.
+
+    
+
+
+
+</script>
 </body>
 </html>
 

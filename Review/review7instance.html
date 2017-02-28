@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+     /*
+     * 术语：
+     * 实例： 一般在描述实例这个概念的时候 ，也是指对象，但是实例一般是用来描述一个由某个构造函数创建的对象。
+     * 一般称为 构造函数的实例
+     * */
+    // 实例成员就是由构造函数创建的对象的成员
+//    静态成员就是构造函数的成员。
+    function Person() {
+        this.sayHello = function () {
+            console.log('hello');
+        };
+    }
+    console.log(Person.name);
+    console.log((new Person).sayHello());
+
+
+    // 在商品案例中，
+//    当页面向下滚动的时候动态加载更多商品
+//    动态加载商品的时候，应该考虑如果商品已经在页面了，就不在加载商品
+//    所以一般来说，展示商品，就是展示商品的信息和链接
+
+//    就是在判断一个对象的所有属性相等，则为同一件商品
+    // 要是判断是否相同，就是判断每一个属性是否相同
+     var data = "[{name: 'rick', price: 100, img: '494894.jpg'}, {name: 'rick', price: 100, img: '494894.jpg'}]";
+     var o = eval( "(" + data + ")" );
+//     var o1 = o[0];
+//     var o2 = o[1];
+
+     // 对象都有一个构造函数的东西。
+     var Goods = function (o) {
+         for (var k in o) {
+             this[k] = o[k];
+         }
+     };
+
+     var o1 = new Goods(o[0]);
+     var o2 = new Goods(o[1]);
+    Goods.compare = function (s1, s2) {
+        return s1.name === s2.name &&
+                s1.price === s2.price &&
+                s1.img === s2.img;
+    };
+    console.log(Goods.compare(o1, o2)); // true
+
+//    这种判断在项目中，这种类型的判断会很多，为了便于管理，该判断和商品有关
+//    因此应该讲这样的方法和类型判断应该和该类型绑定在一起，一般与维护
+//    函数也是对象，也可以利用动态添加成员的方法添加成员，因此上面的修改为
+
+    // 为了方便调用，我们应该同时保留静态方法和实例方法， 也就是方法的复用
+    Goods.prototype.isEqualsTo = function (o) {
+//        比较this 与 o 的
+        return Goods.compare(this, o);
+    };
+    console.log(o1.isEqualsTo(o2));
+
+//    一般在使用的时候，将通用的方法由静态成员提供，实例成员如果要实现该功能，调用静态成员来实现。
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

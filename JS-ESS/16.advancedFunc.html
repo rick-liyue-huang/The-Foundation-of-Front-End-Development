@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    // 求 fibonacci array by encapsulated function
+    function getFibonacci(n) {
+
+        var num1 = 1;
+        var num2 = 1;
+        for (var i = 3; i<= n; i++) {
+            var temp = num2;
+            num2 = num1 + num2;
+            num1 = temp;
+        }
+        return num2;
+    }
+
+    console.log(getFibonacci(6));
+
+
+    // 输入年月日，判断这一天是这一年的第几天
+//    判断是否是闰年， 求天数
+    function isLeap(year) {
+        if (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0) {
+            return true;
+        } 
+        return false;
+    }
+    
+    function getDays(year, month, date) {
+        var arr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+        // 把输入的月份之前的天数放入到date中， 不包含本月
+//        输入的月份我们把它当做索引值用， 所以 -1,而且不能相等
+
+
+        for (var i = 0; i < month - 1; i++) {
+            date = date + arr[i];
+        }
+//        判断是否是闰年，并且月份超过二月
+        if (month > 2 && isLeap(year)) {
+            date += 1;
+        }
+        return date;
+    }
+
+    console.log(getDays(2016, 3, 1)); // 61
+
+
+
+/*
+*       advanced topic:
+*       anonymous function.
+*
+* */
+//    (function () {
+//        console.log(1)
+//    })
+
+//    (function () {
+//        console.log(1);
+//    })();
+//
+//    document.onclick = function () {
+//        console.log(1);
+//    };
+//
+//    setTimeout(function () {
+//        console.log(121);
+//    }, 1000);
+
+
+//    function is one data type, but essentially is the object
+    var str = 'abc';
+    var num = 111;
+    var bool = true;
+    var aaa;
+    var bbb = null;
+    var ccc = [];
+    var fn = function () {
+        console.log(1);
+    };
+    console.log(typeof fn); // function
+    console.log(typeof fn()); // undefined
+
+//    回调函数 --- 一般用于定义一个规则来使用的，
+//    规则的传递是通过函数实现的，通过变量无法实现，所以我们需要传递规则的时候必须用回调函数
+
+    function test1(a, b) {
+        return a + b;
+    }
+    function test2(a, b) {
+        return a - b;
+    }
+    function test3(a, b) {
+        return a * b;
+    }
+    function test4(a, b) {
+        return a / b;
+    }
+    function func(num1, num2, test) {
+        return test(num1, num2);
+    }
+
+
+    console.log(func(10, 6, test1));
+
+
+//    recursion 递归： 递归的实质就是函数自己调用自己,
+//    注意的问题，recursion 必须有跳出条件， 否则是死循环
+    var  i = 1;
+    function recFunc() {
+        console.log('the recursion function');
+
+        i++;
+//        if (i > 10) return; // 跳出条件
+//        recFunc();
+
+        if (i < 10) {
+            recFunc();
+        }
+    }
+    recFunc();
+
+    var sum = 0;
+    function getSum1(n) {
+        if (n < 1) {
+            return 0;  // 跳出条件
+        }
+        return n + getSum1(n-1);
+    }
+    console.log(getSum1(100));
+
+    function fibonacci(n) {
+        if (n == 1) return 1;
+        if (n == 2) return 1;
+        return fibonacci(n-1) + fibonacci(n-2);
+    }
+    console.log(fibonacci(6));
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

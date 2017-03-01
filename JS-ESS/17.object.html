@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+
+    /*
+    *  封装信息, 基于对象, 包括状态和方法
+    *
+    * */
+
+    var hero = new Object();
+    hero.level = 6;
+    hero.kick = function () {
+        console.log('kick');
+    };
+    console.log(hero.level);
+    hero.kick();
+
+//    create the self-definition object
+    var student = new Object();
+    console.log(student);
+    student.name = 'rick';
+    student.age = 30;
+    student.study = function () {
+        console.log(this.name +' study js');
+    };
+    student.study();
+
+
+//     创建一类对象
+    function createStu(name) {
+        var stu = new Object();
+        stu.name = name;
+        stu.sayHi = function () {
+            console.log(stu.name + ' say hi');
+        };
+        return stu;
+    }
+    var stu1 = createStu('rick');
+    console.log(stu1.sayHi());
+
+//    this 只是出现在函数中， 谁调用函数，this就指向谁
+//    new 用来开辟内存空间，存储创建的对象，把 this 设置为当前对象， 执行内部代码，设置对象的属性和方法，返回新创建的对象。
+//     new 默认就带有 return 的功能，具有返回创建对象的功能。
+
+    var aa = new Stu();
+    console.log(aa); // Stu{}
+
+    aa.say(); // Stu{}
+    function Stu() {
+        this.say = function () {
+            console.log(this);
+        }
+    }
+
+//     constructor function -- used to create the object instance
+
+    var p = new People('rick');
+    p.sayHi();
+    function People(name) {
+        this.name = name;
+        this.sayHi = function () {
+            console.log(this.name + ' : hi');
+        }
+    }
+
+    p.age = 12;
+    p['sex'] = 'male';
+    console.log(p); // People {name: "rick", age: 12, sex: "male"}
+
+
+//   parseInt() -- 任意进制转换成十进制
+
+    console.log(parseInt(1010, 2)); // 10
+    console.log(parseInt(0xff, 16)); // 597
+
+//    toString(), --- 十进制转换成任意进制
+    var num = 8;
+    console.log(num.toString(2)); // 1000
+    console.log(num.toString(8)); // 10
+
+    
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

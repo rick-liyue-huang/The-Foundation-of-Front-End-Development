@@ -229,17 +229,6 @@
     console.log(isPrime2(26));
 
 
-//    fibonacci array
-//    function fibonacciFn(arr) {
-//        arr[0] = 1;
-//        arr[1] = 1;
-//        for ( var i = 2; i < arr.length; i++) {
-//            arr[i] = arr[i - 1] + arr[i - 2];
-//            arr[i + 1] = arr[i - 1] + arr[i];
-//            arr[i - 1] = arr[i];
-//        }
-//    }
-
 
 
 //    函数名， 函数体， 函数加载
@@ -316,6 +305,40 @@
 
 //        就近原则，如果自己有就不会麻烦别人。
     }
+
+// 1.
+
+//    var num = 10;
+//    fun();  // undefined
+//    function fun() {
+//        console.log(num);
+//        var num = 20;
+//    }
+
+//    2.
+//    var a = 18;
+//    f1();
+//    function f1() {
+//        var b = 9;
+//        console.log(a); // undefined
+//        console.log(b); // 9
+//        var a = 18;
+//    }
+
+//    3.
+    f2();
+    console.log(c); // 9
+    console.log(b); // 9
+    console.log(a); // 9
+    function f2() {
+        var a = b = c= 9;
+        console.log(a);  // not defined
+        console.log(b); // 9
+        console.log(c);  // 9
+    }
+
+
+
 
 </script>
 </body>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // 函数就是具有一定功能的可以重复使用的代码块
+
+//    console.log(str);
+//    var str = 'abc';
+//    fn();   // call function
+//    function fn() {
+//        console.log('haha');
+//    }
+//
+//    fn(); // call function
+
+/*
+*   函数的组成部分： 1. 参数， 2. 返回值，  3. 功能
+*
+*   参数不匹配： 形参小于实参，可以省去多余的，这就是弱类型语言。
+*
+*   如果我们想把函数内部的值复制给外部，必须使用return
+*   如果没有return 或者return的值是空，就返回undefined
+*
+*   返回值的作用： 一般来说函数通过运算出来的结果都是半成品，需要在外部二次加工，所以就返回去进行二次加工。return 后面的代码不会再执行。（切断函数）
+*
+*   比较： break 直接跳出整个循环， continue, 跳出本次循环， return 是中断函数内部后面的代码。
+*
+* */
+//    function func(a, b) {
+//        console.log(a + b); // a and b are arguments
+//    }
+//    func(4, 5); // 4 and 5 are parameters
+
+//    var aaa = fn();
+//    console.log(aaa);
+//    function fn() {
+//        return 111;
+//    }
+
+//    sum
+//    var num = getSum() + 1 + 2;
+//    console.log(num); // 5053, 函数的返回值必须执行函数才能得到。
+//
+//    function getSum() {
+//        var sum = 0;
+//        for (var i = 1; i <= 100; i++) {
+//            sum += i;
+//        }
+//        return sum;
+//    }
+
+
+//    target: 1+1 =2
+//    alert(fn(1, 2));
+//    function fn(a, b) {
+//        return a + b;
+//
+//    }
+
+//    samples
+//    圆的周长和面积
+    var pi = Math.PI;
+    function perimeter(r) {
+        return 2 * pi * r;
+    }
+    function area(r) {
+        return Math.pow(r, 2) * pi;
+    }
+    console.log(perimeter(3));
+    console.log(area(3));
+
+
+//    求两个数中的最大值
+    function largerNum(num1, num2) {
+//        if (num1 > num2) {
+//            return num1;
+//        } else {
+//            return num2;
+//        }
+
+//        if (num1 > num2) {
+//            return num1;
+//        }
+//        return num2;
+
+        return num1 > num2 ? num1 : num2;
+
+
+    }
+
+//    求三个数的最大值
+    function largestNum(num1, num2, num3) {
+        var num = largerNum(num1, num2);
+//        if (num > num3) {
+//            return num;
+//        } else {
+//            return num3;
+//        }
+
+//        return num > num3 ? num : num3;
+
+//
+        if (num1 > num2) {
+            if (num1 > num3) {
+                return num1;
+            } else {
+                return num3;
+            }
+        } else {
+            if (num2 > num3) {
+                return num2;
+            } else {
+                return num3;
+            }
+        }
+    }
+
+    console.log(largerNum(3, 5));
+    console.log(largestNum(3, 6, 1));
+
+//    求数组中的最大值
+    function largestElement(arr) {
+        var max = arr[0];
+        for (var i = 1; i < arr.length; i++) {
+            if (max < arr[i]) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    console.log(largestElement([3, 5, 1, 7]));
+    
+//    翻转数组，返回一个新的数组
+    function reversalArray(arr) {
+
+        var newArr = [];
+        for (var i = 0; i < arr.length; i++) {
+            newArr[newArr.length] = arr[arr.length - 1 - i];
+        }
+        return newArr;
+    }
+
+    function revrsalArray2(arr) {
+        for (var i = 0; i < arr.length / 2; i++) {
+            var temp = arr[i];
+            arr[i] = arr[arr.length - 1 - i];
+            arr[arr.length - 1- i] = temp;
+        }
+        return arr;
+    }
+
+    console.log(revrsalArray2([1,2,3]));
+
+    console.log(reversalArray([1,2,3]));
+
+//    对数组排序
+    function sortArr(arr) {
+        for (var i = 0; i < arr.length - 1; i++) { // control the round times
+            var bool = true;
+
+            for (var j = 0; j < arr.length - 1; j++) {  // control the switch times
+                if (arr[j] > arr[j+1]) {
+                    var temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                    bool = false;
+                }
+            }
+
+            if (bool) break;
+        }
+
+        return arr;
+    }
+    console.log(sortArr([2,5,1,4,7]));
+    
+    
+//    target : 1! + 2! + 3! + ....
+    function getFactorial(num) {
+        var factorialNum = 1;
+        for (var i = 1; i <= num; i++) {
+
+            factorialNum *= i;
+        }
+        return factorialNum;
+    }
+    console.log(getFactorial(4));
+
+    function getFactorialSum(num) {
+        var sum = 0; // sum 必须放在外面。
+        for (var i = 1; i <= num; i++) {
+
+            sum += getFactorial(i);
+        }
+        return sum;
+    }
+    console.log(getFactorialSum(4));
+
+
+//    target : prime number
+
+    function isPrime(num) {
+//        除了自身和1都不能被其他数整除
+
+        for (var i = 2; i < num; i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    console.log(isPrime(26));
+
+
+    function isPrime2(num) {
+
+        for (var i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    console.log(isPrime2(26));
+
+
+//    fibonacci array
+//    function fibonacciFn(arr) {
+//        arr[0] = 1;
+//        arr[1] = 1;
+//        for ( var i = 2; i < arr.length; i++) {
+//            arr[i] = arr[i - 1] + arr[i - 2];
+//            arr[i + 1] = arr[i - 1] + arr[i];
+//            arr[i - 1] = arr[i];
+//        }
+//    }
+
+
+
+//    函数名， 函数体， 函数加载
+//    函数加载的时候，只加载函数名，不加载函数体，所以想使用内部的成员变量，就需要调用函数。
+    console.log(fn); // 打印函数名，相当于打印函数体
+    console.log(fn()); // 打印执行函数，相当于打印函数的执行结果。
+    function fn() {
+        console.log(111);
+    }
+
+//    函数的命名方法
+    function fn1() {
+        console.log('this is first method');
+    }
+    fn1();
+
+    var fn2 = function () {
+        console.log('this is second mehtod');
+    };
+    fn2();
+
+    var fn3 = new Function(console.log('this is third method'));
+    fn3();
+
+//    后两种方法必须先定义后使用。
+
+
+
+//    变量问题， 根据作用范围，分为局部变量和全局变量, 在回收机制中有区别，局部用完就回收，函数用完就回收，而全局变量（成员变量）不会自动收回。
+//    函数内部都是局部变量, 除非 不带有 var
+    function fn(num2) {
+        var num1 = 20;
+    }
+//    console.log(num2); // num2 not defined
+//    console.log(num1); // num1 not defined
+
+
+
+
+
+/*
+*   作用域：
+*   隐式全局变量
+*
+*
+* */
+    function fn11() {
+        var a = b = c = 1; // here b and c are global variables
+
+//         ==> var a = 1; b = 1; c = 1;
+
+        var d = 1; e = 2; f = 3; // here e and f are also global variables
+
+        var g = 1, h = 4, i = 5; // they are all local variables.
+    }
+
+
+
+/*
+*
+*               预解析： ----- js的解析器在页面记载的时候，首先检查页面上的语法错误，把变量的名字提升上来，而函数是整体提升上来。
+*               1. 查看语法错误
+*               2. 变量声明提升和函数整体提升，变量声明提升的时候只提升变量名，不提升变量值
+*
+* */
+
+    console.log(aaa); // undefined
+    var aaa = 111;
+    fnk();  // undefined
+
+    function fnk() {
+        console.log(aaa);
+        var aaa = 222; // 变量提升在函数内部一样适用。
+
+//        就近原则，如果自己有就不会麻烦别人。
+    }
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -62,8 +62,8 @@
 //     js 就是事件驱动语言 ： 事件源， 事件， 事件驱动程序,
 //    获取事件源，绑定事件，书写事件程序
 
-//    document.getElementsByTagName()
-//    document.getElementsByClassName()
+//    document.getElementsByTagName() // 伪数组， 长度不能变化，无法添加元素
+//    document.getElementsByClassName() // 伪数组， 长度不能变化，无法添加元素
 
 
 
@@ -79,9 +79,9 @@
     var topBanner = document.getElementById('topBanner');
     close.onclick = function () {
         topBanner.style.display = none;
-    }
+    };
 
-    
+    console.log(document);
 
 
 

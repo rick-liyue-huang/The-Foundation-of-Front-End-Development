@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            background-color: yellow;
+        }
+
+        .top-banner {
+            background-color: pink;
+        }
+        .w {
+            width: 1210px;
+            margin: 10px auto;
+            position: relative;
+        }
+        img {
+            width: 1210px;
+            height: 80px;
+            background-color: blue;
+        }
+        a {
+            text-decoration: none;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #fff;
+            width: 20px;
+            height: 20px;
+            font: 700 14px/20px 'simsun';
+        }
+        .top-banner .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!--<div id="box" class="box"></div>-->
+
+    <div class="top-banner" id="topBanner">
+        <div class="w">
+            <img src="" alt="">
+            <a href="" id="closeBanner">x</a>
+        </div>
+    </div>
+
+<script>
+    /*
+    *  DOM document object model
+    *  BOM browser object model
+    * */
+
+//     js 就是事件驱动语言 ： 事件源， 事件， 事件驱动程序,
+//    获取事件源，绑定事件，书写事件程序
+
+//    document.getElementsByTagName()
+//    document.getElementsByClassName()
+
+
+
+//    var box = document.getElementById('box');
+//    box.onclick = function () {
+//        this.style.width = "200px";
+//        this.style.height = "300px";
+//        this.style.backgroundColor = "red";
+//    };
+
+    // 点击按钮隐藏盒子， 加隐藏类名
+    var close = document.getElementById('closeBanner');
+    var topBanner = document.getElementById('topBanner');
+    close.onclick = function () {
+        topBanner.style.display = none;
+    }
+
+    
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

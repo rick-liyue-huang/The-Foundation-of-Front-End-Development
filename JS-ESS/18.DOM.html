@@ -53,6 +53,9 @@
         </div>
     </div>
 
+    <input type="button" value="this is a button"> this is input
+    <div id="box"><h1>this is box</h1></div>
+
 <script>
     /*
     *  DOM document object model
@@ -83,6 +86,10 @@
 
     console.log(document);
 
+    console.log(document.getElementsByTagName('input')[0].value); // value
+    console.log(document.getElementsByTagName('input')[0].innerText);
+    console.log(document.getElementById('box').innerHTML);
+    console.log(document.getElementById('box').innerText);
 
 
 </script>

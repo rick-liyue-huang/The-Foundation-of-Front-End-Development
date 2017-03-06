@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body {
+            font-family: "Helvetica", "Arial", serif;
+            color: #333;
+            background-color: #ccc;
+            margin: 1em 10%;
+        }
+
+        h1 {
+            color: #333;
+            background-color: transparent;
+        }
+
+        a {
+            color: #c60;
+            background-color: transparent;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            float: left;
+            padding: 1em;
+            list-style: none;
+        }
+
+        #imagegallery {
+
+            list-style: none;
+        }
+
+        #imagegallery li {
+            margin: 0px 20px 20px 0px;
+            padding: 0px;
+            display: inline;
+        }
+
+        #imagegallery li a img {
+            border: 0;
+        }
+    </style>
+
+</head>
+<body>
+<h2>
+    美女画廊
+</h2>
+<a href="#">注册</a>
+<ul id="imagegallery">
+    <li>
+        <a href="images/1.jpg" title="美女A">
+            <img src="images/1-small.jpg" width="100px" alt="美女1"/>
+        </a>
+    </li>
+    <li>
+        <a href="images/2.jpg" title="美女B">
+            <img src="images/2-small.jpg" width="100px" alt="美女2"/>
+        </a>
+    </li>
+    <li>
+        <a href="images/3.jpg" title="美女C">
+            <img src="images/3-small.jpg" width="100px" alt="美女3"/>
+        </a>
+    </li>
+    <li>
+        <a href="images/4.jpg" title="美女D">
+            <img src="images/4-small.jpg" width="100px" alt="美女4"/>
+        </a>
+    </li>
+</ul>
+
+
+<div style="clear:both"></div>
+
+<img id="image" src="images/placeholder.png" width="450px"/>
+
+<p id="des">选择一个图片</p>
+
+<script>
+    //0 获取目标a
+    //获取ul  再获取ul中的a
+    var ul = document.getElementById("imagegallery");
+    var links = ul.getElementsByTagName("a");
+    var img = document.getElementById("image");
+    var p = document.getElementById("des");
+    //1 给a注册事件
+    for (var i = 0; i < links.length; i++) {
+        //获取到每一个a
+        links[i].onclick = function fn() {
+            //2 点击a切换图片
+            img.src = this.href;
+            //3 点击a设置p中的内容
+            p.innerHTML = this.title;
+            return false;
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -23,9 +23,33 @@
             text-decoration: none;
         }
 
+<<<<<<< HEAD
         ul {
             padding: 0;
         }
+=======
+    <div class="top-banner" id="topBanner">
+        <div class="w">
+            <img src="" alt="">
+            <a href="" id="closeBanner">x</a>
+        </div>
+    </div>
+
+    <input type="button" value="this is a button"> this is input
+    <div id="box"><h1>this is box</h1></div>
+
+<script>
+    /*
+    *  DOM document object model
+    *  BOM browser object model
+    * */
+
+//     js 就是事件驱动语言 ： 事件源， 事件， 事件驱动程序,
+//    获取事件源，绑定事件，书写事件程序
+
+//    document.getElementsByTagName() // 伪数组， 长度不能变化，无法添加元素
+//    document.getElementsByClassName() // 伪数组， 长度不能变化，无法添加元素
+>>>>>>> 48a3e3166ab34f717ab61763349e4c5bbc7b6e5c
 
         li {
             float: left;
@@ -49,6 +73,7 @@
         }
     </style>
 
+<<<<<<< HEAD
 </head>
 <body>
 <h2>
@@ -84,6 +109,12 @@
 <img id="image" src="./images/image/placeholder.png" width="450px"/>
 
 <p id="des">选择一个图片</p>
+=======
+    console.log(document.getElementsByTagName('input')[0].value); // value
+    console.log(document.getElementsByTagName('input')[0].innerText);
+    console.log(document.getElementById('box').innerHTML);
+    console.log(document.getElementById('box').innerText);
+>>>>>>> 48a3e3166ab34f717ab61763349e4c5bbc7b6e5c
 
 <script>
     //需求：点击小图片，改变下面的大图片的src属性值。赋值为a链接的href属性值。

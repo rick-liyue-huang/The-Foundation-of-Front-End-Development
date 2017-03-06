@@ -3,11 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline-style: none;
+        }
+        .btn {
+            margin-top: 20px;
+            width: 30px;
+            height: 30px;
+            background-color: grey;
+            display: block;
+            font: 400 14px/30px "simsun";
+        }
+
+        .box1 {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        #inp2 {
+
+
+        }
+
+        label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 12px
+        }
+    </style>
 </head>
 <body>
+<a href="" style="margin: 10px; display: block">switch</a>
+<img src="images/1.jpg" alt="" width="400px" id="img">
+
+<button id="btn" class="btn">hide</button>
+<div id="box1" class="box1">
+    林倩人知悉，废材张掖，为高也
+</div>
+
+
+countname: <input type="text" value="hello"><button id="disable">disable</button><button id="active">active</button> <br><br>
+password: <input type="text" value="please input"> <br><br><br>
+
+
+京东: <input type="text" value="jd" id="inp1"> <br><br>
+淘宝: <label for="inp2">我是淘宝</label><input type="text" id="inp2"> <br><br>
+
+
+<button id="btn0">find the difference</button><br>
+<select name="" id="sel">
+    <option value="">banana</option>
+    <option value="">apple</option>
+    <option value="">fish</option>
+    <option value="">pear</option>
+</select>
+
+
+<input type="text"><br><br>
+<input type="text"><br><br>
+<input type="text"><br><br>
+<input type="text"><br><br>
+<input type="text"><br><br>
+<input type="text"><br><br>
+
+<button>set</button><br><br>
+<button>get</button><br><br>
+
+
 
 <script>
+
     
+
+
+    var btn0 = document.getElementById('btn0');
+    var opt = document.getElementsByTagName('option')[2];
+
+    btn0.onclick = function () {
+        opt.selected = true;
+    };
+
+
+
+    // 获取事件源， 绑定事件， 书写事件程序
+    var a = document.getElementsByTagName('a')[0];
+    var img = document.getElementById('img');
+
+
+
+    a.onclick = function () {
+        img.src = "images/2.jpg";
+        return false; // 防止a链接跳转
+    };
+
+    /* 处理为行内式   onclick="fn(); return false"
+    function fn() {
+        img.src = 'images/2.jpg';
+    }
+    */
+
+    var btn = document.getElementById('btn');
+    var box1 = document.getElementById('box1');
+
+    btn.onclick = function () {
+
+        if (this.innerHTML === "hide") {
+            box1.className += " hide";
+
+            this.innerHTML = "show";
+        } else {
+            box1.className = "box1";
+            this.innerHTML = "hide";
+        }
+
+    };
+
+    var disable = document.getElementById('disable');
+    var active = document.getElementById('active');
+    var count = document.getElementsByTagName('input')[0];
+    var password = document.getElementsByTagName('input')[1];
+    var label = document.getElementsByTagName('label')[0];
+
+
+
+
+    disable.onclick = function () {
+        count.disabled = "disabled";
+    };
+    active.onclick = function () {
+        count.disabled = 0;
+    };
+
+    var inp1 = document.getElementById('inp1');
+    inp1.onfocus = function () {
+        if (this.value == "jd") {
+            this.value = "";
+        }
+
+    };
+
+    inp1.onblur = function () {
+        if (this.value == "") {
+            this.value = "jd";
+        }
+
+    };
+
+//    淘宝输入字符后才便没有
+    var inp2 = document.getElementById('inp2');
+    inp2.focus();
+    inp2.oninput = function () {
+        if (this.value === '') {
+            label.display = none;
+        }
+    }
+
+
+
+
+
+
+
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

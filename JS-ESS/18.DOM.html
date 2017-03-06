@@ -1,131 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+<head lang="en">
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        .box {
-            width: 100px;
-            height: 100px;
-            border: 1px solid red;
-            background-color: yellow;
+    <title></title>
+    <style type="text/css">
+        body {
+            font-family: "Helvetica", "Arial", serif;
+            color: #333;
+            background-color: #ccc;
+            margin: 1em 10%;
         }
 
-        .top-banner {
-            background-color: pink;
+        h1 {
+            color: #333;
+            background-color: transparent;
         }
-        .w {
-            width: 1210px;
-            margin: 10px auto;
-            position: relative;
-        }
-        img {
-            width: 1210px;
-            height: 80px;
-            background-color: blue;
-        }
+
         a {
+            color: #c60;
+            background-color: transparent;
+            font-weight: bold;
             text-decoration: none;
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #fff;
-            width: 20px;
-            height: 20px;
-            font: 700 14px/20px 'simsun';
         }
-        .top-banner .hide {
-            display: none;
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            float: left;
+            padding: 1em;
+            list-style: none;
+        }
+
+        #imagegallery {
+
+            list-style: none;
+        }
+
+        #imagegallery li {
+            margin: 0px 20px 20px 0px;
+            padding: 0px;
+            display: inline;
+        }
+
+        #imagegallery li a img {
+            border: 0;
         }
     </style>
+
 </head>
 <body>
-    <!--<div id="box" class="box"></div>-->
+<h2>
+    美女画廊
+</h2>
+<a href="#">注册</a>
+<ul id="imagegallery">
+    <li>
+        <a href="./images/image/1.jpg" title="美女A">
+            <img src="./images/image/1-small.jpg" width="100" alt="美女1"/>
+        </a>
+    </li>
+    <li>
+        <a href="./images/image/2.jpg" title="美女B">
+            <img src="./images/image/2-small.jpg" width="100" alt="美女2"/>
+        </a>
+    </li>
+    <li>
+        <a href="./images/image/3.jpg" title="美女C">
+            <img src="./images/image/3-small.jpg" width="100" alt="美女3"/>
+        </a>
+    </li>
+    <li>
+        <a href="./images/image/4.jpg" title="美女D">
+            <img src="./images/image/4-small.jpg" width="100" alt="美女4"/>
+        </a>
+    </li>
+</ul>
 
-    <div class="top-banner" id="topBanner">
-        <div class="w">
-            <img src="" alt="">
-            <a href="" id="closeBanner">x</a>
-        </div>
-    </div>
+
+<div style="clear:both"></div>
+
+<img id="image" src="./images/image/placeholder.png" width="450px"/>
+
+<p id="des">选择一个图片</p>
 
 <script>
-    /*
-    *  DOM document object model
-    *  BOM browser object model
-    * */
-
-//     js 就是事件驱动语言 ： 事件源， 事件， 事件驱动程序,
-//    获取事件源，绑定事件，书写事件程序
-
-//    document.getElementsByTagName() // 伪数组， 长度不能变化，无法添加元素
-//    document.getElementsByClassName() // 伪数组， 长度不能变化，无法添加元素
+    //需求：点击小图片，改变下面的大图片的src属性值。赋值为a链接的href属性值。
+    //让p标签的innnerHTML属性值，变成a标签的title属性值。
+    //步骤：
+    //1.获取事件源和相关元素
+    //2.绑定事件
+    //3.书写事件驱动程序
 
 
-
-//    var box = document.getElementById('box');
-//    box.onclick = function () {
-//        this.style.width = "200px";
-//        this.style.height = "300px";
-//        this.style.backgroundColor = "red";
-//    };
-
-    // 点击按钮隐藏盒子， 加隐藏类名
-    var close = document.getElementById('closeBanner');
-    var topBanner = document.getElementById('topBanner');
-    close.onclick = function () {
-        topBanner.style.display = none;
-    };
-
-    console.log(document);
-
-
+    //1.获取事件源和相关元素
+    //利用元素获取其下面的标签。
+    var ul = document.getElementById("imagegallery");
+    var aArr = ul.getElementsByTagName("a");
+    //    console.log(aArr[0]);
+    var img = document.getElementById("image");
+    var des = document.getElementById("des");
+    //2.绑定事件
+    //以前是一个一个绑定，但是现在是一个数组。for循环绑定
+    for(var i=0;i<aArr.length;i++){
+        aArr[i].onclick = function () {
+            //3.书写事件驱动程序
+            //修改属性
+            //this指的是函数调用者，和i并无关系，所以不会出错。
+            img.src = this.href;
+//            img.src = aArr[i].href;
+            des.innerHTML = this.title;
+            return false;
+        }
+    }
 
 </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

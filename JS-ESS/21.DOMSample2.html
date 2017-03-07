@@ -1,109 +1,123 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
+<!doctype html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title></title>
-    <style type="text/css">
-        body {
-            font-family: "Helvetica", "Arial", serif;
-            color: #333;
-            background-color: #ccc;
-            margin: 1em 10%;
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
         }
-
-        h1 {
-            color: #333;
-            background-color: transparent;
-        }
-
-        a {
-            color: #c60;
-            background-color: transparent;
-            font-weight: bold;
-            text-decoration: none;
+        .box {
+            width: 500px;
+            height: 400px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            overflow: hidden;
         }
 
         ul {
-            padding: 0;
+            width: 600px;
+            height: 40px;
+            margin-left: -1px;
+            list-style: none;
         }
-
         li {
             float: left;
-            padding: 1em;
-            list-style: none;
+            width: 101px;
+            height: 40px;
+            text-align: center;
+            font: 600 18px/40px "simsun";
+            background-color: orange;
+            cursor: pointer;
         }
-
-        #imagegallery {
-
-            list-style: none;
+        span {
+            display: none;
+            width: 500px;
+            height: 360px;
+            background-color: yellow;
+            text-align: center;
+            font: 700 150px/360px "simsun";
         }
-
-        #imagegallery li {
-            margin: 0px 20px 20px 0px;
-            padding: 0px;
-            display: inline;
+        .show {
+            display: block;
         }
-
-        #imagegallery li a img {
-            border: 0;
+        .current {
+            background-color: yellow;
         }
     </style>
-
 </head>
 <body>
-<h2>
-    美女画廊
-</h2>
-<a href="#">注册</a>
-<ul id="imagegallery">
-    <li>
-        <a href="images/1.jpg" title="美女A">
-            <img src="images/1-small.jpg" width="100px" alt="美女1"/>
-        </a>
-    </li>
-    <li>
-        <a href="images/2.jpg" title="美女B">
-            <img src="images/2-small.jpg" width="100px" alt="美女2"/>
-        </a>
-    </li>
-    <li>
-        <a href="images/3.jpg" title="美女C">
-            <img src="images/3-small.jpg" width="100px" alt="美女3"/>
-        </a>
-    </li>
-    <li>
-        <a href="images/4.jpg" title="美女D">
-            <img src="images/4-small.jpg" width="100px" alt="美女4"/>
-        </a>
-    </li>
-</ul>
-
-
-<div style="clear:both"></div>
-
-<img id="image" src="images/placeholder.png" width="450px"/>
-
-<p id="des">选择一个图片</p>
-
+    <div class="box">
+        <ul>
+            <li class="current">shoes</li>
+            <li>socks</li>
+            <li>hats</li>
+            <li>pants</li>
+            <li>skirts</li>
+        </ul>
+        <span class="show">shoes</span>
+        <span>socks</span>
+        <span>hats</span>
+        <span>pants</span>
+        <span>skirts</span>
+    </div>
 <script>
-    //0 获取目标a
-    //获取ul  再获取ul中的a
-    var ul = document.getElementById("imagegallery");
-    var links = ul.getElementsByTagName("a");
-    var img = document.getElementById("image");
-    var p = document.getElementById("des");
-    //1 给a注册事件
-    for (var i = 0; i < links.length; i++) {
-        //获取到每一个a
-        links[i].onclick = function fn() {
-            //2 点击a切换图片
-            img.src = this.href;
-            //3 点击a设置p中的内容
-            p.innerHTML = this.title;
-            return false;
+
+        var box = document.getElementsByClassName('box')[0];
+        var liArr = box.getElementsByTagName('li');
+        var spanArr = box.getElementsByTagName('span');
+
+        for (var i = 0; i < liArr.length; i++) {
+
+            liArr[i].index = i;
+            liArr[i].onmouseover = function () {
+
+                for (var j = 0; j < liArr.length; j++) {
+                    liArr[j].className = "";
+                    spanArr[j].className = "";
+                }
+
+                this.className = "current";
+                spanArr[this.index].className = "show"
+            }
         }
-    }
 
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

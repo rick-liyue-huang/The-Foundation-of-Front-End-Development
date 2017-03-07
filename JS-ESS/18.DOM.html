@@ -1,152 +1,138 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <style type="text/css">
+<head>
+    <meta charset="utf-8">
+    <title>Beauty Gallery</title>
+    <style>
         body {
             font-family: "Helvetica", "Arial", serif;
             color: #333;
             background-color: #ccc;
             margin: 1em 10%;
         }
-
         h1 {
             color: #333;
             background-color: transparent;
         }
-
         a {
             color: #c60;
             background-color: transparent;
             font-weight: bold;
             text-decoration: none;
         }
-
-<<<<<<< HEAD
         ul {
             padding: 0;
         }
-=======
-    <div class="top-banner" id="topBanner">
-        <div class="w">
-            <img src="" alt="">
-            <a href="" id="closeBanner">x</a>
-        </div>
-    </div>
-
-    <input type="button" value="this is a button"> this is input
-    <div id="box"><h1>this is box</h1></div>
-
-<script>
-    /*
-    *  DOM document object model
-    *  BOM browser object model
-    * */
-
-//     js 就是事件驱动语言 ： 事件源， 事件， 事件驱动程序,
-//    获取事件源，绑定事件，书写事件程序
-
-//    document.getElementsByTagName() // 伪数组， 长度不能变化，无法添加元素
-//    document.getElementsByClassName() // 伪数组， 长度不能变化，无法添加元素
->>>>>>> 48a3e3166ab34f717ab61763349e4c5bbc7b6e5c
-
         li {
             float: left;
             padding: 1em;
             list-style: none;
         }
-
         #imagegallery {
-
             list-style: none;
         }
 
         #imagegallery li {
-            margin: 0px 20px 20px 0px;
-            padding: 0px;
+            margin: 0 20px;
+            padding: 0;
             display: inline;
         }
-
         #imagegallery li a img {
             border: 0;
         }
     </style>
-
-<<<<<<< HEAD
 </head>
 <body>
-<h2>
-    美女画廊
-</h2>
-<a href="#">注册</a>
-<ul id="imagegallery">
-    <li>
-        <a href="./images/image/1.jpg" title="美女A">
-            <img src="./images/image/1-small.jpg" width="100" alt="美女1"/>
-        </a>
-    </li>
-    <li>
-        <a href="./images/image/2.jpg" title="美女B">
-            <img src="./images/image/2-small.jpg" width="100" alt="美女2"/>
-        </a>
-    </li>
-    <li>
-        <a href="./images/image/3.jpg" title="美女C">
-            <img src="./images/image/3-small.jpg" width="100" alt="美女3"/>
-        </a>
-    </li>
-    <li>
-        <a href="./images/image/4.jpg" title="美女D">
-            <img src="./images/image/4-small.jpg" width="100" alt="美女4"/>
-        </a>
-    </li>
-</ul>
 
-
-<div style="clear:both"></div>
-
-<img id="image" src="./images/image/placeholder.png" width="450px"/>
-
-<p id="des">选择一个图片</p>
-=======
-    console.log(document.getElementsByTagName('input')[0].value); // value
-    console.log(document.getElementsByTagName('input')[0].innerText);
-    console.log(document.getElementById('box').innerHTML);
-    console.log(document.getElementById('box').innerText);
->>>>>>> 48a3e3166ab34f717ab61763349e4c5bbc7b6e5c
+    <h1>Beauty Gallery</h1>
+    <a href="http://www.google.com">Register</a>
+    <ul id="imagegallery">
+        <li>
+            <a href="./images/image/1.jpg" title="Beauty a">
+                <img src="./images/image/1-small.jpg">
+            </a>
+        </li>
+        <li>
+            <a href="./images/image/2.jpg" title="Beauty b">
+                <img src="./images/image/2-small.jpg">
+            </a>
+        </li>
+        <li>
+            <a href="./images/image/3.jpg" title="Beauty c">
+                <img src="./images/image/3-small.jpg">
+            </a>
+        </li>
+        <li>
+            <a href="./images/image/4.jpg" title="Beauty d">
+                <img src="./images/image/4-small.jpg">
+            </a>
+        </li>
+    </ul>
+    <div style="clear: both"></div>
+    <img src="./images/image/placeholder.png" alt="" id="image">
+    <p id="destination">Please pick one beauty</p>
 
 <script>
-    //需求：点击小图片，改变下面的大图片的src属性值。赋值为a链接的href属性值。
-    //让p标签的innnerHTML属性值，变成a标签的title属性值。
-    //步骤：
-    //1.获取事件源和相关元素
-    //2.绑定事件
-    //3.书写事件驱动程序
 
+    var ul = document.getElementById('imagegallery');
+    var aArr = ul.getElementsByTagName('a');
+    var image = document.getElementById('image');
+    var destination = document.getElementById('destination');
 
-    //1.获取事件源和相关元素
-    //利用元素获取其下面的标签。
-    var ul = document.getElementById("imagegallery");
-    var aArr = ul.getElementsByTagName("a");
-    //    console.log(aArr[0]);
-    var img = document.getElementById("image");
-    var des = document.getElementById("des");
-    //2.绑定事件
-    //以前是一个一个绑定，但是现在是一个数组。for循环绑定
-    for(var i=0;i<aArr.length;i++){
+    for (var i = 0; i < aArr.length; i++) {
         aArr[i].onclick = function () {
-            //3.书写事件驱动程序
-            //修改属性
-            //this指的是函数调用者，和i并无关系，所以不会出错。
-            img.src = this.href;
-//            img.src = aArr[i].href;
-            des.innerHTML = this.title;
-            return false;
+            image.src = this.href;
+            destination.innerHTML = this.title;
+            return false; // avoid the page jumping.
         }
     }
-
 </script>
-
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

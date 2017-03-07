@@ -1,191 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Select All/ Inverse</title>
     <style>
         * {
-            margin: 0;
             padding: 0;
-            outline-style: none;
+            margin: 0;
         }
-        .btn {
-            margin-top: 20px;
-            width: 30px;
-            height: 30px;
-            background-color: grey;
-            display: block;
-            font: 400 14px/30px "simsun";
+        .wrap {
+            width: 300px;
+            margin: 100px auto 0;
         }
-
-        .box1 {
-            width: 100px;
-            height: 100px;
-            background-color: yellow;
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #c0c0c0;
+            width: 300px;
         }
 
-        .hide {
-            display: none;
+        th, td {
+            border: 1px solid #d0d0d0;
+            color: #404060;
+            padding: 10px;
         }
-
-        #inp2 {
-
-
+        th {
+            background-color: #09c;
+            color: #404060;
+            padding: 10px;
         }
-
-        label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            font-size: 12px
+        td {
+            font: 14px "simsun";
+        }
+        tbody tr {
+            background-color: #f0f0f0;
+        }
+        tbody tr:hover {
+            cursor: pointer;
+            background-color: #fafafa;
         }
     </style>
 </head>
 <body>
-<a href="" style="margin: 10px; display: block">switch</a>
-<img src="images/1.jpg" alt="" width="400px" id="img">
-
-<button id="btn" class="btn">hide</button>
-<div id="box1" class="box1">
-    林倩人知悉，废材张掖，为高也
-</div>
-
-
-countname: <input type="text" value="hello"><button id="disable">disable</button><button id="active">active</button> <br><br>
-password: <input type="text" value="please input"> <br><br><br>
-
-
-京东: <input type="text" value="jd" id="inp1"> <br><br>
-淘宝: <label for="inp2">我是淘宝</label><input type="text" id="inp2"> <br><br>
-
-
-<button id="btn0">find the difference</button><br>
-<select name="" id="sel">
-    <option value="">banana</option>
-    <option value="">apple</option>
-    <option value="">fish</option>
-    <option value="">pear</option>
-</select>
-
-
-<input type="text"><br><br>
-<input type="text"><br><br>
-<input type="text"><br><br>
-<input type="text"><br><br>
-<input type="text"><br><br>
-<input type="text"><br><br>
-
-<button>set</button><br><br>
-<button>get</button><br><br>
-
+    <div class="wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="theadInp"></th>
+                    <th>Food</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            <tr>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>Kebab</td>
+                <td>Bar</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>Chips</td>
+                <td>Bar</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>Pizza</td>
+                <td>Bar</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 
 <script>
+    var theadInp = document.getElementById('theadInp');
+    var tbody = document.getElementById('tbody');
+    var bodyInp = tbody.getElementsByTagName('input');
 
-    
-
-
-    var btn0 = document.getElementById('btn0');
-    var opt = document.getElementsByTagName('option')[2];
-
-    btn0.onclick = function () {
-        opt.selected = true;
-    };
-
-
-
-    // 获取事件源， 绑定事件， 书写事件程序
-    var a = document.getElementsByTagName('a')[0];
-    var img = document.getElementById('img');
-
-
-
-    a.onclick = function () {
-        img.src = "images/2.jpg";
-        return false; // 防止a链接跳转
-    };
-
-    /* 处理为行内式   onclick="fn(); return false"
-    function fn() {
-        img.src = 'images/2.jpg';
-    }
-    */
-
-    var btn = document.getElementById('btn');
-    var box1 = document.getElementById('box1');
-
-    btn.onclick = function () {
-
-        if (this.innerHTML === "hide") {
-            box1.className += " hide";
-
-            this.innerHTML = "show";
-        } else {
-            box1.className = "box1";
-            this.innerHTML = "hide";
+//     click the top input to select or unselect the body inputs
+    theadInp.onclick = function () {
+        for (var i = 0; i < bodyInp.length; i++) {
+            bodyInp[i].checked = this.checked;
         }
-
     };
 
-    var disable = document.getElementById('disable');
-    var active = document.getElementById('active');
-    var count = document.getElementsByTagName('input')[0];
-    var password = document.getElementsByTagName('input')[1];
-    var label = document.getElementsByTagName('label')[0];
+//    single click th body input to change the status of the top input.
+    for (var i = 0; i < bodyInp.length; i++) {
+        bodyInp[i].onclick = function () {
 
-
-
-
-    disable.onclick = function () {
-        count.disabled = "disabled";
-    };
-    active.onclick = function () {
-        count.disabled = 0;
-    };
-
-    var inp1 = document.getElementById('inp1');
-    inp1.onfocus = function () {
-        if (this.value == "jd") {
-            this.value = "";
-        }
-
-    };
-
-    inp1.onblur = function () {
-        if (this.value == "") {
-            this.value = "jd";
-        }
-
-    };
-
-//    淘宝输入字符后才便没有
-    var inp2 = document.getElementById('inp2');
-    inp2.focus();
-    inp2.oninput = function () {
-        if (this.value === '') {
-            label.display = none;
+            var bool = true;
+            for (var j = 0; j < bodyInp.length; j++) {
+                if (bodyInp[j].checked === false) {
+                    bool = false;
+                }
+            }
+            theadInp.checked = bool;
         }
     }
-
-
-
-
 
 
 
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
 
 
 

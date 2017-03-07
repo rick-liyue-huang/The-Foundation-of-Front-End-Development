@@ -1,84 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Document</title>
+    <style>
+        input {
+            width: 300px;
+            height: 36px;
+            padding-left: 5px;
+            color: #ccc;
+            font: 700 20px/36px "simsun";
+        }
+        label {
+            position: absolute;
+            top: 89px;
+            left: 33px;
+            font: 700 20px/36px "simsun";
+            color: #ccc;
+            cursor: text;
+        }
+        .hide {
+            display: none;
+        }
+        .show {
+            display: block;
+        }
+
+        .wrong {
+            border: 1px solid red;
+        }
+        .right {
+            border: 1px solid green;
+        }
+    </style>
 </head>
 <body>
-    <div class="box1" id="box1">
-        <div class="box2" id="box2"></div>
-        <div class="box3" id="box3"></div>
-        <img src="images/jd1.png" alt="jddog" class="box" title="picture" id="aaa">
-    </div>
 
-<script>
-     // 关系节点获取： 父节点， 兄弟节点， 子节点， 所有子节点, 找不到不会报错，但是会显示undefined
-//      重点的是 parentNode, 和 children[index], 就可以找到所有的节点。
-    var box2 = document.getElementById('box2');
-    var box1 = document.getElementById('box1');
-    console.log(box2.parentNode); // box1
-
-    console.log(box2.nextElementSibling || box2.nextSibling);
-
-    console.log(box3.previousElementSibling || box3.previousSibling);
+    <div>---- Sample one ------</div>
+    jd: <input type="text" value="this is jd" id="inp1"><br><br>
+    tb: <label for="inp2">this is tb</label><input type="text" id="inp2"><br><br>
+    placeholder: <input type="text" placeholder="this is placeholder">
 
 
-    console.log(box1.firstChild); // text
+    <div>---- Sample one ------</div>
 
-    console.log(box1.firstElementChild); // box2
+    <button>Select Difference</button><br><br>
+    <button>Cancel</button><br><br>
+    <select name="" id="sel">
+        <option value="0">Banana</option>
+        <option value="1">Apple</option>
+        <option value="2">Fish</option>
+        <option value="3">Pear</option>
+    </select>
 
-    console.log(box1.childNodes); // [text, div#box2.box2, text, div#box3.box3, text]
+    <script>
 
-    console.log(box1.children); // 2 个
+        //-------- Sample one ----------
+        // for jd
+        var inp1 = document.getElementById('inp1');
+        inp1.onfocus = function () {
+            if (this.value === "this is jd") {
+                this.value = ""
+            }
+        };
+        inp1.onblur = function () {
+            if (this.value === "") {
+                this.value = "this is jd";
+            }
 
-    console.log(box2.parentNode.children[1]); // box3,
+            if (this.value.length < 6 || this.value.length > 12) {
+                this.className = "wrong";
+            } else {
+                this.className = "right";
+            }
+        };
 
-
-//      节点的创建
-    var box4 = document.createElement('div');
-    box1.appendChild(box4);
-    console.log(box1);
-
-    var box5 = document.createElement('div');
-    box1.insertBefore(box5, box2);
-    console.log(box1);
-
-    box1.removeChild(box3);
-    console.log(box1);
-
-
-    var cc = box1.cloneNode();
-    console.log(cc);
-    var dd = box1.cloneNode(true); // deep clone
-    console.log(dd);
-
-
-
-//    节点的属性
-    var img = box1.getElementsByTagName('img')[0];
-    console.log(img.src);  // http://localhost:63342/JS-ESS/images/jd1.png
-    console.log(img['src']); // // http://localhost:63342/JS-ESS/images/jd1.png
-
-    console.log(img.title);  // picture
-    console.log(img['title']);
-
-    console.log(img["id"]); // aaa
-    console.log(img['className']); // undefined
-
-    img.src = "http://localhost:63342/JS-ESS/images/jd2.png";
-    console.log(img["src"]); // http://localhost:63342/JS-ESS/images/jd2.png
-
-    box2.setAttribute("id", "BOX2");
-    console.log(box2.getAttribute("id")); // BOX2
+        // for tb
+        var inp2 = document.getElementById('inp2');
+        var lab = document.getElementsByTagName('label')[0];
+        inp2.oninput = function () {
+            if (this.value === "") {
+                lab.className = 'block';
+            } else {
+                lab.className = "hide";
+            }
+        };
 
 
 
+//   ------ Sample two --------
+    var btn1 = document.getElementsByTagName('button')[0];
+    var btn2 = document.getElementsByTagName('button')[1];
+    var sel = document.getElementsByTagName('select')[0];
+    var optArr = document.getElementsByTagName('option');
 
-</script>
+    btn1.onclick = function () {
+        optArr[2].selected = true;
+    };
+    btn2.onclick = function () {
+        optArr[2].selected = false;
+        optArr[0].selected = true;
+    };
+    </script>
 </body>
 </html>
-
-
 
 
 

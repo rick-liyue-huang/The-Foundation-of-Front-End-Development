@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
 <head lang="en">
     <meta charset="utf-8">
     <title>Photograph</title>
+=======
+<head>
+    <meta charset="utf-8">
+    <title>Beauty Gallery</title>
+>>>>>>> 9d1b49124e54832cc1915ec283acc0648cae8102
     <style>
         body {
             font-family: "Helvetica", "Arial", serif;
@@ -10,9 +16,135 @@
             background-color: #ccc;
             margin: 1em 10%;
         }
+<<<<<<< HEAD
+=======
+        h1 {
+            color: #333;
+            background-color: transparent;
+        }
+        a {
+            color: #c60;
+            background-color: transparent;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        ul {
+            padding: 0;
+        }
+        li {
+            float: left;
+            padding: 1em;
+            list-style: none;
+        }
+        #imagegallery {
+            list-style: none;
+        }
+
+        #imagegallery li {
+            margin: 0 20px;
+            padding: 0;
+            display: inline;
+        }
+        #imagegallery li a img {
+            border: 0;
+        }
+>>>>>>> 9d1b49124e54832cc1915ec283acc0648cae8102
     </style>
 </head>
 <body>
 
+<<<<<<< HEAD
+=======
+    <h1>Beauty Gallery</h1>
+    <a href="http://www.google.com">Register</a>
+    <ul id="imagegallery">
+        <li>
+            <a href="./images/image/1.jpg" title="Beauty a">
+                <img src="./images/image/1-small.jpg">
+            </a>
+        </li>
+        <li>
+            <a href="./images/image/2.jpg" title="Beauty b">
+                <img src="./images/image/2-small.jpg">
+            </a>
+        </li>
+        <li>
+            <a href="./images/image/3.jpg" title="Beauty c">
+                <img src="./images/image/3-small.jpg">
+            </a>
+        </li>
+        <li>
+            <a href="./images/image/4.jpg" title="Beauty d">
+                <img src="./images/image/4-small.jpg">
+            </a>
+        </li>
+    </ul>
+    <div style="clear: both"></div>
+    <img src="./images/image/placeholder.png" alt="" id="image">
+    <p id="destination">Please pick one beauty</p>
+
+<script>
+
+    var ul = document.getElementById('imagegallery');
+    var aArr = ul.getElementsByTagName('a');
+    var image = document.getElementById('image');
+    var destination = document.getElementById('destination');
+
+    for (var i = 0; i < aArr.length; i++) {
+        aArr[i].onclick = function () {
+            image.src = this.href;
+            destination.innerHTML = this.title;
+            return false; // avoid the page jumping.
+        }
+    }
+</script>
+>>>>>>> 9d1b49124e54832cc1915ec283acc0648cae8102
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

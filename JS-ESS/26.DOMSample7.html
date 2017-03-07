@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        li {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button>create</button>
+    <ul></ul>
+    <script>
+        var btn = document.getElementsByTagName('button')[0];
+        var ul = document.getElementsByTagName('ul')[0];
+        var arr = ["昭君出塞","西施浣纱","贵妃醉酒","貂蝉拜月"];
+        btn.onclick = function () {
+
+            for (var i = 0; i < arr.length; i++) {
+                var newLi = document.createElement('li');
+                ul.appendChild(newLi);
+            }
+            var liArr = ul.children;
+            for (var i = 0; i < liArr.length; i++) {
+                liArr[i].onmouseover = function () {
+
+                    for (var j = 0; j < liArr.length; j++) {
+                        liArr[j].style.backgroundColor = "";
+                    }
+                    this.style.backgroundColor = "red";
+                }
+            }
+        };
+
+    </script>
+</body>
+</html>

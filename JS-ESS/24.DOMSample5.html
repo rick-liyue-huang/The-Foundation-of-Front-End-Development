@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>interlace coloring</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        .wrap {
+            width: 500px;
+            margin: 100px auto 0;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #c0c0c0;
+            width: 500px;
+        }
+
+        th, td {
+            border: 1px solid #d0d0d0;
+            color: #404060;
+            padding: 10px;
+        }
+        th {
+            background-color: #09c;
+            font: bold 16px "simsun";
+            color: #fff;
+        }
+        td {
+            font: 14px "simsun";
+        }
+        tbody tr {
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .current {
+            background-color: rebeccapurple !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>index</th>
+                    <th>name</th>
+                    <th>lesson</th>
+                    <th>score</th>
+                </tr>
+            </thead>
+            <tbody id="target">
+                <tr>
+                    <td>1</td>
+                    <td>吕不韦</td>
+                    <td>Chinese</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>吕布</td>
+                    <td>English</td>
+                    <td>90</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>吕蒙</td>
+                    <td>Japanese</td>
+                    <td>95</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>吕尚</td>
+                    <td>Math</td>
+                    <td>99</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>吕雉</td>
+                    <td>Physics</td>
+                    <td>93</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>吕超</td>
+                    <td>Chemistry</td>
+                    <td>91</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var target = document.getElementById('target');
+        var trArr = target.children;
+
+        for (var i = 0; i < trArr.length; i++) {
+
+            if (i % 2 === 0) {
+                trArr[i].style.backgroundColor = '#a3a3a3';
+            } else {
+                trArr[i].style.backgroundColor = "#ccc";
+            }
+
+            var color = "";
+            trArr[i].onmouseover = function () {
+                color = this.style.backgroundColor;
+                this.style.backgroundColor = 'white';
+            };
+            trArr[i].onmouseout = function () {
+                this.style.backgroundColor = color;
+            }
+
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

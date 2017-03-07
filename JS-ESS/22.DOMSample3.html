@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        li {
+            list-style: none;
+            width: 100px;
+            height: 100px;
+            background-color: #0099cc;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<ul>
+    <li class="box1"></li>
+    <li class="box2"></li>
+    <li id="box3">BOX3</li>
+    <li class="box4"></li>
+    <li class="box5"></li>
+</ul>
+<script>
+    var box3 = document.getElementById('box3');
+    box3.parentNode.style.backgroundColor = "orange";
+    var pre = box3.previousElementSibling || box3.previousSibling;
+    var next = box3.nextElementSibling || box3.nextSibling;
+    pre.style.backgroundColor = 'yellow';
+    next.style.backgroundColor = 'red';
+
+    var first = box3.parentNode.firstElementChild || box3.parentNode.firstChild;
+    var last = box3.parentNode.lastElementChild || box3.parentNode.lastChild;
+    first.style.backgroundColor = 'pink';
+    last.style.backgroundColor = 'green';
+
+    var arr = box3.parentNode.children;
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].style.border = "2px solid white";
+    }
+
+    var arr2 = box3.parentNode.childNodes;
+    for (var i = 0; i < arr2.length; i++) {
+        if (arr2[i].nodeType === 1) {
+            arr2[i].innerHTML = "<h1>" + i + "</h1>"
+        }
+    }
+
+//    get the any sibling element node
+    var index = 0;
+    var node = box3.parentNode.children[index];
+
+//    create the function to go through all the sibling elements of 'elem'
+
+    function siblings(elem) {
+        var arr = [];
+        var sib = elem.parentNode.children;
+        for (var i = 0; i < sib.length; i++) {
+            if (sib[i] !== elem) {
+                arr.push(sib[i]);
+            }
+        }
+        return arr;
+    }
+
+
+    // about nodeName, nodeType, nodeValue
+    var box3 = document.getElementById('box3');
+    var attr = box3.getAttributeNode('id');
+    var txt = box3.firstChild;
+
+    console.log(box3.nodeType); // 1
+    console.log(attr.nodeType); // 2
+    console.log(txt.nodeType);  // 1
+
+    console.log(box3.nodeName); // LI
+    console.log(attr.nodeName); // id
+    console.log(txt.nodeName); // H1
+
+    console.log(box3.nodeValue); // null
+    console.log(attr.nodeValue); // box3
+    console.log(txt.nodeValue); // null
+
+
+//    interlace coloring
+    var arr = box3.parentNode.children;
+//    var newArr = [];
+
+    for (var i = 0; i < arr.length; i++) {
+//        newArr.push(arr[i]);
+        if (i % 2 === 0) {
+            arr[i].style.borderColor = 'black';
+        } else {
+            arr[i].style.borderColor = 'white';
+        }
+
+
+    }
+//    console.log(newArr);
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

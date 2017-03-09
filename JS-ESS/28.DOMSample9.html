@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        select {
+            width: 150px;
+            height: 200px;
+            background-color: #0099cc;
+        }
+    </style>
+</head>
+<body>
+<select name="" id="sel1" size="10" multiple>
+    <option value="1">Banana</option>
+    <option value="2">Apple</option>
+    <option value="3">Grape</option>
+    <option value="4">Pear</option>
+</select>
+<button>>>></button>
+<button><<<</button>
+<button>></button>
+<button><</button>
+<select name="" id="sel2" size="10" multiple></select>
+
+<script>
+    var sel1 = document.getElementById('sel1');
+    var sel2 = document.getElementById('sel2');
+    var button = document.getElementsByTagName('button');
+
+
+
+    button[0].onclick = function () {
+//        var optArr = sel1.children;
+//        for (var i = optArr.length - 1; i >= 0; i--) {
+//            sel2.appendChild(optArr[0]);
+//        }
+        selectAll(sel1, sel2);
+    };
+
+    button[1].onclick = function () {
+//        var optArr = sel2.children;
+//        for (var i = optArr.length - 1; i >= 0; i--) {
+//            sel1.appendChild(optArr[0]);
+//        }
+        selectAll(sel2, sel1);
+    };
+
+    function selectAll(origin, target) {
+        var optArr = origin.children;
+        for (var i = optArr.length - 1; i >= 0; i--) {
+            target.appendChild(optArr[0]);
+        }
+    }
+
+    button[2].onclick = function () {
+//        var optArr = sel1.children;
+//        for (var i = optArr.length - 1; i >= 0; i--) {
+//            if (optArr[i].selected === true) {
+//                sel2.appendChild(optArr[i]);
+//            }
+//        }
+        selectSingles(sel1, sel2);
+    };
+
+    button[3].onclick = function () {
+//        var optArr = sel2.children;
+//        for (var i = optArr.length - 1; i >= 0; i--) {
+//            if (optArr[i].selected === true) {
+//                sel1.appendChild(optArr[i]);
+//            }
+//        }
+        selectSingles(sel2, sel1);
+    };
+
+
+    function selectSingles(origin, target) {
+
+        var optArr = origin.children;
+
+//        add the unsorted elements to the target
+        for (var i = optArr.length - 1; i >= 0; i--) {
+            if (optArr[i].selected === true) {
+                optArr[i].selected = false;
+                target.appendChild(optArr[i]);
+            }
+        }
+
+//         sort the selected elements
+        var arr = Array.from(target.children).sort(function (a, b) {
+            return a.value - b.value;
+        });
+
+//       remove the unsorted elements from the target
+        for (var i = 0; i < target.length; i++) {
+            target.removeChild(target.children[i]);
+        }
+
+//        add the new sorted elements to target
+        for (var i = 0; i < arr.length; i++) {
+            target.appendChild(arr[i]);
+        }
+    }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

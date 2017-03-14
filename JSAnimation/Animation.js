@@ -1,5 +1,6 @@
 // this capsulating function will provide a method to animated move the element.
 
+
 function animate(obj, target) {
         clearInterval(obj.timer);
         obj.timer = setInterval(function () {
